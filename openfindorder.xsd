@@ -1,0 +1,719 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ofo="http://oss.dbc.dk/ns/openfindorder" targetNamespace="http://oss.dbc.dk/ns/openfindorder" elementFormDefault="qualified">
+	<xs:annotation>
+		<xs:documentation xml:lang="eng">This XML Schema describes the data and structure of data of the ORS search orders-service.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="findOrderRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service request.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:query"/>
+				<xs:element ref="ofo:agency"/>
+				<xs:element ref="ofo:callback" minOccurs="0"/>
+				<xs:element ref="ofo:start" minOccurs="0"/>
+				<xs:element ref="ofo:stepValue" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findOrderResponse">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service response.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="ofo:result" maxOccurs="unbounded"/>
+				<xs:element ref="ofo:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="order">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Data about a specific order</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:articleDirect" minOccurs="0"/>
+				<xs:element ref="ofo:articleFirstNote" minOccurs="0"/>
+				<xs:element ref="ofo:author" minOccurs="0"/>
+				<xs:element ref="ofo:authorOfComponent" minOccurs="0"/>
+				<xs:element ref="ofo:autoForwardDeliverToday" minOccurs="0"/>
+				<xs:element ref="ofo:autoForwardReason" minOccurs="0"/>
+				<xs:element ref="ofo:autoForwardResult" minOccurs="0"/>
+				<xs:element ref="ofo:autoForwardTestNote" minOccurs="0"/>
+				<xs:element ref="ofo:bibliographicCategory" minOccurs="0"/>
+				<xs:element ref="ofo:bibliographicRecordAgencyId" minOccurs="0"/>
+				<xs:element ref="ofo:bibliographicRecordId" minOccurs="0"/>
+				<xs:element ref="ofo:callNumber" minOccurs="0"/>
+				<xs:element ref="ofo:cancelled" minOccurs="0"/>
+				<xs:element ref="ofo:cancelledDate" minOccurs="0"/>
+				<xs:element ref="ofo:closedDate" minOccurs="0"/>
+				<xs:element ref="ofo:copy" minOccurs="0"/>
+				<xs:element ref="ofo:creationDate" minOccurs="0"/>
+				<xs:element ref="ofo:dateDue" minOccurs="0"/>
+				<xs:element ref="ofo:desiredDateDue" minOccurs="0"/>
+				<xs:element ref="ofo:edition" minOccurs="0"/>
+				<xs:element ref="ofo:exactEdition" minOccurs="0"/>
+				<xs:element ref="ofo:expectedDelivery" minOccurs="0"/>
+				<xs:element ref="ofo:isbn" minOccurs="0"/>
+				<xs:element ref="ofo:issn" minOccurs="0"/>
+				<xs:element ref="ofo:issue" minOccurs="0"/>
+				<xs:element ref="ofo:itemId" minOccurs="0"/>
+				<xs:element ref="ofo:kvik" minOccurs="0"/>
+				<xs:element ref="ofo:language" minOccurs="0"/>
+				<xs:element ref="ofo:lastRenewalDate" minOccurs="0"/>
+				<xs:element ref="ofo:latestProviderNote" minOccurs="0"/>
+				<xs:element ref="ofo:latestRequesterNote" minOccurs="0"/>
+				<xs:element ref="ofo:localHoldingsId" minOccurs="0"/>
+				<xs:element ref="ofo:lookedUpUserId" minOccurs="0"/>
+				<xs:element ref="ofo:mediumType" minOccurs="0"/>
+				<xs:element ref="ofo:needBeforeDate" minOccurs="0"/>
+				<xs:element ref="ofo:norfri" minOccurs="0"/>
+				<xs:element ref="ofo:numberOfRenewals" minOccurs="0"/>
+				<xs:element ref="ofo:orderId" minOccurs="0"/>
+				<xs:element ref="ofo:orderSystem" minOccurs="0"/>
+				<xs:element ref="ofo:originalOrderId" minOccurs="0"/>
+				<xs:element ref="ofo:pagination" minOccurs="0"/>
+				<xs:element ref="ofo:pickUpAgencyId" minOccurs="0"/>
+				<xs:element ref="ofo:pickUpAgencySubdivision" minOccurs="0"/>
+				<xs:element ref="ofo:placeOfPublication" minOccurs="0"/>
+				<xs:element ref="ofo:placeOnHold" minOccurs="0"/>
+				<xs:element ref="ofo:providerAnswer" minOccurs="0"/>
+				<xs:element ref="ofo:providerAnswerDate" minOccurs="0"/>
+				<xs:element ref="ofo:providerAnswerReason" minOccurs="0"/>
+				<xs:element ref="ofo:providerOrderState" minOccurs="0"/>
+				<xs:element ref="ofo:publicationDate" minOccurs="0"/>
+				<xs:element ref="ofo:publicationDateOfComponent" minOccurs="0"/>
+				<xs:element ref="ofo:publisher" minOccurs="0"/>
+				<xs:element ref="ofo:receivedDate" minOccurs="0"/>
+				<xs:element ref="ofo:renewed" minOccurs="0"/>
+				<xs:element ref="ofo:renewPendingDate" minOccurs="0"/>
+				<xs:element ref="ofo:requesterId" minOccurs="0"/>
+				<xs:element ref="ofo:requesterInitials" minOccurs="0"/>
+				<xs:element ref="ofo:requesterOrderState" minOccurs="0"/>
+				<xs:element ref="ofo:responderId" minOccurs="0"/>
+				<xs:element ref="ofo:returnedDate" minOccurs="0"/>
+				<xs:element ref="ofo:seriesTitelNumber" minOccurs="0"/>
+				<xs:element ref="ofo:shippedDate" minOccurs="0"/>
+				<xs:element ref="ofo:shippedServiceType" minOccurs="0"/>
+				<xs:element ref="ofo:title" minOccurs="0"/>
+				<xs:element ref="ofo:titleOfComponent" minOccurs="0"/>
+				<xs:element ref="ofo:userAddress" minOccurs="0"/>
+				<xs:element ref="ofo:userAgencyId" minOccurs="0"/>
+				<xs:element ref="ofo:userDateOfBirth" minOccurs="0"/>
+				<xs:element ref="ofo:userId" minOccurs="0"/>
+				<xs:element ref="ofo:userIdAuthenticated" minOccurs="0"/>
+				<xs:element ref="ofo:userIdType" minOccurs="0"/>
+				<xs:element ref="ofo:userMail" minOccurs="0"/>
+				<xs:element ref="ofo:userName" minOccurs="0"/>
+				<xs:element ref="ofo:userReferenceSource" minOccurs="0"/>
+				<xs:element ref="ofo:userTelephone" minOccurs="0"/>
+				<xs:element ref="ofo:verificationReferenceSource" minOccurs="0"/>
+				<xs:element ref="ofo:volume" minOccurs="0"/>
+				<xs:element ref="ofo:wantsReceipt" minOccurs="0"/>
+				<xs:element ref="ofo:worldCatNote" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="result">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Search result</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:resultPosition"/>
+				<xs:element ref="ofo:numberOfOrders"/>
+				<xs:element ref="ofo:order" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="agency" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Identifier of the agency using this service</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="articleDirect" type="ofo:articleDirectType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Order of a photocopy from bibliotek.dk with direct delivery to the end-user.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="articleFirstNote" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">From Netpunkt, refers to the order being created in Netpunkt-Articlefirst.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="autoForwardDeliverToday" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Boolean that states whether ORS has found a holding library where the item is on shelf (true), or if the order has been placed where the item is not on shelf at the moment (false). For statistical purposes.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="autoForwardReason" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">State of automated-ILL orders.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="autoForwardResult" type="ofo:autoForwardResultType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Order fulfils the necessary requirements for ORS to try and automatically seek and retrieve a responderID. The results are stored in autoForwardResult: order has been automated or order has not been automated. If uninitialized, the order does not fulfill the requirements necessary for automation.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="autoForwardTestNote" type="xs:string"/>
+	<xs:element name="author" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Author-data (monographs) in orders without locations.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="authorOfComponent" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Author of an journal article/part of work.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="bibliographicCategory" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Bibliographic category from danMARC2 008 *t</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="bibliographicRecordAgencyId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">bibliographicRecordAgencyId is the ISIL-number of the library system which has assigned/owns a given bibliographicRecordId (e.g. 001*b in danMARC2). Each combination of bibliographicRecordId + bibliographicRecordAgencyId is unique and identifies a specific record in bibliotek.dk/DanBib (danMARC2 001*a + 001*b). </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="bibliographicRecordId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Providers ID-number for the ordered item is verified in a bibliographic information-system (verificationReferenceSource) </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="callback" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">If outputType=json.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="callNumber" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Notation assigned to an item indicating its physical location in the owner institution.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="cancelled" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Value is retrieved from z3950 Cancel Reply/NCIP Cancel Item Response. Cancel is accepted/not accepted by responder.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="cancelledDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The date of cancellation by requester. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="closedDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The date where the order is closed. Order closes if: 1. Requester has sent a Cancel-request, and a positive response from supplier is received. 2. Provider has registered loaned material as returned. 3. Order is expired (ISO .ILL .expiry date is exceeded.)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="copy" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Boolean stating whether end-user wants a photocopy of an article or component. Provider may still choose to fulfill the order by lending out the item itself. Default is: .false".</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="creationDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Date of order received/created in ORS.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="dateDue" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The date by which the loaned item should be returned to the responder. If the responder does not provide a due date, the system will add a due-date based on a standard.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="desiredDateDue" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The proposed due date for a renewed loan.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="edition" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Edition-information from the bibliographic record, in orders without locations.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="error" type="ofo:errorType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Message returned by the service, if an error occurs.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="exactEdition" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Boolean stating whether only the requested edition of the item can be used, or if any available edition can be used.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="expectedDelivery" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Expected date for delivery of the item (z3950: ILL-Answer, NCIP: Request Item Response).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="isbn" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">ISBN-information from the bibliographic record, in orders without locations.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="issn" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">ISSN-information from the bibliographic record, in orders without locations.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="issue" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Issue-number in article-requests. If volume and issue are received combined, 'Issue' is preferred.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="itemId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The requested items id-number (barcode), as stated by provider. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="kvik" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The order is a KVIK-order.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="language" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Language of the requested material.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="latestProviderNote" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Latest note received from provider.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="latestRequesterNote" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Latest note received from requester.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="lastRenewalDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Date when loan was last renewed.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="localHoldingsId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The item.s bibliographic identifier, retrieved from local systems (e.g. via z3950 holdings request).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="lookedUpUserId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The userId retrieved from a local end-user directory via NCIP Lookup User.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="mediumType" type="ofo:mediumTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Type of material - from danMARC2 009 *a+*g (general and specific).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="needBeforeDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">End-user.s last day of interest. Also defines the date of expiry for an un-executed order.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="norfri" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The order is a NORFRI-order. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="numberOfOrders" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Number of orders in the search result.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="numberOfRenewals" type="xs:integer">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The number of times item has been renewed. NCIP RenewItem Response Renewal count is optional.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="orderId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">An order.s unique number. Orders from Netpunkt/bibliotek.dk are given a number by ORS, while orders from other systems (e.g. from z39.50-clients) are given numbers by those systems (in z-ill: transaction-qualifier). Orders received via NCIP are numbered by ORS with a UniqueRequestId, qualified with a UniqueAgencyId. Orders numbered by ORS have the interval: 1000000000-2000000000 . numbered orders from other systems must not use numbers in that interval. orderId (+requesterId) is the Primary key to an order.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="orderSystem" type="ofo:orderSystemType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The system in which the order was created. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="originalOrderId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">A reference to a previous order, replaced by this one. E.g. by remit or re-ordering.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pagination" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Number of pages in an item or a component part of an item.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pickUpAgencyId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The library/branch, where the end user whishes to collect the item. PickUpAgency is always stated. See also: pickUpAgencySubdivision.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pickUpAgencySubdivision" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">An addition to an ISIL-number of a mobile library service point. In NCIP-messages compounded with agencyId. E.g. : 'DK-765702_Sinding' </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="placeOfPublication" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The place of publication of the requested material.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="placeOnHold" type="ofo:placeOnHoldType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">States whether item is to be placed on hold if not on shelf.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="providerAnswer" type="ofo:providerAnswerType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The value of a provider answer: z-ill-answer and Request Item response.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="providerAnswerDate" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Date; indicates when the provider sent an answer to an order.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="providerAnswerReason" type="ofo:providerAnswerReasonType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The contents of a z-ill-answer/Request Item response - reason unfilled/reason-will-supply.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="providerOrderState" type="ofo:providerOrderStateType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The state of an order from a responder.s point of view.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="publicationDate" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Publication date of the requested material.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="publicationDateOfComponent" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Publication date of an item component, or article.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="publisher" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Publisher of the requested material.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="query" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The query language of this service is CQL, and the specific implementation of CQL in this service is described in the orssearch_cql.xml file.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="receivedDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Date of item received by requester - from NCIP Item received.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="renewed" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Providers answer to a renewal request.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="renewPendingDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Date of a renewal request.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="requesterId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">This is the ISIL-nr of the library that sends the order. Main library/branches: requesterId can either be a main library or a branch. If the library prefers the main library, or a specific branch to be their default requesterID, the chosen branch.s/library.s ISIL-number must be declared in OpenAgency. In these cases ORS will use the chosen ISIL as the requesterId, and the actual sender as pickUpAgency. pickUpAgency always represents the users chosen library, whether it is the main library or a branch. (orderId+) requesterId is the Primary key of the order.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="requesterInitials" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The initials of the ILL-librarian who created the order, only used in orders from Netpunkt.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="requesterOrderState" type="ofo:requesterOrderStateType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The state of an order from the requester.s point of view.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="responderId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">responderId is the ISIL-number of the library/agency that can provide the requested item.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="resultPosition" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The position of the order in the search result.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="returnedDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Date, indicates when requester has sent an item back to provider. Retrieved from NCIP Shipped. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="seriesTitelNumber" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Title of series and number of the requested component.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="shippedDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Date, indicates when provider has sent the item. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="shippedServiceType" type="ofo:shippedServiceTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">States whether sent item is a photocopy or an item to be returned. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="start" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The number of the first order you want the service to return.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="stepValue" type="xs:int">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The number of orders you want the service to return, counted from the value in start.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="title" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Title of the requested material.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="titleOfComponent" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Title of the requested component.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userAddress" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">User address.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userAgencyId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The ISIL-number of the end user.s library/agency.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userDateOfBirth" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">End user.s date of birth</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">End user.s identification (e.g. borrower id), type of ID is stated in userIdType.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userIdAuthenticated" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">States whether the value of userId+!userIdType is authenticated.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userIdType" type="ofo:userIdTypeType">
+		<xs:annotation>
+			<xs:documentation>States userId.s type.  userId+userIdType may be authenticated.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userMail" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">End user.s address.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userName" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">End user.s name.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userReferenceSource" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Reference as submitted by end user.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="userTelephone" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">End user.s telephone number.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="verificationReferenceSource" type="ofo:verificationReferenceSourceType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Reference to a database, or a bibliographic information-system, where the item ordered has been verified.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="volume" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Volume-number in article-requests. If volume and issue are received combined, 'Issue' is preferred.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="wantsReceipt" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">User wants a receipt sent.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="worldCatNote" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">A reference to a record ordered in Netpunkt-Worldcat.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:simpleType name="articleDirectType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="electronic"/>
+			<xs:enumeration value="pickup"/>
+			<xs:enumeration value="postal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="autoForwardReasonType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="error"/>
+			<xs:enumeration value="new_for_requester"/>
+			<xs:enumeration value="new_for_responder"/>
+			<xs:enumeration value="no_delivery_date"/>
+			<xs:enumeration value="no_provider"/>
+			<xs:enumeration value="not_for_loan"/>
+			<xs:enumeration value="not_on_shelf"/>
+			<xs:enumeration value="not_possible"/>
+			<xs:enumeration value="test"/>
+			<xs:enumeration value="user_date_exceeded"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="autoForwardResultType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="automated"/>
+			<xs:enumeration value="non_automated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="errorType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="orssearch order service not available"/>
+			<xs:enumeration value="no orders found"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="mediumTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="audiobook_cd"/>
+			<xs:enumeration value="audiobook_mp3"/>
+			<xs:enumeration value="audiobook_tape"/>
+			<xs:enumeration value="book"/>
+			<xs:enumeration value="braille"/>
+			<xs:enumeration value="cartopraphic_material"/>
+			<xs:enumeration value="cd"/>
+			<xs:enumeration value="composite_material"/>
+			<xs:enumeration value="dvd"/>
+			<xs:enumeration value="gramophone_record"/>
+			<xs:enumeration value="internet_ressource"/>
+			<xs:enumeration value="manuscript"/>
+			<xs:enumeration value="newspaper"/>
+			<xs:enumeration value="periodical"/>
+			<xs:enumeration value="printed_music"/>
+			<xs:enumeration value="tape"/>
+			<xs:enumeration value="video_tape"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="orderSystemType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="bibliotekdk"/>
+			<xs:enumeration value="netpunkt"/>
+			<xs:enumeration value="zpunkt"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="placeOnHoldType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="yes"/>
+			<xs:enumeration value="no"/>
+			<xs:enumeration value="responder_depending"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="providerAnswerType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="conditional"/>
+			<xs:enumeration value="unfilled"/>
+			<xs:enumeration value="will_supply"/>
+			<xs:enumeration value="hold_placed"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="providerAnswerReasonType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="at_bindery"/>
+			<xs:enumeration value="being_processed_for_supply"/>
+			<xs:enumeration value="charges"/>
+			<xs:enumeration value="cost_exceeds_limit"/>
+			<xs:enumeration value="expiry_not_supported"/>
+			<xs:enumeration value="in_process"/>
+			<xs:enumeration value="in_use_on_loan"/>
+			<xs:enumeration value="lacks_copyright_compliance"/>
+			<xs:enumeration value="lacking"/>
+			<xs:enumeration value="locations_not_found"/>
+			<xs:enumeration value="lost"/>
+			<xs:enumeration value="mandatory_messaging_not_supported"/>
+			<xs:enumeration value="non_circulating"/>
+			<xs:enumeration value="not_found_as_cited"/>
+			<xs:enumeration value="not_on_shelf"/>
+			<xs:enumeration value="not_owned"/>
+			<xs:enumeration value="on_hold"/>
+			<xs:enumeration value="on_order"/>
+			<xs:enumeration value="on_reserve"/>
+			<xs:enumeration value="other"/>
+			<xs:enumeration value="payment_required"/>
+			<xs:enumeration value="policy_problem"/>
+			<xs:enumeration value="poor_condition"/>
+			<xs:enumeration value="requested_delivery_service_not_supported"/>
+			<xs:enumeration value="preferred_delivery_time_not_possible"/>
+			<xs:enumeration value="responder_specific"/>
+			<xs:enumeration value="volume_issue_not_yet_available"/>
+			<xs:enumeration value="electronic_delivery"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="providerOrderStateType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="requested"/>
+			<xs:enumeration value="search"/>
+			<xs:enumeration value="serial"/>
+			<xs:enumeration value="on_hold"/>
+			<xs:enumeration value="in_process"/>
+			<xs:enumeration value="shipped"/>
+			<xs:enumeration value="returned"/>
+			<xs:enumeration value="finished"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="requesterOrderStateType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="unknown_user"/>
+			<xs:enumeration value="user_request"/>
+			<xs:enumeration value="requested"/>
+			<xs:enumeration value="reminded"/>
+			<xs:enumeration value="cancelled"/>
+			<xs:enumeration value="received"/>
+			<xs:enumeration value="returned"/>
+			<xs:enumeration value="finished"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="shippedServiceTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="loan"/>
+			<xs:enumeration value="copy"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="userIdTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="cpr"/>
+			<xs:enumeration value="common"/>
+			<xs:enumeration value="barcode"/>
+			<xs:enumeration value="cardno"/>
+			<xs:enumeration value="optional"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="verificationReferenceSourceType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="articlefirst"/>
+			<xs:enumeration value="bibsys"/>
+			<xs:enumeration value="bibliotekdk"/>
+			<xs:enumeration value="danbib"/>
+			<xs:enumeration value="libris"/>
+			<xs:enumeration value="worldcat"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
