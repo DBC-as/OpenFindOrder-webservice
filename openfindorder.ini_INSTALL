@@ -1,0 +1,77 @@
+; Inifile for openfindorder
+
+[setup]
+version = 0.1
+
+; wsdl for service
+wsdl = openfindorder.wsdl
+
+; validate
+;validate[request] = openfindorder.xsd
+;validate[response] = openfindorder.xsd
+
+; soapActions and their corresponding request structure
+; Can be found in the wsdl but is stated here for convenience
+soapAction[findOrder] = findOrderRequest
+
+; prefixes and namespaces
+xmlns[NONE] = http://oss.dbc.dk/ns/openfindorder
+xmlns[xs] = http://www.w3.org/2001/XMLSchema
+xmlns[xsi] = http://www.w3.org/2001/XMLSchema-instance
+xmlns[oss] = http://oss.dbc.dk/ns/osstypes
+xmlns[dc] = http://purl.org/dc/elements/1.1/
+xmlns[dkabm] = http://biblstandard.dk/abm/namespace/dkabm/
+xmlns[dcmitype] = http://purl.org/dc/dcmitype/
+xmlns[dcterms] = http://purl.org/dc/terms/
+xmlns[ac] = http://biblstandard.dk/ac/namespace/
+xmlns[dkdcplus] = http://biblstandard.dk/abm/namespace/dkdcplus/
+
+; path to xml-examples
+xmldir = ./xml
+
+order_credentials = user/pass@someserver.dbc.dk
+
+; logfile for verbose output
+logfile = /tmp/openfindorder.log
+
+; set verboselevel
+;   WARNING - simple warnings
+;   ERROR   - errors in response
+;   FATAL   - major errors
+;   STAT    - Statístical logging
+;   TIMER   - timer logging
+;   TRACE   - program trace
+;   DEBUG   - debugging info
+;   Z3959   - calls to z3950 services
+;   OCI     - oracle
+verbose = WARNING+ERROR+FATAL+STAT+TIMER+TRACE+DEBUG+Z3950+OCI
+
+
+[rest]
+; REST parameters for SOAPAction
+;
+; use xml.path.to.par notation to solve name-conflicts
+; action[thisSoapAction][foo][] = some.number
+; action[thisSoapAction][bar][] = another.number
+; to build 
+; <thisSoapAction>
+;   <foo>
+;     <number>nn</number>
+;   </foo>
+;   <bar>
+;     <number>mm</number>
+;   </bar>
+; </thisSoapAction>
+; from url: action=thisSoapAction&some.number=nn&another.number=mm
+;
+; action[ALL] defines parameter used in all defined soap-actions
+;
+action[ALL][] = outputType
+action[ALL][] = callback
+
+action[findOrder][] = query
+
+[howru]
+;test[] = search&query=danmark&stepValue=1
+;preg_match[] = hitCount
+;error[] = ERROR searching for danmark
