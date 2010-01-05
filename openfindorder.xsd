@@ -1,9 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ofo="http://oss.dbc.dk/ns/openfindorder" targetNamespace="http://oss.dbc.dk/ns/openfindorder" elementFormDefault="qualified">
 	<xs:annotation>
-		<xs:documentation xml:lang="eng">This XML Schema describes the data and structure of data of the ORS search orders-service.</xs:documentation>
+		<xs:documentation xml:lang="eng">This XML Schema describes the data and structure of data of the ORS find order-service.</xs:documentation>
 	</xs:annotation>
-	<xs:element name="findOrderRequest">
+	<xs:element name="findAllOrdersRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service request.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:element ref="ofo:orderSystem" minOccurs="0"/>
+				<xs:element ref="ofo:fromDate" minOccurs="0"/>
+				<xs:element ref="ofo:toDate" minOccurs="0"/>
+				<xs:element ref="ofo:agency"/>
+				<xs:element ref="ofo:callback" minOccurs="0"/>
+				<xs:element ref="ofo:start" minOccurs="0"/>
+				<xs:element ref="ofo:stepValue" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findOrdersFromUserRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service request.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:choice>
+					<xs:element ref="ofo:userId"/>
+					<xs:element ref="ofo:userMail"/>
+					<xs:element ref="ofo:userName"/>
+				</xs:choice>
+				<xs:element ref="ofo:fromDate" minOccurs="0"/>
+				<xs:element ref="ofo:toDate" minOccurs="0"/>
+				<xs:element ref="ofo:agency"/>
+				<xs:element ref="ofo:callback" minOccurs="0"/>
+				<xs:element ref="ofo:start" minOccurs="0"/>
+				<xs:element ref="ofo:stepValue" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findOrdersFromUnknownUserRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service request.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:element ref="ofo:agency"/>
+				<xs:element ref="ofo:callback" minOccurs="0"/>
+				<xs:element ref="ofo:start" minOccurs="0"/>
+				<xs:element ref="ofo:stepValue" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="bibliographicSearchRequest">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">The service request.</xs:documentation>
 		</xs:annotation>
@@ -17,7 +78,7 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="findOrderResponse">
+	<xs:element name="findOrdersResponse">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">The service response.</xs:documentation>
 		</xs:annotation>
@@ -34,6 +95,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element ref="ofo:resultPosition"/>
 				<xs:element ref="ofo:articleDirect" minOccurs="0"/>
 				<xs:element ref="ofo:articleFirstNote" minOccurs="0"/>
 				<xs:element ref="ofo:author" minOccurs="0"/>
@@ -122,7 +184,6 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="ofo:resultPosition"/>
 				<xs:element ref="ofo:numberOfOrders"/>
 				<xs:element ref="ofo:order" maxOccurs="unbounded"/>
 			</xs:sequence>
@@ -247,6 +308,11 @@
 	<xs:element name="expectedDelivery" type="xs:dateTime">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Expected date for delivery of the item (z3950: ILL-Answer, NCIP: Request Item Response).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="fromDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Earliest date in request.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="isbn" type="xs:string">
@@ -487,6 +553,11 @@
 	<xs:element name="titleOfComponent" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Title of the requested component.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="toDate" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Latest date in request.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="userAddress" type="xs:string">
