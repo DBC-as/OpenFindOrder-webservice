@@ -2,7 +2,7 @@
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ofo="http://oss.dbc.dk/ns/openfindorder" xmlns:ofow="http://oss.dbc.dk/ns/openfindorder_wsdl" targetNamespace="http://oss.dbc.dk/ns/openfindorder_wsdl" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
 	<wsdl:types>
 		<xs:schema elementFormDefault="qualified">
-			<xs:import schemaLocation="openfindorder_2.xsd" namespace="http://oss.dbc.dk/ns/openfindorder"/>
+			<xs:import schemaLocation="openfindorder.xsd" namespace="http://oss.dbc.dk/ns/openfindorder"/>
 		</xs:schema>
 	</wsdl:types>
 	<wsdl:message name="findAllOrdersRequest">
