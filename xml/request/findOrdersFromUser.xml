@@ -1,0 +1,23 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope"
+xmlns:xml="http://www.w3.org/XML/1998/namespace"
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+xmlns:ofow="http://oss.dbc.dk/ns/openfindorder_wsdl"
+xmlns:ofo="http://oss.dbc.dk/ns/openfindorder"
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+<SOAP-ENV:Body>
+<ofo:findOrdersFromUserRequest>
+  <ofo:requesterId>?</ofo:requesterId>
+  <ofo:responderId>?</ofo:responderId>
+  <ofo:userId>?</ofo:userId>
+  <ofo:userMail>?</ofo:userMail>
+  <ofo:userName>?</ofo:userName>
+  <ofo:fromDate>?</ofo:fromDate>
+  <ofo:toDate>?</ofo:toDate>
+  <ofo:agency>?</ofo:agency>
+  <ofo:callback>?</ofo:callback>
+  <ofo:start>?</ofo:start>
+  <ofo:stepValue>?</ofo:stepValue>
+</ofo:findOrdersFromUserRequest>
+</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>
