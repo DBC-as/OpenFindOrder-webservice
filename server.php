@@ -25,6 +25,7 @@ define(DEBUG, FALSE);
 
 require_once("OLS_class_lib/webServiceServer_class.php");
 require_once "OLS_class_lib/cql2solr_class.php";
+require_once "OLS_class_lib/oci_class.php";
 
 class openFindOrder extends webServiceServer {
 
@@ -35,8 +36,25 @@ class openFindOrder extends webServiceServer {
  /** \brief
   *
   */
-  public function findOrder($param) {
+
+  public function findAllOrders($param)
+  {
     var_dump($param); die();
+  }
+
+  public function findOrdersFromUser($param)
+  {
+     var_dump($param); die();
+  }
+
+  public function findOrdersFromUnknownUser($param)
+  {
+     var_dump($param); die();
+  }
+
+  public function bibliographicSearch($param)
+  {
+     var_dump($param); die();
   }
 }
 
@@ -47,6 +65,51 @@ class openFindOrder extends webServiceServer {
 $ws=new openFindOrder();
 
 $ws->handle_request();
+
+/* \brief  wrapper for oci_class
+ *  handles database transactions
+*/
+class db
+{
+  // member to hold instance of oci_class
+  private $oci;
+  // constructor
+  function db()
+  {
+    $this->oci = new oci(VIP_US,VIP_PW,VIP_DB);
+    $this->oci->connect();
+  }
+
+  function bind($name,$value,$type=SQLT_CHR)
+  {
+    $this->oci->bind($name, $value, -1, $type);
+  }
+
+  function query($query)
+  {
+    $this->oci->set_query($query);
+  }
+
+  /** return one row from db */
+  function get_row()
+  {
+    return $this->oci->fetch_into_assoc();
+  }
+
+  /** destructor; disconnect from database */
+  function __destruct()
+  {
+    //  if( $this->oci )
+      $this->oci->destructor();
+  }
+
+  /** get error from oci-class */
+  function get_error()
+  {
+    return $this->oci->get_error_string();
+  }
+}
+
 
 ?>
 
