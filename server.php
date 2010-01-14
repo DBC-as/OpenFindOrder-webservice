@@ -26,11 +26,12 @@ define(DEBUG, FALSE);
 require_once("OLS_class_lib/webServiceServer_class.php");
 require_once "OLS_class_lib/cql2solr_class.php";
 require_once "OLS_class_lib/oci_class.php";
+require_once("xsdparse.php");
 
 class openFindOrder extends webServiceServer {
 
   public function __construct(){
-    webServiceServer::__construct('openfindorder.ini');
+    parent::__construct('openfindorder.ini');
   }
 
  /** \brief
@@ -39,7 +40,13 @@ class openFindOrder extends webServiceServer {
 
   public function findAllOrders($param)
   {
-    var_dump($param); die();
+    if( !OFO_agency::authenticate($param->agency->_value) )
+      die( "findAllOrders:not authenticated" );
+
+    $OFO = new OFO_database("findAllOrders",$this->config);
+    $orders=$OFO->findAllOrders($param);
+   
+    return $this->findOrderResponse($orders);
   }
 
   public function findOrdersFromUser($param)
@@ -56,6 +63,21 @@ class openFindOrder extends webServiceServer {
   {
      var_dump($param); die();
   }
+
+  private function findOrderResponse($orders)
+  {
+    $response->findOrdersResponse->_namespace='http://oss.dbc.dk/ns/openfindorder';
+    // error
+    $error->_namespace='http://oss.dbc.dk/ns/openfindorder';
+    $error->_value="testhest";
+
+    $response->findOrdersResponse->_value->error=$error;
+
+    foreach( $orders as $order )
+      $response->findOrdersResponse->_value->result[]=$order;
+
+    return $response;      
+  }
 }
 
 /*
@@ -66,50 +88,101 @@ $ws=new openFindOrder();
 
 $ws->handle_request();
 
-/* \brief  wrapper for oci_class
- *  handles database transactions
-*/
-class db
+class OFO_database
 {
-  // member to hold instance of oci_class
-  private $oci;
-  // constructor
-  function db()
+  private $xmlfields=array();
+  private $action;
+  private $fields=array();
+
+  public function __construct($action,$config)
   {
-    $this->oci = new oci(VIP_US,VIP_PW,VIP_DB);
-    $this->oci->connect();
+    $this->action=$action;    
+    if( $config )
+      {
+	$arr=$config->get_value("action");
+	
+	foreach($arr[$action] as $key=>$val)
+	  $this->fields[]=$val;
+
+      }
+
+    $schema=new xml_schema();
+    $schema->get_from_file('openfindorder.xsd');
+    $this->xmlfields=$schema->get_sequence_array('order');
+  }
+  
+  public function findAllOrders($param)
+  {
+    // get sql for database-call
+    if($oci=self::execute($param))
+      {
+	$resultPosition=1;
+	while( $data=$oci->fetch_into_assoc() )
+	  {
+	    if( $order=$this->get_order($data,$resultPosition) )
+	      {
+		$orders[]=$order;
+		$resultPosition++;
+	      }
+	  }
+      }
+    
+    return $orders;
   }
 
-  function bind($name,$value,$type=SQLT_CHR)
+  private function get_order($data,$resultPosition)
   {
-    $this->oci->bind($name, $value, -1, $type);
+    $ret->_namespace='http://oss.dbc.dk/ns/openfindorder';
+  
+    $ret->_value->resultPosition->_value=$resultPosition;;
+    $ret->_value->resultPosition->_namespace='http://oss.dbc.dk/ns/openfindorder';
+   
+    // column-names from database MUST match xml-fields for this loop to work
+    foreach( $data as $key=>$val )
+      {
+	if( $xmlkey=array_search($key,$this->xmlfields) )
+	  if( $val )
+	    {	    
+	      $ret->_value->$xmlkey->_value=$val;
+	      $ret->_value->$xmlkey->_namespace='http://oss.dbc.dk/ns/openfindorder';
+	    }
+      }
+    return $ret;
   }
 
-  function query($query)
+  private static function set_sql($param)
   {
-    $this->oci->set_query($query);
+    // TODO implement
+    $sql="SELECT * FROM ORS_ORDER WHERE REQUESTERID=716700";
+    
+    return $sql;
+    
   }
 
-  /** return one row from db */
-  function get_row()
+  private static function execute($param)
   {
-    return $this->oci->fetch_into_assoc();
+    $connectionstring="ors_test/ors_test@tora1";
+    $oci=new oci($connectionstring);
+
+    $oci->connect();
+    if( $end=$param->stepValue->_value && $begin=$param->start->_value )
+      $oci->set_pagination((int)$begin,(int)$end);
+
+    $sql = self::set_sql($param);
+    $oci->set_query($sql);    
+
+    return $oci;
   }
 
-  /** destructor; disconnect from database */
-  function __destruct()
-  {
-    //  if( $this->oci )
-      $this->oci->destructor();
-  }
-
-  /** get error from oci-class */
-  function get_error()
-  {
-    return $this->oci->get_error_string();
-  }
 }
 
-
+class OFO_agency
+{
+  // WHAT IS THIS and how do i authenticate
+  public static function authenticate($agency)
+  {
+    return true;
+  }  
+}
 ?>
 
