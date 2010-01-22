@@ -5,76 +5,162 @@
 	</xs:annotation>
 	<xs:element name="findAllOrdersRequest">
 		<xs:annotation>
-			<xs:documentation xml:lang="eng">The service request.</xs:documentation>
+			<xs:documentation xml:lang="eng">The service request for all orders (optionally for a specific order system)</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:choice>
-					<xs:element ref="ofo:requesterId" maxOccurs="unbounded"/>
-					<xs:element ref="ofo:responderId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:element ref="ofo:orderSystem" minOccurs="0"/>
-				<xs:element ref="ofo:fromDate" minOccurs="0"/>
-				<xs:element ref="ofo:toDate" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findSpecificOrderRequest">
+		<xs:annotation>
+			<xs:documentation>The service request for a specific order (orderId)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:choice>
+						<xs:element ref="ofo:requesterAgencyId"/>
+						<xs:element ref="ofo:responderAgencyId"/>
+					</xs:choice>
+				</xs:choice>
+				<xs:element ref="ofo:orderId"/>
 				<xs:element ref="ofo:agency"/>
-				<xs:element ref="ofo:callback" minOccurs="0"/>
-				<xs:element ref="ofo:start" minOccurs="0"/>
-				<xs:element ref="ofo:stepValue" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="findOrdersFromUserRequest">
 		<xs:annotation>
-			<xs:documentation xml:lang="eng">The service request.</xs:documentation>
+			<xs:documentation xml:lang="eng">The service request for orders from a specific user (userId, userName or userMail)</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:choice>
-					<xs:element ref="ofo:requesterId" maxOccurs="unbounded"/>
-					<xs:element ref="ofo:responderId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
 				<xs:choice>
 					<xs:element ref="ofo:userId"/>
 					<xs:element ref="ofo:userMail"/>
 					<xs:element ref="ofo:userName"/>
 				</xs:choice>
-				<xs:element ref="ofo:fromDate" minOccurs="0"/>
-				<xs:element ref="ofo:toDate" minOccurs="0"/>
-				<xs:element ref="ofo:agency"/>
-				<xs:element ref="ofo:callback" minOccurs="0"/>
-				<xs:element ref="ofo:start" minOccurs="0"/>
-				<xs:element ref="ofo:stepValue" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="findOrdersFromUnknownUserRequest">
 		<xs:annotation>
-			<xs:documentation xml:lang="eng">The service request.</xs:documentation>
+			<xs:documentation xml:lang="eng">The service request for orders from unknown users (general)</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
 				<xs:choice>
-					<xs:element ref="ofo:requesterId" maxOccurs="unbounded"/>
-					<xs:element ref="ofo:responderId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:element ref="ofo:agency"/>
-				<xs:element ref="ofo:callback" minOccurs="0"/>
-				<xs:element ref="ofo:start" minOccurs="0"/>
-				<xs:element ref="ofo:stepValue" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findAutomatedOrdersRequest">
+		<xs:annotation>
+			<xs:documentation>The service request for automatically forwarded orders (general)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findNonAutomatedOrdersRequest">
+		<xs:annotation>
+			<xs:documentation>The service request for non-automatatically forwarded orders (general)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findOrdersWithAutoForwardReasonRequest">
+		<xs:annotation>
+			<xs:documentation>The service request for reason for auto forward (autoForwardReason)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:element ref="ofo:autoForwardReason"/>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findOrdersWithStatusRequest">
+		<xs:annotation>
+			<xs:documentation>(placeholder - request not yet defined)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findOrderOfTypeRequest">
+		<xs:annotation>
+			<xs:documentation>The service request for orders from a specific ill-cooperation (kvik, norfri or articleDirect)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:choice>
+					<xs:element ref="ofo:articleDirect"/>
+					<xs:element ref="ofo:kvik"/>
+					<xs:element ref="ofo:norfri"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="bibliographicSearchRequest">
 		<xs:annotation>
-			<xs:documentation xml:lang="eng">The service request.</xs:documentation>
+			<xs:documentation xml:lang="eng">The service request for a biblographical search of orders</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="ofo:query"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:element ref="ofo:author" minOccurs="0"/>
+				<xs:element ref="ofo:bibliographicRecordId" minOccurs="0"/>
+				<xs:element ref="ofo:isbn" minOccurs="0"/>
+				<xs:element ref="ofo:issn" minOccurs="0"/>
+				<xs:element ref="ofo:mediumType" minOccurs="0"/>
+				<xs:element ref="ofo:title" minOccurs="0"/>
 				<xs:element ref="ofo:agency"/>
-				<xs:element ref="ofo:callback" minOccurs="0"/>
-				<xs:element ref="ofo:start" minOccurs="0"/>
-				<xs:element ref="ofo:stepValue" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -87,6 +173,67 @@
 				<xs:element ref="ofo:result" maxOccurs="unbounded"/>
 				<xs:element ref="ofo:error"/>
 			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getOrderStatusRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service request for the status of an order.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:element ref="ofo:orderId"/>
+				<xs:group ref="ofo:requestGeneral"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="getOrderStatusResponse">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service response.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice>
+				<xs:sequence>
+					<xs:element ref="ofo:autoForwardReason" minOccurs="0"/>
+					<xs:element ref="ofo:autoForwardResult" minOccurs="0"/>
+					<xs:element ref="ofo:autoForwardTestNote" minOccurs="0"/>
+					<xs:element ref="ofo:cancelled" minOccurs="0"/>
+					<xs:element ref="ofo:cancelledDate" minOccurs="0"/>
+					<xs:element ref="ofo:closedDate" minOccurs="0"/>
+					<xs:element ref="ofo:creationDate" minOccurs="0"/>
+					<xs:element ref="ofo:dateDue" minOccurs="0"/>
+					<xs:element ref="ofo:expectedDelivery" minOccurs="0"/>
+					<xs:element ref="ofo:lastRenewalDate" minOccurs="0"/>
+					<xs:element ref="ofo:latestProviderNote" minOccurs="0"/>
+					<xs:element ref="ofo:latestRequesterNote" minOccurs="0"/>
+					<xs:element ref="ofo:providerAnswer" minOccurs="0"/>
+					<xs:element ref="ofo:providerAnswerDate" minOccurs="0"/>
+					<xs:element ref="ofo:providerAnswerReason" minOccurs="0"/>
+					<xs:element ref="ofo:providerOrderState" minOccurs="0"/>
+					<xs:element ref="ofo:receivedDate" minOccurs="0"/>
+					<xs:element ref="ofo:renewed" minOccurs="0"/>
+					<xs:element ref="ofo:renewPendingDate" minOccurs="0"/>
+					<xs:element ref="ofo:requesterOrderState" minOccurs="0"/>
+					<xs:element ref="ofo:returnedDate" minOccurs="0"/>
+					<xs:element ref="ofo:shippedDate" minOccurs="0"/>
+					<xs:element ref="ofo:shippedServiceType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="ofo:error"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="result">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Search result</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:numberOfOrders"/>
+				<xs:element ref="ofo:order" maxOccurs="unbounded"/>
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="order">
@@ -178,17 +325,6 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="result">
-		<xs:annotation>
-			<xs:documentation xml:lang="eng">Search result</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="ofo:numberOfOrders"/>
-				<xs:element ref="ofo:order" maxOccurs="unbounded"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
 	<xs:element name="agency" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Identifier of the agency using this service</xs:documentation>
@@ -204,22 +340,6 @@
 			<xs:documentation xml:lang="eng">From Netpunkt, refers to the order being created in Netpunkt-Articlefirst.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="autoForwardDeliverToday" type="xs:boolean">
-		<xs:annotation>
-			<xs:documentation xml:lang="eng">Boolean that states whether ORS has found a holding library where the item is on shelf (true), or if the order has been placed where the item is not on shelf at the moment (false). For statistical purposes.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="autoForwardReason" type="xs:string">
-		<xs:annotation>
-			<xs:documentation xml:lang="eng">State of automated-ILL orders.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="autoForwardResult" type="ofo:autoForwardResultType">
-		<xs:annotation>
-			<xs:documentation xml:lang="eng">Order fulfils the necessary requirements for ORS to try and automatically seek and retrieve a responderID. The results are stored in autoForwardResult: order has been automated or order has not been automated. If uninitialized, the order does not fulfill the requirements necessary for automation.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="autoForwardTestNote" type="xs:string"/>
 	<xs:element name="author" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Author-data (monographs) in orders without locations.</xs:documentation>
@@ -230,6 +350,22 @@
 			<xs:documentation xml:lang="eng">Author of an journal article/part of work.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:element name="autoForwardDeliverToday" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Boolean that states whether ORS has found a holding library where the item is on shelf (true), or if the order has been placed where the item is not on shelf at the moment (false). For statistical purposes.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="autoForwardReason" type="ofo:autoForwardReasonType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">State of automated-ILL orders.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="autoForwardResult" type="ofo:autoForwardResultType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Order fulfils the necessary requirements for ORS to try and automatically seek and retrieve a responderID. The results are stored in autoForwardResult: order has been automated or order has not been automated. If uninitialized, the order does not fulfill the requirements necessary for automation.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="autoForwardTestNote" type="xs:string"/>
 	<xs:element name="bibliographicCategory" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Bibliographic category from danMARC2 008 *t</xs:documentation>
@@ -377,7 +513,7 @@
 	</xs:element>
 	<xs:element name="needBeforeDate" type="xs:dateTime">
 		<xs:annotation>
-			<xs:documentation xml:lang="eng">End-user.s last day of interest. Also defines the date of expiry for an un-executed order.</xs:documentation>
+			<xs:documentation xml:lang="eng">End-user's last day of interest. Also defines the date of expiry for an un-executed order.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="norfri" type="xs:boolean">
@@ -402,12 +538,17 @@
 	</xs:element>
 	<xs:element name="orderSystem" type="ofo:orderSystemType">
 		<xs:annotation>
-			<xs:documentation xml:lang="eng">The system in which the order was created. </xs:documentation>
+			<xs:documentation xml:lang="eng">The system in which the order was created.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="originalOrderId" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">A reference to a previous order, replaced by this one. E.g. by remit or re-ordering.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="outputType" type="ofo:outputTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">E.g. xml, json or php.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="pagination" type="xs:string">
@@ -440,7 +581,7 @@
 			<xs:documentation xml:lang="eng">The value of a provider answer: z-ill-answer and Request Item response.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="providerAnswerDate" type="xs:string">
+	<xs:element name="providerAnswerDate" type="xs:dateTime">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Date; indicates when the provider sent an answer to an order.</xs:documentation>
 		</xs:annotation>
@@ -452,7 +593,7 @@
 	</xs:element>
 	<xs:element name="providerOrderState" type="ofo:providerOrderStateType">
 		<xs:annotation>
-			<xs:documentation xml:lang="eng">The state of an order from a responder.s point of view.</xs:documentation>
+			<xs:documentation xml:lang="eng">The state of an order from a responder's point of view.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="publicationDate" type="xs:string">
@@ -468,11 +609,6 @@
 	<xs:element name="publisher" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Publisher of the requested material.</xs:documentation>
-		</xs:annotation>
-	</xs:element>
-	<xs:element name="query" type="xs:string">
-		<xs:annotation>
-			<xs:documentation xml:lang="eng">The query language of this service is CQL, and the specific implementation of CQL in this service is described in the orssearch_cql.xml file.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="receivedDate" type="xs:dateTime">
@@ -492,7 +628,12 @@
 	</xs:element>
 	<xs:element name="requesterId" type="xs:string">
 		<xs:annotation>
-			<xs:documentation xml:lang="eng">This is the ISIL-nr of the library that sends the order. Main library/branches: requesterId can either be a main library or a branch. If the library prefers the main library, or a specific branch to be their default requesterID, the chosen branch.s/library.s ISIL-number must be declared in OpenAgency. In these cases ORS will use the chosen ISIL as the requesterId, and the actual sender as pickUpAgency. pickUpAgency always represents the users chosen library, whether it is the main library or a branch. (orderId+) requesterId is the Primary key of the order.</xs:documentation>
+			<xs:documentation xml:lang="eng">This is the ISIL-nr of the library that sends the order. Main library/branches: requesterId can either be a main library or a branch. If the library prefers the main library, or a specific branch to be their default requesterID, the chosen branch’s/library’s ISIL-number must be declared in OpenAgency. In these cases ORS will use the chosen ISIL as the requesterId, and the actual sender as pickUpAgency. pickUpAgency always represents the users chosen library, whether it is the main library or a branch. (orderId+) requesterId is the Primary key of the order.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="requesterAgencyId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">ISIL-number of a responder agency that the agency using this service is authorized to manage orders on behalf of (or the agency itself).</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="requesterInitials" type="xs:string">
@@ -508,6 +649,11 @@
 	<xs:element name="responderId" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">responderId is the ISIL-number of the library/agency that can provide the requested item.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="responderAgencyId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">ISIL-number of a responder agency that the agency using this service is authorized to manage orders on behalf of (or the agency itself).</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="resultPosition" type="xs:int">
@@ -630,6 +776,21 @@
 			<xs:documentation xml:lang="eng">A reference to a record ordered in Netpunkt-Worldcat.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:group name="requestGeneral">
+		<xs:annotation>
+			<xs:documentation>Common parameters for the service requests (requester/responder, ageny, orderSystem and date-intervals) and parameters for order counts in service requests</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ofo:agency"/>
+			<xs:element ref="ofo:orderSystem" minOccurs="0"/>
+			<xs:element ref="ofo:fromDate" minOccurs="0"/>
+			<xs:element ref="ofo:toDate" minOccurs="0"/>
+			<xs:element ref="ofo:outputType" minOccurs="0"/>
+			<xs:element ref="ofo:callback" minOccurs="0"/>
+			<xs:element ref="ofo:start" minOccurs="0"/>
+			<xs:element ref="ofo:stepValue" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
 	<xs:simpleType name="articleDirectType">
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="electronic"/>
@@ -689,6 +850,16 @@
 			<xs:enumeration value="bibliotekdk"/>
 			<xs:enumeration value="netpunkt"/>
 			<xs:enumeration value="zpunkt"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="outputTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The types of output that can be returned by the service.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="xml"/>
+			<xs:enumeration value="json"/>
+			<xs:enumeration value="php"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="placeOnHoldType">

@@ -8,11 +8,29 @@
 	<wsdl:message name="findAllOrdersRequest">
 		<wsdl:part name="body" element="ofo:findAllOrdersRequest"/>
 	</wsdl:message>
+	<wsdl:message name="findSpecificOrderRequest">
+		<wsdl:part name="body" element="ofo:findSpecificOrderRequest"/>
+	</wsdl:message>
 	<wsdl:message name="findOrdersFromUserRequest">
 		<wsdl:part name="body" element="ofo:findOrdersFromUserRequest"/>
 	</wsdl:message>
 	<wsdl:message name="findOrdersFromUnknownUserRequest">
 		<wsdl:part name="body" element="ofo:findOrdersFromUnknownUserRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findOrdersWithStatusRequest">
+		<wsdl:part name="body" element="ofo:findOrdersWithStatusRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findOrdersWithAutoForwardReasonRequest">
+		<wsdl:part name="body" element="ofo:findOrdersWithAutoForwardReasonRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findAutomatedOrdersRequest">
+		<wsdl:part name="body" element="ofo:findAutomatedOrdersRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findNonAutomatedOrdersRequest">
+		<wsdl:part name="body" element="ofo:findNonAutomatedOrdersRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findOrderTypeRequest">
+		<wsdl:part name="body" element="ofo:findOrderOfTypeRequest"/>
 	</wsdl:message>
 	<wsdl:message name="bibliographicSearchRequest">
 		<wsdl:part name="body" element="ofo:bibliographicSearchRequest"/>
@@ -20,9 +38,27 @@
 	<wsdl:message name="findOrdersResponse">
 		<wsdl:part name="body" element="ofo:findOrdersResponse"/>
 	</wsdl:message>
+	<wsdl:message name="getOrderStatusRequest">
+		<wsdl:part name="body" element="ofo:getOrderStatusRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getOrderStatusResponse">
+		<wsdl:part name="body" element="ofo:getOrderStatusResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getUserOrderStatusRequest">
+		<wsdl:part name="body" element="ofo:getUserOrderStatusRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getUserOrderStatusResponse">
+		<wsdl:part name="body" element="ofo:getUserOrderStatusResponse"/>
+	</wsdl:message>
 	<wsdl:portType name="findAllOrdersPortType">
 		<wsdl:operation name="findAllOrders">
 			<wsdl:input message="ofow:findAllOrdersRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="findSpecificOrderPortType">
+		<wsdl:operation name="findSpecificOrder">
+			<wsdl:input message="ofow:findSpecificOrderRequest"/>
 			<wsdl:output message="ofow:findOrdersResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
@@ -38,17 +74,71 @@
 			<wsdl:output message="ofow:findOrdersResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
+	<wsdl:portType name="findOrdersWithStatusPortType">
+		<wsdl:operation name="findOrdersWithStatus">
+			<wsdl:input message="ofow:findOrdersWithStatusRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="findOrdersWithAutoForwardReasonPortType">
+		<wsdl:operation name="findOrdersWithAutoForwardReason">
+			<wsdl:input message="ofow:findOrdersWithAutoForwardReasonRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="findAutomatedOrdersPortType">
+		<wsdl:operation name="findAutomatedOrders">
+			<wsdl:input message="ofow:findAutomatedOrdersRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="findNonAutomatedOrdersPortType">
+		<wsdl:operation name="findNonAutomatedOrders">
+			<wsdl:input message="ofow:findNonAutomatedOrdersRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="findOrderTypePortType">
+		<wsdl:operation name="findOrderType">
+			<wsdl:input message="ofow:findOrderTypeRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
 	<wsdl:portType name="bibliographicSearchPortType">
 		<wsdl:operation name="bibliographicSearch">
 			<wsdl:input message="ofow:bibliographicSearchRequest"/>
 			<wsdl:output message="ofow:findOrdersResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
+	<wsdl:portType name="getOrderStatusPortType">
+		<wsdl:operation name="getOrderStatus">
+			<wsdl:input message="ofow:getOrderStatusRequest"/>
+			<wsdl:output message="ofow:getOrderStatusResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="getUserOrderStatusPortType">
+		<wsdl:operation name="getUserOrderStatus">
+			<wsdl:input message="ofow:getUserOrderStatusRequest"/>
+			<wsdl:output message="ofow:getUserOrderStatusResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
 	<wsdl:binding name="findAllOrdersSoapBinding" type="ofow:findAllOrdersPortType">
 		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
 		<wsdl:operation name="findAllOrders">
-			<soap:operation soapAction="findOrder"/>
+			<soap:operation soapAction="findAllOrders"/>
 			<wsdl:input name="findAllOrdersRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="findSpecificOrderSoapBinding" type="ofow:findSpecificOrderPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findSpecificOrder">
+			<soap:operation soapAction="findSpecificOrder"/>
+			<wsdl:input name="findSpecificOrderRequest">
 				<soap:body use="literal"/>
 			</wsdl:input>
 			<wsdl:output name="findOrdersResponse">
@@ -80,6 +170,66 @@
 			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:binding>
+	<wsdl:binding name="findOrdersWithStatusSoapBinding" type="ofow:findOrdersWithStatusPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findOrdersWithStatus">
+			<soap:operation soapAction="findOrdersWithStatus"/>
+			<wsdl:input name="findOrdersWithStatusRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="findOrdersWithAutoForwardReasonSoapBinding" type="ofow:findOrdersWithAutoForwardReasonPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findOrdersWithAutoForwardReason">
+			<soap:operation soapAction="findOrdersWithAutoForwardReason"/>
+			<wsdl:input name="findOrdersWithAutoForwardReasonRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="findAutomatedOrdersSoapBinding" type="ofow:findAutomatedOrdersPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findAutomatedOrders">
+			<soap:operation soapAction="findAutomatedOrders"/>
+			<wsdl:input name="findAutomatedOrdersRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="findNonAutomatedOrdersSoapBinding" type="ofow:findNonAutomatedOrdersPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findNonAutomatedOrders">
+			<soap:operation soapAction="findNonAutomatedOrders"/>
+			<wsdl:input name="findNonAutomatedOrdersRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="findOrderTypeSoapBinding" type="ofow:findOrderTypePortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findOrderType">
+			<soap:operation soapAction="findOrderType"/>
+			<wsdl:input name="findOrderTypeRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
 	<wsdl:binding name="bibliographicSearchSoapBinding" type="ofow:bibliographicSearchPortType">
 		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
 		<wsdl:operation name="bibliographicSearch">
@@ -92,18 +242,66 @@
 			</wsdl:output>
 		</wsdl:operation>
 	</wsdl:binding>
+	<wsdl:binding name="getOrderStatusSoapBinding" type="ofow:getOrderStatusPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getOrderStatus">
+			<soap:operation soapAction="getOrderStatus"/>
+			<wsdl:input name="getOrderStatusRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="getOrderStatusResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="getUserOrderStatusSoapBinding" type="ofow:getUserOrderStatusPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getUserOrderStatus">
+			<soap:operation soapAction="getUserOrderStatus"/>
+			<wsdl:input name="getUserOrderStatusRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="getUserOrderStatusResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
 	<wsdl:service name="openFindOrderService">
 		<wsdl:port name="findAllOrdersPortType" binding="ofow:findAllOrdersSoapBinding">
-			<soap:address location="http://didicas.dbc.dk/openfindorder"/>
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="findSpecificOrderPortType" binding="ofow:findSpecificOrderSoapBinding">
+			<soap:address location="http://didcias.dbc.dk/openfindorder"/>
 		</wsdl:port>
 		<wsdl:port name="findOrdersFromUserPortType" binding="ofow:findOrdersFromUserSoapBinding">
-			<soap:address location="http://didicas.dbc.dk/openfindorder"/>
+			<soap:address location="http://openfindorder.addi.dk"/>
 		</wsdl:port>
 		<wsdl:port name="findOrdersFromUnknownUserPortType" binding="ofow:findOrdersFromUserSoapBinding">
-			<soap:address location="http://didicas.dbc.dk/openfindorder"/>
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="findOrdersWithStatusPortType" binding="ofow:findOrdersWithStatusSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="findOrdersWithAutoForwardReasonPortType" binding="ofow:findOrdersWithAutoForwardReasonSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="findAutomatedOrdersPortType" binding="ofow:findAutomatedOrdersSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="findNonAutomatedOrdersPortType" binding="ofow:findNonAutomatedOrdersSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="findOrderTypePortType" binding="ofow:findOrderTypeSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
 		</wsdl:port>
 		<wsdl:port name="bibliographicSearchPortType" binding="ofow:bibliographicSearchSoapBinding">
-			<soap:address location="http://didicas.dbc.dk/openfindorder"/>
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="getOrderStatusPortType" binding="ofow:getOrderStatusSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="getUserOrderStatusPortType" binding="ofow:getUserOrderStatusSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>
