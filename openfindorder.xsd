@@ -170,7 +170,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:choice>
-				<xs:element ref="ofo:result" maxOccurs="unbounded"/>
+				<xs:element ref="ofo:result"/>
 				<xs:element ref="ofo:error"/>
 			</xs:choice>
 		</xs:complexType>
