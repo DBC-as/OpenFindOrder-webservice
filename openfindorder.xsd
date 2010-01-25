@@ -396,12 +396,12 @@
 			<xs:documentation xml:lang="eng">Value is retrieved from z3950 Cancel Reply/NCIP Cancel Item Response. Cancel is accepted/not accepted by responder.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="cancelledDate" type="xs:dateTime">
+	<xs:element name="cancelledDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">The date of cancellation by requester. </xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="closedDate" type="xs:dateTime">
+	<xs:element name="closedDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">The date where the order is closed. Order closes if: 1. Requester has sent a Cancel-request, and a positive response from supplier is received. 2. Provider has registered loaned material as returned. 3. Order is expired (ISO .ILL .expiry date is exceeded.)</xs:documentation>
 		</xs:annotation>
@@ -416,12 +416,12 @@
 			<xs:documentation xml:lang="eng">Date of order received/created in ORS.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="dateDue" type="xs:dateTime">
+	<xs:element name="dateDue" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">The date by which the loaned item should be returned to the responder. If the responder does not provide a due date, the system will add a due-date based on a standard.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="desiredDateDue" type="xs:dateTime">
+	<xs:element name="desiredDateDue" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">The proposed due date for a renewed loan.</xs:documentation>
 		</xs:annotation>
@@ -441,12 +441,12 @@
 			<xs:documentation xml:lang="eng">Boolean stating whether only the requested edition of the item can be used, or if any available edition can be used.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="expectedDelivery" type="xs:dateTime">
+	<xs:element name="expectedDelivery" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Expected date for delivery of the item (z3950: ILL-Answer, NCIP: Request Item Response).</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="fromDate" type="xs:dateTime">
+	<xs:element name="fromDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Earliest date in request.</xs:documentation>
 		</xs:annotation>
@@ -491,7 +491,7 @@
 			<xs:documentation xml:lang="eng">Latest note received from requester.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="lastRenewalDate" type="xs:dateTime">
+	<xs:element name="lastRenewalDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Date when loan was last renewed.</xs:documentation>
 		</xs:annotation>
@@ -511,7 +511,7 @@
 			<xs:documentation xml:lang="eng">Type of material - from danMARC2 009 *a+*g (general and specific).</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="needBeforeDate" type="xs:dateTime">
+	<xs:element name="needBeforeDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">End-user's last day of interest. Also defines the date of expiry for an un-executed order.</xs:documentation>
 		</xs:annotation>
@@ -526,7 +526,7 @@
 			<xs:documentation xml:lang="eng">Number of orders in the search result.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="numberOfRenewals" type="xs:integer">
+	<xs:element name="numberOfRenewals" type="xs:int">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">The number of times item has been renewed. NCIP RenewItem Response Renewal count is optional.</xs:documentation>
 		</xs:annotation>
@@ -581,7 +581,7 @@
 			<xs:documentation xml:lang="eng">The value of a provider answer: z-ill-answer and Request Item response.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="providerAnswerDate" type="xs:dateTime">
+	<xs:element name="providerAnswerDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Date; indicates when the provider sent an answer to an order.</xs:documentation>
 		</xs:annotation>
@@ -611,7 +611,7 @@
 			<xs:documentation xml:lang="eng">Publisher of the requested material.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="receivedDate" type="xs:dateTime">
+	<xs:element name="receivedDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Date of item received by requester - from NCIP Item received.</xs:documentation>
 		</xs:annotation>
@@ -621,7 +621,7 @@
 			<xs:documentation xml:lang="eng">Providers answer to a renewal request.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="renewPendingDate" type="xs:dateTime">
+	<xs:element name="renewPendingDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Date of a renewal request.</xs:documentation>
 		</xs:annotation>
@@ -661,7 +661,7 @@
 			<xs:documentation xml:lang="eng">The position of the order in the search result.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="returnedDate" type="xs:dateTime">
+	<xs:element name="returnedDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Date, indicates when requester has sent an item back to provider. Retrieved from NCIP Shipped. </xs:documentation>
 		</xs:annotation>
@@ -671,7 +671,7 @@
 			<xs:documentation xml:lang="eng">Title of series and number of the requested component.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="shippedDate" type="xs:dateTime">
+	<xs:element name="shippedDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Date, indicates when provider has sent the item. </xs:documentation>
 		</xs:annotation>
@@ -701,7 +701,7 @@
 			<xs:documentation xml:lang="eng">Title of the requested component.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="toDate" type="xs:dateTime">
+	<xs:element name="toDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Latest date in request.</xs:documentation>
 		</xs:annotation>
