@@ -243,6 +243,8 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="ofo:resultPosition"/>
+				<xs:element ref="ofo:orderId" minOccurs="0"/>
+				<xs:element ref="ofo:requesterId" minOccurs="0"/>
 				<xs:element ref="ofo:articleDirect" minOccurs="0"/>
 				<xs:element ref="ofo:articleFirstNote" minOccurs="0"/>
 				<xs:element ref="ofo:author" minOccurs="0"/>
@@ -280,7 +282,6 @@
 				<xs:element ref="ofo:needBeforeDate" minOccurs="0"/>
 				<xs:element ref="ofo:norfri" minOccurs="0"/>
 				<xs:element ref="ofo:numberOfRenewals" minOccurs="0"/>
-				<xs:element ref="ofo:orderId" minOccurs="0"/>
 				<xs:element ref="ofo:orderSystem" minOccurs="0"/>
 				<xs:element ref="ofo:originalOrderId" minOccurs="0"/>
 				<xs:element ref="ofo:pagination" minOccurs="0"/>
@@ -298,7 +299,6 @@
 				<xs:element ref="ofo:receivedDate" minOccurs="0"/>
 				<xs:element ref="ofo:renewed" minOccurs="0"/>
 				<xs:element ref="ofo:renewPendingDate" minOccurs="0"/>
-				<xs:element ref="ofo:requesterId" minOccurs="0"/>
 				<xs:element ref="ofo:requesterInitials" minOccurs="0"/>
 				<xs:element ref="ofo:requesterOrderState" minOccurs="0"/>
 				<xs:element ref="ofo:responderId" minOccurs="0"/>
