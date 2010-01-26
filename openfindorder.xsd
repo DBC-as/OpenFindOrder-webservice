@@ -17,6 +17,35 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="findOpenIllOrdersRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service request for all orders (optionally for a specific order system)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findClosedIllOrdersRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service request for all orders (optionally for a specific order system)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:element ref="ofo:orderStatus"/>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="findSpecificOrderRequest">
 		<xs:annotation>
 			<xs:documentation>The service request for a specific order (orderId)</xs:documentation>
@@ -40,10 +69,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:choice>
-					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
-					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
-				</xs:choice>
+				<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 				<xs:choice>
 					<xs:element ref="ofo:userId"/>
 					<xs:element ref="ofo:userMail"/>
@@ -59,10 +85,31 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
-				<xs:choice>
-					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
-					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
-				</xs:choice>
+				<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findLocalizedEndUserOrdersRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service request for orders on material localized to the end user agency.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+				<xs:element ref="ofo:closed"/>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findNonLocalizedEndUserOrdersRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">The service request for orders on material not localized to the end user agency.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+				<xs:element ref="ofo:closed"/>
 				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
@@ -106,20 +153,6 @@
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
 				<xs:element ref="ofo:autoForwardReason"/>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="findOrdersWithStatusRequest">
-		<xs:annotation>
-			<xs:documentation>(placeholder - request not yet defined)</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:choice>
-					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
-					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
-				</xs:choice>
 				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
@@ -401,6 +434,11 @@
 			<xs:documentation xml:lang="eng">The date of cancellation by requester. </xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:element name="closed" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Whether the order is closed or not.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="closedDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">The date where the order is closed. Order closes if: 1. Requester has sent a Cancel-request, and a positive response from supplier is received. 2. Provider has registered loaned material as returned. 3. Order is expired (ISO .ILL .expiry date is exceeded.)</xs:documentation>
@@ -534,6 +572,11 @@
 	<xs:element name="orderId" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">An order.s unique number. Orders from Netpunkt/bibliotek.dk are given a number by ORS, while orders from other systems (e.g. from z39.50-clients) are given numbers by those systems (in z-ill: transaction-qualifier). Orders received via NCIP are numbered by ORS with a UniqueRequestId, qualified with a UniqueAgencyId. Orders numbered by ORS have the interval: 1000000000-2000000000 . numbered orders from other systems must not use numbers in that interval. orderId (+requesterId) is the Primary key to an order.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="orderStatus" type="ofo:orderStatusType">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Status of an ill order.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="orderSystem" type="ofo:orderSystemType">
@@ -726,7 +769,7 @@
 			<xs:documentation xml:lang="eng">End user.s identification (e.g. borrower id), type of ID is stated in userIdType.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="userIdAuthenticated" type="xs:boolean">
+	<xs:element name="userIdAuthenticated" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">States whether the value of userId+!userIdType is authenticated.</xs:documentation>
 		</xs:annotation>
@@ -766,7 +809,7 @@
 			<xs:documentation xml:lang="eng">Volume-number in article-requests. If volume and issue are received combined, 'Issue' is preferred.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="wantsReceipt" type="xs:boolean">
+	<xs:element name="wantsReceipt" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">User wants a receipt sent.</xs:documentation>
 		</xs:annotation>
@@ -843,6 +886,15 @@
 			<xs:enumeration value="printed_music"/>
 			<xs:enumeration value="tape"/>
 			<xs:enumeration value="video_tape"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="orderStatusType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="conditional"/>
+			<xs:enumeration value="unfilled"/>
+			<xs:enumeration value="will_supply"/>
+			<xs:enumeration value="hold_placed"/>
+			<xs:enumeration value="shipped"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="orderSystemType">
