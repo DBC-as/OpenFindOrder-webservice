@@ -300,6 +300,7 @@
 				<xs:element ref="ofo:edition" minOccurs="0"/>
 				<xs:element ref="ofo:exactEdition" minOccurs="0"/>
 				<xs:element ref="ofo:expectedDelivery" minOccurs="0"/>
+				<xs:element ref="ofo:forwardOrderId" minOccurs="0"/>
 				<xs:element ref="ofo:isbn" minOccurs="0"/>
 				<xs:element ref="ofo:issn" minOccurs="0"/>
 				<xs:element ref="ofo:issue" minOccurs="0"/>
@@ -482,6 +483,11 @@
 	<xs:element name="expectedDelivery" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Expected date for delivery of the item (z3950: ILL-Answer, NCIP: Request Item Response).</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="forwardOrderId" type="xs:string">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">A reference to a later order, replaced by this one. E.g. by remit or re-ordering.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="fromDate" type="xs:date">
