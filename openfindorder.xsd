@@ -292,6 +292,7 @@
 				<xs:element ref="ofo:callNumber" minOccurs="0"/>
 				<xs:element ref="ofo:cancelled" minOccurs="0"/>
 				<xs:element ref="ofo:cancelledDate" minOccurs="0"/>
+				<xs:element ref="ofo:closed" minOccurs="0"/>
 				<xs:element ref="ofo:closedDate" minOccurs="0"/>
 				<xs:element ref="ofo:copy" minOccurs="0"/>
 				<xs:element ref="ofo:creationDate" minOccurs="0"/>
@@ -302,6 +303,7 @@
 				<xs:element ref="ofo:expectedDelivery" minOccurs="0"/>
 				<xs:element ref="ofo:forwardOrderId" minOccurs="0"/>
 				<xs:element ref="ofo:isbn" minOccurs="0"/>
+				<xs:element ref="ofo:isShipped" minOccurs="0"/>
 				<xs:element ref="ofo:issn" minOccurs="0"/>
 				<xs:element ref="ofo:issue" minOccurs="0"/>
 				<xs:element ref="ofo:itemId" minOccurs="0"/>
@@ -498,6 +500,11 @@
 	<xs:element name="isbn" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">ISBN-information from the bibliographic record, in orders without locations.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="isShipped" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation xml:lang="eng">Tells whether the material requested in the order has been shipped.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="issn" type="xs:string">
