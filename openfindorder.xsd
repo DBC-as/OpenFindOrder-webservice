@@ -305,6 +305,7 @@
 				<xs:element ref="ofo:isbn" minOccurs="0"/>
 				<xs:element ref="ofo:isShipped" minOccurs="0"/>
 				<xs:element ref="ofo:issn" minOccurs="0"/>
+				<xs:element ref="ofo:isShipped" minOccurs="0"/>
 				<xs:element ref="ofo:issue" minOccurs="0"/>
 				<xs:element ref="ofo:itemId" minOccurs="0"/>
 				<xs:element ref="ofo:kvik" minOccurs="0"/>
@@ -512,6 +513,12 @@
 			<xs:documentation xml:lang="eng">ISSN-information from the bibliographic record, in orders without locations.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+<xs:element name="isShipped" type="xs:boolean">
+                <xs:annotation>
+				<xs:documentation xml:lang="eng">?????????????</xs:documentation>
+                </xs:annotation>
+        </xs:element>
+
 	<xs:element name="issue" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="eng">Issue-number in article-requests. If volume and issue are received combined, 'Issue' is preferred.</xs:documentation>
