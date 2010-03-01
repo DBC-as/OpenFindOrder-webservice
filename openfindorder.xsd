@@ -57,11 +57,13 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="ofo:authentication" minOccurs="0"/>
+				<xs:element ref="ofo:callback" minOccurs="0"/>
 				<xs:choice>
 					<xs:element ref="ofo:requesterAgencyId"/>
 					<xs:element ref="ofo:responderAgencyId"/>
 				</xs:choice>
 				<xs:element ref="ofo:orderId"/>
+				<xs:element ref="ofo:outputType" minOccurs="0"/>
 				<xs:element ref="ofo:agency"/>
 			</xs:sequence>
 		</xs:complexType>
