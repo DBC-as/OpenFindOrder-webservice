@@ -52,7 +52,7 @@
 	</xs:element>
 	<xs:element name="findSpecificOrderRequest">
 		<xs:annotation>
-			<xs:documentation>The service request for a specific order (orderId)</xs:documentation>
+			<xs:documentation xml:lang="en">The service request for a specific order (orderId)</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -77,6 +77,7 @@
 				<xs:element ref="ofo:authentication" minOccurs="0"/>
 				<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 				<xs:choice>
+					<xs:element ref="ofo:userFreeText"/>
 					<xs:element ref="ofo:userId"/>
 					<xs:element ref="ofo:userMail"/>
 					<xs:element ref="ofo:userName"/>
@@ -125,7 +126,7 @@
 	</xs:element>
 	<xs:element name="findAutomatedOrdersRequest">
 		<xs:annotation>
-			<xs:documentation>The service request for automatically forwarded orders (general)</xs:documentation>
+			<xs:documentation xml:lang="en">The service request for automatically forwarded orders (general)</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -140,7 +141,7 @@
 	</xs:element>
 	<xs:element name="findNonAutomatedOrdersRequest">
 		<xs:annotation>
-			<xs:documentation>The service request for non-automatatically forwarded orders (general)</xs:documentation>
+			<xs:documentation xml:lang="en">The service request for non-automatatically forwarded orders (general)</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -155,7 +156,7 @@
 	</xs:element>
 	<xs:element name="findOrdersWithAutoForwardReasonRequest">
 		<xs:annotation>
-			<xs:documentation>The service request for reason for auto forward (autoForwardReason)</xs:documentation>
+			<xs:documentation xml:lang="en">The service request for reason for auto forward (autoForwardReason)</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -171,7 +172,7 @@
 	</xs:element>
 	<xs:element name="findOrderOfTypeRequest">
 		<xs:annotation>
-			<xs:documentation>The service request for orders from a specific ill-cooperation (kvik, norfri or articleDirect)</xs:documentation>
+			<xs:documentation xml:lang="en">The service request for orders from a specific ill-cooperation (kvik, norfri or articleDirect)</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -201,6 +202,7 @@
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
 				<xs:element ref="ofo:author" minOccurs="0"/>
+				<xs:element ref="ofo:bibliographicFreeText" minOccurs="0"/>
 				<xs:element ref="ofo:bibliographicRecordId" minOccurs="0"/>
 				<xs:element ref="ofo:isbn" minOccurs="0"/>
 				<xs:element ref="ofo:issn" minOccurs="0"/>
@@ -431,6 +433,11 @@
 	<xs:element name="bibliographicCategory" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Bibliographic category from danMARC2 008 *t</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="bibliographicFreeText">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Search in either one of the exposed bibliographic information elements (author OR title OR...)</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="bibliographicRecordAgencyId" type="xs:string">
@@ -813,6 +820,11 @@
 			<xs:documentation xml:lang="en">End user.s date of birth</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:element name="userFreeText">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Search in either one of the exposed user identifier fields (userId OR userName OR userMail)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="userId" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">End user.s identification (e.g. borrower id), type of ID is stated in userIdType.</xs:documentation>
@@ -830,7 +842,7 @@
 	</xs:element>
 	<xs:element name="userIdType" type="ofo:userIdTypeType">
 		<xs:annotation>
-			<xs:documentation>States userId.s type.  userId+userIdType may be authenticated.</xs:documentation>
+			<xs:documentation xml:lang="en">States userId.s type.  userId+userIdType may be authenticated.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="userMail" type="xs:string">
@@ -875,7 +887,7 @@
 	</xs:element>
 	<xs:group name="requestGeneral">
 		<xs:annotation>
-			<xs:documentation>Common parameters for the service requests (requester/responder, ageny, orderSystem and date-intervals) and parameters for order counts in service requests</xs:documentation>
+			<xs:documentation xml:lang="en">Common parameters for the service requests (requester/responder, ageny, orderSystem and date-intervals) and parameters for order counts in service requests</xs:documentation>
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element ref="ofo:agency"/>
