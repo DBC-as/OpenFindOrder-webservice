@@ -26,11 +26,11 @@ require_once("OLS_class_lib/cql2solr_class.php");
 require_once("OLS_class_lib/oci_class.php");
 require_once("xsdparse.php");
 require_once("OLS_class_lib/memcache_class.php");
-require_once("stat_class.php");
+//require_once("stat_class.php");
 
 class openFindOrder extends webServiceServer 
 {
-  public $stat;
+  //public $stat;
 
   /** \brief 
       constructor; start watch; call parent's constructor
@@ -40,7 +40,7 @@ class openFindOrder extends webServiceServer
     parent::__construct('openfindorder.ini');
     
     $this->watch->start("openfindorderWS");
-    $this->stat=new stats();
+  //  $this->stat=new stats();
   }
 
   /** \brief
@@ -313,7 +313,7 @@ class openFindOrder extends webServiceServer
     if( empty($orders) )
       return $this->send_error("no orders found");
 
-    $this->stat->orders+=count($orders);
+//    $this->stat->orders+=count($orders);
 
     $response->findOrdersResponse->_value->result->_namespace='http://oss.dbc.dk/ns/openfindorder';    
     
@@ -516,7 +516,7 @@ class OFO_database
 	return false;
       }
 
-    /*  var_dump($oci);
+    /*   var_dump($oci);
     echo $oci->query;
     exit;*/
     return $oci;
@@ -655,7 +655,7 @@ class OFO_sql
     $sql.=self::bind_array($ids,$oci);
 
     // required field; closed
-    if( $closed=$params->closed->_value )
+    if( $close=$params->closed->_value )
       {
 	if( $close=='true' )
 	  $oci->bind("closed_bind",'Y');
@@ -1088,20 +1088,24 @@ class OFO_sql
     // fromDate
     if( $fromDate = $params->fromDate->_value )
       {
-	if( !$fdate=self::check_date_time($fromDate) )
+	//if( !$fdate=self::check_date_time($fromDate) )
+	if( !$fdate=self::check_date($fromDate) )
 	  return false;
 
 	$oci->bind("fromDate_bind",$fdate);
-	$sql.=" and to_char(creationdate,'YYYY-MM-DD HH24:MI:SS') >:fromDate_bind\n";
+	//	$sql.=" and to_char(creationdate,'YYYY-MM-DD HH24:MI:SS') >=:fromDate_bind\n";
+	$sql.=" and to_char(creationdate,'YYYY-MM-DD') >=:fromDate_bind\n";
       }
 
      // toDate
     if( $toDate = $params->toDate->_value )
       {
-	if( !$tdate=self::check_date_time($toDate) )
+	//if( !$tdate=self::check_date_time($toDate) )
+	if( !$tdate=self::check_date($toDate) )
 	  return false;
 	$oci->bind("toDate_bind",$tdate);
-	$sql.=" and to_char(creationdate,'YYYY-MM-DD HH24:MI:SS') <:toDate_bind\n";
+	//	$sql.=" and to_char(creationdate,'YYYY-MM-DD HH24:MI:SS') <=:toDate_bind\n";
+		$sql.=" and to_char(creationdate,'YYYY-MM-DD') <=:toDate_bind\n";
       }       
     // agency ??? 
     return $sql;
@@ -1112,28 +1116,31 @@ class OFO_sql
      returns date('Ymd') or false
    */
 
-  // TODO parse for xml-date and datetime
+  // TODO parse for xml Date
   private static function check_date($date)
   {
-     if( $time=strtotime($date) )
+    /* if( $time=strtotime($date) )
       {
 	$date=date('Ymd H:i',$time );
 	//	echo $date;
 	//exit;
 	return $date;
       }
-      return false;
+      return false;*/
 
     $reg='/([0-9]{4})-([0-9]{2})-([0-9]{2})/';
     if( preg_match($reg,$date,$matches) )
       {
 	$time=strtotime($date);
-	$date=date('Y-m-d H:i:s',$time );
+	//	$date=date('Y-m-d H:i:s',$time );
+	$date=date('Y-m-d',$time );
+
 	return $date;
       }    
     return false;
   }
 
+  //check xml dateTime
   private function check_date_time($dateTime)
   {
     $reg='/([0-9]{4})-([0-9]{2})-([0-9]{2})([T]|[ ])([0-1][0-9]|[2][0-3]):([0-5][0-9]):([0-5][0-9])/';
