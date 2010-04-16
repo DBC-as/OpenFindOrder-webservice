@@ -52,7 +52,7 @@
 	</xs:element>
 	<xs:element name="findSpecificOrderRequest">
 		<xs:annotation>
-			<xs:documentation xml:lang="en">The service request for a specific order (orderId)</xs:documentation>
+			<xs:documentation xml:lang="en">The service request for one or more specific orders (orderId)</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -62,7 +62,7 @@
 					<xs:element ref="ofo:requesterAgencyId"/>
 					<xs:element ref="ofo:responderAgencyId"/>
 				</xs:choice>
-				<xs:element ref="ofo:orderId"/>
+				<xs:element ref="ofo:orderId" maxOccurs="unbounded"/>
 				<xs:element ref="ofo:outputType" minOccurs="0"/>
 				<xs:element ref="ofo:agency"/>
 			</xs:sequence>
