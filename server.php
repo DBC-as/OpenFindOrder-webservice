@@ -318,7 +318,8 @@ class openFindOrder extends webServiceServer
     $response->findOrdersResponse->_value->result->_namespace='http://oss.dbc.dk/ns/openfindorder';    
     
     $response->findOrdersResponse->_value->result->_value->numberOfOrders->_namespace='http://oss.dbc.dk/ns/openfindorder';
-    $response->findOrdersResponse->_value->result->_value->numberOfOrders->_value=count($orders);
+    // $response->findOrdersResponse->_value->result->_value->numberOfOrders->_value=count($orders);
+    $response->findOrdersResponse->_value->result->_value->numberOfOrders->_value=OFO_database::$numrows;
 
     foreach( $orders as $order )
       $response->findOrdersResponse->_value->result->_value->order[]=$order;
@@ -355,6 +356,7 @@ $ws->handle_request();
 class OFO_database
 {
   public static $error;
+  public static $numrows;
 
   private $xmlfields=array();
   private $action;
@@ -436,6 +438,35 @@ class OFO_database
     return $orders;
   }
 
+  private function count($param)
+  {
+    $oci1=new oci($this->connectionstring);
+
+    if( !$clause = $this->set_sql($param,$oci1) )
+      return false;
+
+    $sql="SELECT COUNT(*) count FROM(".$this->sql.$clause.")";
+
+    if(!$oci1->connect() )
+      {
+	self::$error="could not connect to db";
+	return false;
+      }
+    
+    if(!$oci1->set_query($sql))
+      {
+	self::$error="query could not be set";
+	die("TSTHEST");
+	return false;
+      }
+
+    $row=$oci1->fetch_into_assoc();
+
+    self::$numrows=$row["COUNT"];
+
+    $oci1->disconnect();
+  }
+
   /**\brief
    * Handle óne order.
    * @data; a row of data from database
@@ -493,32 +524,32 @@ class OFO_database
     $step=$param->stepValue->_value;
     $start=$param->start->_value;
 
-    if( ($step || $step===0) && ($start || $start===0) )
-      $oci->set_pagination($start,($start+$step)-1);
-
     if( !$clause = $this->set_sql($param,$oci) )
 	return false;
 
     $sql=$this->sql.$clause;
-    // $sql=$clause;
-    //echo $sql;
-    //exit;
+
+    /*  echo $sql;
+	exit;*/
+
+   
+    $this->count($param);
+
+    if( ($step || $step===0) && ($start || $start===0) )
+      $oci->set_pagination($start,($start+$step)-1);
 
     if(!@$oci->connect() )
       {
 	self::$error="could not connect to db";
 	return false;
       }
-
+    
     if(!@$oci->set_query($sql))
       {
 	self::$error="query could not be set";
 	return false;
       }
-
-    /*   var_dump($oci);
-    echo $oci->query;
-    exit;*/
+   
     return $oci;
   }
  
@@ -621,14 +652,25 @@ class OFO_sql
     $sql.=self::bind_array($ids,$oci);
 
     // required field; closed
-    if( $close=$params->closed->_value )
+    /*  if( $close=$params->closed->_value || ($close=$params->closed->_value)==0 )
       {
-	if( $close=='true' )
+	if( $close=='true' || $close==1 )
 	  $oci->bind("closed_bind",'Y');
 	else
 	  $oci->bind("closed_bind",'N');
 
 	$sql.="and closed=:closed_bind\n";
+	}*/
+     if( isset($params->closed->_value) )
+      {
+	$close=$params->closed->_value;
+	if( $close=='true' || $close==1 )
+	  $oci->bind("closed_bind",'Y');
+	else
+	  $oci->bind("closed_bind",'N');
+
+	$sql.="and closed=:closed_bind\n";
+	
       }
     else
       return false;
@@ -644,7 +686,6 @@ class OFO_sql
 
   public static function findLocalizedEndUserOrders($params,$oci)
   {
-    // TDOO filter on some field in ors_order (orderstatus)
     $sql = self::get_select();
     
     if( $add=self::set_ids($params,$ids) )
@@ -654,8 +695,8 @@ class OFO_sql
    
     $sql.=self::bind_array($ids,$oci);
 
-    // required field; closed
-    if( $close=$params->closed->_value )
+    /*  // required field; closed
+    if( $close=$params->closed->_value || ($close=$params->closed->_value)==0 )
       {
 	if( $close=='true' )
 	  $oci->bind("closed_bind",'Y');
@@ -663,6 +704,18 @@ class OFO_sql
 	  $oci->bind("closed_bind",'N');
 
 	$sql.="and closed=:closed_bind\n";
+	}*/
+    //required field; closed
+    if( isset($params->closed->_value) )
+      {
+	$close=$params->closed->_value;
+	if( $close=='true' || $close==1 )
+	  $oci->bind("closed_bind",'Y');
+	else
+	  $oci->bind("closed_bind",'N');
+
+	$sql.="and closed=:closed_bind\n";
+	
       }
     else
       return false;
@@ -882,7 +935,7 @@ class OFO_sql
    
     $sql.=self::bind_array($ids,$oci);
 
-    // user;required fields: userId OR userMail OR userName
+    // user;required fields: userId OR userMail OR userName (choice)
     if( $userId=$params->userId->_value )
       {
 	$oci->bind("userId_bind",$userId);
@@ -897,6 +950,11 @@ class OFO_sql
       {
 	$oci->bind("userName_bind",$userName.'%');
 	$sql.="and username like :userName_bind\n";
+      }
+    elseif( $ftext=$params->userFreeText->_value )
+      {
+	$oci->bind("ftxt_bind",$ftext.'%');
+	$sql.="and (userName like :ftxt_bind OR userMail like :ftxt_bind OR userId like :ftxt_bind)\n";
       }
     else
       return false;
@@ -945,11 +1003,12 @@ class OFO_sql
 
      $sql.=self::bind_array($ids,$oci);
     
-    // optional parameters;author,bibliographicRecordId,isbn,issn,mediumType,title
+    // optional parameters;author,bibliographicRecordId,isbn,issn,mediumType,title,bibliographicFreeText
     if( $author=$params->author->_value )
       {
-	$oci->bind("author_bind",$author.'%');
-	$sql.="and author like :author_bind\n";
+	$oci->bind("author_bind",$author."%");
+	//	echo "'".$author."%'";
+	$sql.=" and author like :author_bind\n";
       }
     if( $bibliographicRecordId=$params->bibliographicRecordId->_value )
       {
@@ -979,7 +1038,15 @@ class OFO_sql
 	$oci->bind("title_bind",$title.'%');
 	$sql.="and title like:title_bind\n";
       }
+
+    if( $ftxt=$params->bibliographicFreeText->_value )
+      {
+	$oci->bind("ftext_bind",$ftxt.'%');
+	$sql.="and (title like :ftext_bind OR author like :ftext_bind)\n";
+      }
      
+    /* echo $sql;
+       exit;*/
 
     $add = self::setRequestGeneral($params,$oci);
     if( $add !== false )
