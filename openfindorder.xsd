@@ -435,7 +435,7 @@
 			<xs:documentation xml:lang="en">Bibliographic category from danMARC2 008 *t</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="bibliographicFreeText">
+	<xs:element name="bibliographicFreeText" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Search in either one of the exposed bibliographic information elements (author OR title OR...)</xs:documentation>
 		</xs:annotation>
@@ -530,7 +530,7 @@
 			<xs:documentation xml:lang="en">Earliest date in request.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="groupIdAut">
+	<xs:element name="groupIdAut" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Identifier of the group (most often a library number) the user belongs to (for authentication purposes)</xs:documentation>
 		</xs:annotation>
@@ -650,7 +650,7 @@
 			<xs:documentation xml:lang="en">Number of pages in an item or a component part of an item.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="passwordAut">
+	<xs:element name="passwordAut" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Password (for authentication purposes)</xs:documentation>
 		</xs:annotation>
@@ -820,7 +820,7 @@
 			<xs:documentation xml:lang="en">End user.s date of birth</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="userFreeText">
+	<xs:element name="userFreeText" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Search in either one of the exposed user identifier fields (userId OR userName OR userMail)</xs:documentation>
 		</xs:annotation>
@@ -830,7 +830,7 @@
 			<xs:documentation xml:lang="en">End user.s identification (e.g. borrower id), type of ID is stated in userIdType.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="userIdAut">
+	<xs:element name="userIdAut" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">User identifier (for authentication purposes)</xs:documentation>
 		</xs:annotation>
