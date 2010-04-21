@@ -929,8 +929,9 @@
 	</xs:simpleType>
 	<xs:simpleType name="errorType">
 		<xs:restriction base="xs:string">
-			<xs:enumeration value="orssearch order service not available"/>
+			<xs:enumeration value="open find order service not available"/>
 			<xs:enumeration value="no orders found"/>
+			<xs:enumeration value="authentication_error"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="mediumTypeType">
