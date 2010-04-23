@@ -529,10 +529,6 @@ class OFO_database
 
     $sql=$this->sql.$clause;
 
-    /*  echo $sql;
-	exit;*/
-
-   
     $this->count($param);
 
     if( ($step || $step===0) && ($start || $start===0) )
@@ -1069,7 +1065,16 @@ class OFO_sql
    
     $sql.=self::bind_array($ids,$oci);
 
-    if( $orderId=$params->orderId->_value )
+    // required field orderId
+    if( is_array($params->orderId ) )
+      {
+	$sql.=" and orderid in(";
+	$sql.=self::bind_array($params->orderId,$oci,"orderId");
+
+	//	echo $sql;
+	//exit; 
+      }    
+    elseif( $orderId=$params->orderId->_value )
       {
 	$oci->bind("orderId_bind",$orderId);
 	$sql.=" and orderid=:orderId_bind\n";
@@ -1226,14 +1231,14 @@ class OFO_sql
      Run through given array ($key=>$val). Bind variables to given instance of oci-class.
      Return sql.
    */
-  private static function bind_array($ids,$oci)
+  private static function bind_array($ids,$oci,$prefix="")
   {
     if( is_array($ids) )
       {
 	$count=1;
 	// make an array
 	foreach( $ids as $key=>$val )
-	  $idarr["bind".$count++]=$val->_value;
+	  $idarr[$prefix."bind".$count++]=$val->_value;
 	
 	//iterate array; generate sql
 	foreach( $idarr as $key=>$val )
@@ -1248,7 +1253,7 @@ class OFO_sql
       }
     else
       {
-	$oci->bind("bind_ID",$ids->_value);
+	$oci->bind($prefix."bind_ID",$ids->_value);
 	$sql.=":bind_ID)";
       }
 
