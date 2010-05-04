@@ -19,9 +19,39 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="findAllIllOrdersRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The service request for all ILL orders </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:authentication" minOccurs="0"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="findAllNonIllOrdersRequest">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The service request for all non ILL-orders</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:authentication" minOccurs="0"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="findOpenIllOrdersRequest">
 		<xs:annotation>
-			<xs:documentation xml:lang="en">The service request for all orders (optionally for a specific order system)</xs:documentation>
+			<xs:documentation xml:lang="en">The service request for open ILL orders</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -36,7 +66,7 @@
 	</xs:element>
 	<xs:element name="findClosedIllOrdersRequest">
 		<xs:annotation>
-			<xs:documentation xml:lang="en">The service request for all orders (optionally for a specific order system)</xs:documentation>
+			<xs:documentation xml:lang="en">The service request for closed ILL orders</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
