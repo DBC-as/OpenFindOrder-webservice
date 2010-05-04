@@ -7,8 +7,12 @@ xmlns:ofo="http://oss.dbc.dk/ns/openfindorder"
 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
 <SOAP-ENV:Body>
 <ofo:findOrdersFromUnknownUserRequest>
+  <ofo:authentication>
+    <ofo:groupIdAut>?</ofo:groupIdAut>
+    <ofo:passwordAut>?</ofo:passwordAut>
+    <ofo:userIdAut>?</ofo:userIdAut>
+  </ofo:authentication>
   <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
-  <ofo:responderAgencyId>?</ofo:responderAgencyId>
   <ofo:agency>?</ofo:agency>
   <ofo:orderSystem>?</ofo:orderSystem>
   <ofo:fromDate>?</ofo:fromDate>
@@ -20,5 +24,4 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
 </ofo:findOrdersFromUnknownUserRequest>
 </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
-
 

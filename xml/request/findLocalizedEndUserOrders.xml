@@ -7,6 +7,11 @@ xmlns:ofo="http://oss.dbc.dk/ns/openfindorder"
 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
 <SOAP-ENV:Body>
 <ofo:findLocalizedEndUserOrdersRequest>
+  <ofo:authentication>
+    <ofo:groupIdAut>?</ofo:groupIdAut>
+    <ofo:passwordAut>?</ofo:passwordAut>
+    <ofo:userIdAut>?</ofo:userIdAut>
+  </ofo:authentication>
   <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
   <ofo:closed>?</ofo:closed>
   <ofo:agency>?</ofo:agency>

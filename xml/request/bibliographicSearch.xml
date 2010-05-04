@@ -22,6 +22,7 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <ofo:mediumType>?</ofo:mediumType>
   <ofo:title>?</ofo:title>
   <ofo:agency>?</ofo:agency>
+  <ofo:agency>?</ofo:agency>
   <ofo:orderSystem>?</ofo:orderSystem>
   <ofo:fromDate>?</ofo:fromDate>
   <ofo:toDate>?</ofo:toDate>
@@ -32,6 +33,5 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
 </ofo:bibliographicSearchRequest>
 </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
-
 
 

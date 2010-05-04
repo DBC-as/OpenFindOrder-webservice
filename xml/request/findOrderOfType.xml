@@ -7,6 +7,11 @@ xmlns:ofo="http://oss.dbc.dk/ns/openfindorder"
 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
 <SOAP-ENV:Body>
 <ofo:findOrderOfTypeRequest>
+  <ofo:authentication>
+    <ofo:groupIdAut>?</ofo:groupIdAut>
+    <ofo:passwordAut>?</ofo:passwordAut>
+    <ofo:userIdAut>?</ofo:userIdAut>
+  </ofo:authentication>
   <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
   <ofo:responderAgencyId>?</ofo:responderAgencyId>
   <ofo:articleDirect>?</ofo:articleDirect>
@@ -23,5 +28,6 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
 </ofo:findOrderOfTypeRequest>
 </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
+
 
 
