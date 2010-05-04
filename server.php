@@ -119,11 +119,33 @@ class openFindOrder extends webServiceServer
    */
   public function findOpenIllOrders($param)
   {
-    // TODO implement
     if( $error=OFO_agency::authenticate($param->agency->_value) )
        return $this->send_error($error);
 
     $OFO = new OFO_database("findOpenIllOrders",$this->config);
+    $orders=$OFO->findOrders($param);
+
+    return $this->findOrderResponse($orders);
+  }
+
+
+  public function findAllIllOrders($param)
+  {
+     if( $error=OFO_agency::authenticate($param->agency->_value) )
+       return $this->send_error($error);
+
+    $OFO = new OFO_database("findAllIllOrders",$this->config);
+    $orders=$OFO->findOrders($param);
+
+    return $this->findOrderResponse($orders);
+  }
+
+  public function findAllNonIllOrders($param)
+  {
+    if( $error=OFO_agency::authenticate($param->agency->_value) )
+      return $this->send_error($error);
+
+    $OFO = new OFO_database("findAllNonIllOrders",$this->config);
     $orders=$OFO->findOrders($param);
 
     return $this->findOrderResponse($orders);
@@ -564,6 +586,12 @@ class OFO_database
       case "findAllOrders":
 	$ret= OFO_sql::findAllOrders($param,$oci);
 	break;
+      case "findAllIllOrders":
+	$ret= OFO_sql::findAllIllOrders($param,$oci);
+	break;
+      case "findAllNonIllOrders":
+	$ret= OFO_sql::findAllNonIllOrders($param,$oci);
+	break;
       case "findSpecificOrder":
 	$ret= OFO_sql::findSpecificOrder($param,$oci);
 	break;
@@ -635,6 +663,57 @@ class OFO_sql
     return '';
   }  
 
+
+  public static function findAllIllOrders($params,$oci)
+  {
+    $sql = self::get_select();
+    
+    if( $add=self::set_ids($params,$ids) )
+      $sql.=$add;
+    else
+      return false; 
+   
+    $sql.=self::bind_array($ids,$oci);
+    
+    $oci->bind("ordertype_bind","inter_library_request");
+    $sql.="and ordertype=:ordertype_bind\n";
+
+    $add = self::setRequestGeneral($params,$oci);
+
+    if( $add !== false )
+      $sql.=$add;
+    else
+      return false;
+
+    return $sql;   
+
+  }
+
+  public static function findAllNonIllOrders($params,$oci)
+  {
+    $sql = self::get_select();
+    
+    if( $add=self::set_ids($params,$ids) )
+      $sql.=$add;
+    else
+      return false; 
+   
+    $sql.=self::bind_array($ids,$oci);
+    
+    $oci->bind("enduser_request_bind","enduser_request");
+    $oci->bind("enduser_illrequest_bind","enduser_illrequest");
+    $sql.="and (ordertype=:enduser_request_bind OR ordertype=:enduser_illrequest_bind)\n";
+
+    $add = self::setRequestGeneral($params,$oci);
+
+    if( $add !== false )
+      $sql.=$add;
+    else
+      return false;
+
+    return $sql;
+  }
+  
   public static function findNonLocalizedEndUserOrders($params,$oci)
   {
      // TDOO filter on some field in ors_order (orderstatus)
@@ -647,18 +726,11 @@ class OFO_sql
    
     $sql.=self::bind_array($ids,$oci);
 
-    // required field; closed
-    /*  if( $close=$params->closed->_value || ($close=$params->closed->_value)==0 )
+    if(  isset($params->closed->_value) )
       {
-	if( $close=='true' || $close==1 )
-	  $oci->bind("closed_bind",'Y');
-	else
-	  $oci->bind("closed_bind",'N');
+	$oci->bind( "ordertype_bind","enduser_illrequest");
+	$sql.="and ordertype=:ordertype_bind\n";
 
-	$sql.="and closed=:closed_bind\n";
-	}*/
-     if( isset($params->closed->_value) )
-      {
 	$close=$params->closed->_value;
 	if( $close=='true' || $close==1 )
 	  $oci->bind("closed_bind",'Y');
@@ -666,7 +738,6 @@ class OFO_sql
 	  $oci->bind("closed_bind",'N');
 
 	$sql.="and closed=:closed_bind\n";
-	
       }
     else
       return false;
@@ -702,7 +773,7 @@ class OFO_sql
 	$sql.="and closed=:closed_bind\n";
 	}*/
     //required field; closed
-    if( isset($params->closed->_value) )
+    /*if( isset($params->closed->_value) )
       {
 	$close=$params->closed->_value;
 	if( $close=='true' || $close==1 )
@@ -712,6 +783,19 @@ class OFO_sql
 
 	$sql.="and closed=:closed_bind\n";
 	
+	}*/
+    if( isset($params->closed->_value) )
+      {
+	$oci->bind( "ordertype_bind","enduser_request");
+	$sql.="and ordertype=:ordertype_bind\n";
+
+	$close=$params->closed->_value;
+	if( $close=='true' || $close==1 )
+	  $oci->bind("closed_bind",'Y');
+	else
+	  $oci->bind("closed_bind",'N');
+
+	$sql.="and closed=:closed_bind\n";	
       }
     else
       return false;
@@ -737,6 +821,10 @@ class OFO_sql
    
     $sql.=self::bind_array($ids,$oci);
 
+    $oci->bind("ordertype_bind","inter_library_request");
+    $sql.="and ordertype=:ordertype_bind\n";
+
+      
     // required field; orderStatus
     if( $status=$params->orderStatus->_value )
       {
@@ -760,7 +848,6 @@ class OFO_sql
 
   public static function findOpenIllOrders($params,$oci)
   {
-    // TDOO filter on some field in ors_order
     $sql = self::get_select();
     
     if( $add=self::set_ids($params,$ids) )
@@ -770,6 +857,16 @@ class OFO_sql
    
     $sql.=self::bind_array($ids,$oci);
    
+    $oci->bind("ordertype_bind","inter_library_request");
+    $sql.="and ordertype=:ordertype_bind\n";
+
+    $sql.="and provideranswer IS NOT NULL\n";
+
+    $sql.="and isshipped IS NOT NULL\n";
+    
+    $oci->bind("autoforward_bind","automated");
+    $sql.="and autoforwardresult=:autoforward_bind\n";
+
     $add = self::setRequestGeneral($params,$oci);
     if( $add !== false )
       $sql.=$add;
@@ -882,8 +979,7 @@ class OFO_sql
     else
       return false; 
    
-    $sql.=self::bind_array($ids,$oci);
-
+  
     // TODO restrict selection somehow 
 
     $add = self::setRequestGeneral($params,$oci);
@@ -892,6 +988,9 @@ class OFO_sql
     else
       return false;
 
+    $oci->bind("ordertype_bind","automated");
+    $sql.="and ordertype=:ordertype_bind";
+    
     $oci->bind('auto_bind','automated');
     $sql.="AND AUTOFORWARDRESULT=:auto_bind";
 
@@ -910,6 +1009,10 @@ class OFO_sql
       return false; 
    
     $sql.=self::bind_array($ids,$oci);
+
+    
+    // $oci->bind("ordertype_bind","inter_library_request");
+    //$sql.="and ordertype=:ordertype_bind\n";
 
     $add = self::setRequestGeneral($params,$oci);
     if( $add !== false )
@@ -1136,7 +1239,8 @@ class OFO_sql
   private static function set_ids($params,&$ids)
   {
     if( $ids = $params->requesterAgencyId )
-      $sql.="requesterid in(";
+      //   $sql.="requesterid in(";
+      $sql.="pickUpAgencyId in(";
     elseif( $ids = $params->responderAgencyId )
       $sql.="responderid in(";
     else

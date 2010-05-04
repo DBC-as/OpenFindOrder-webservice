@@ -1,7 +1,7 @@
 <?php
 // little program to parse fields from xsd
-/*
-$schema=new xml_schema();
+
+/*$schema=new xml_schema();
 $schema->get_from_file('openfindorder.xsd');
 
 $seq = $schema->get_sequence('order');
