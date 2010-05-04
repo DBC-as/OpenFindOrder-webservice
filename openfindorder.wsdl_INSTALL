@@ -8,6 +8,12 @@
 	<wsdl:message name="findAllOrdersRequest">
 		<wsdl:part name="body" element="ofo:findAllOrdersRequest"/>
 	</wsdl:message>
+	<wsdl:message name="findAllIllOrdersRequest">
+		<wsdl:part name="body" element="ofo:findAllIllOrdersRequest"/>
+	</wsdl:message>
+	<wsdl:message name="findAllNonIllOrdersRequest">
+		<wsdl:part name="body" element="ofo:findAllNonIllOrdersRequest"/>
+	</wsdl:message>
 	<wsdl:message name="findOpenIllOrdersRequest">
 		<wsdl:part name="body" element="ofo:findOpenIllOrdersRequest"/>
 	</wsdl:message>
@@ -56,6 +62,18 @@
 	<wsdl:portType name="findAllOrdersPortType">
 		<wsdl:operation name="findAllOrders">
 			<wsdl:input message="ofow:findAllOrdersRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="findAllIllOrdersPortType">
+		<wsdl:operation name="findAllIllOrders">
+			<wsdl:input message="ofow:findAllIllOrdersRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="findAllNonIllOrdersPortType">
+		<wsdl:operation name="findAllNonIllOrders">
+			<wsdl:input message="ofow:findAllNonIllOrdersRequest"/>
 			<wsdl:output message="ofow:findOrdersResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
@@ -142,6 +160,30 @@
 		<wsdl:operation name="findAllOrders">
 			<soap:operation soapAction="findAllOrders"/>
 			<wsdl:input name="findAllOrdersRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="findAllIllOrdersSoapBinding" type="ofow:findAllIllOrdersPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findAllIllOrders">
+			<soap:operation soapAction="findAllIllOrders"/>
+			<wsdl:input name="findAllIllOrdersRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="findAllNonIllOrdersSoapBinding" type="ofow:findAllNonIllOrdersPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findAllNonIllOrders">
+			<soap:operation soapAction="findAllNonIllOrders"/>
+			<wsdl:input name="findAllNonIllOrdersRequest">
 				<soap:body use="literal"/>
 			</wsdl:input>
 			<wsdl:output name="findOrdersResponse">
@@ -307,6 +349,12 @@
 	</wsdl:binding>
 	<wsdl:service name="openFindOrderService">
 		<wsdl:port name="findAllOrdersPortType" binding="ofow:findAllOrdersSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="findAllIllOrdersPortType" binding="ofow:findAllOrdersSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="findAllNonIllOrdersPortType" binding="ofow:findAllOrdersSoapBinding">
 			<soap:address location="http://openfindorder.addi.dk"/>
 		</wsdl:port>
 		<wsdl:port name="findOpenIllOrdersPortType" binding="ofow:findOpenIllOrdersSoapBinding">
