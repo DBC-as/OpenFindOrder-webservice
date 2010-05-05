@@ -1239,8 +1239,8 @@ class OFO_sql
   private static function set_ids($params,&$ids)
   {
     if( $ids = $params->requesterAgencyId )
-      //   $sql.="requesterid in(";
-      $sql.="pickUpAgencyId in(";
+      $sql.="requesterid in(";
+    //$sql.="pickUpAgencyId in(";
     elseif( $ids = $params->responderAgencyId )
       $sql.="responderid in(";
     else
