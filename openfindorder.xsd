@@ -75,7 +75,7 @@
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:element ref="ofo:orderStatus"/>
+				<xs:element ref="ofo:orderStatus" minOccurs="0"/>
 				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
 			</xs:sequence>
 		</xs:complexType>
