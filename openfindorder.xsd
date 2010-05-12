@@ -292,8 +292,8 @@
 					<xs:element ref="ofo:renewed" minOccurs="0"/>
 					<xs:element ref="ofo:renewPendingDate" minOccurs="0"/>
 					<xs:element ref="ofo:requesterOrderState" minOccurs="0"/>
-					<xs:element ref="ofo:resentToRequesterDate" minOccurs="0"/>
-					<xs:element ref="ofo:resentToResponderDate" minOccurs="0"/>
+					<xs:element ref="ofo:resendToRequesterDate" minOccurs="0"/>
+					<xs:element ref="ofo:resendToResponderDate" minOccurs="0"/>
 					<xs:element ref="ofo:returnedDate" minOccurs="0"/>
 					<xs:element ref="ofo:shippedDate" minOccurs="0"/>
 					<xs:element ref="ofo:shippedServiceType" minOccurs="0"/>
@@ -381,8 +381,8 @@
 				<xs:element ref="ofo:renewPendingDate" minOccurs="0"/>
 				<xs:element ref="ofo:requesterInitials" minOccurs="0"/>
 				<xs:element ref="ofo:requesterOrderState" minOccurs="0"/>
-				<xs:element ref="ofo:resentToRequesterDate" minOccurs="0"/>
-				<xs:element ref="ofo:resentToResponderDate" minOccurs="0"/>
+				<xs:element ref="ofo:resendToRequesterDate" minOccurs="0"/>
+				<xs:element ref="ofo:resendToResponderDate" minOccurs="0"/>
 				<xs:element ref="ofo:responderId" minOccurs="0"/>
 				<xs:element ref="ofo:returnedDate" minOccurs="0"/>
 				<xs:element ref="ofo:seriesTitelNumber" minOccurs="0"/>
@@ -786,12 +786,12 @@
 			<xs:documentation xml:lang="en">The state of an order from the requester.s point of view.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="resentToRequesterDate" type="xs:date">
+	<xs:element name="resendToRequesterDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">The date that an order has been send again to requester</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="resentToResponderDate" type="xs:date">
+	<xs:element name="resendToResponderDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">The date than an order has been send again to provider</xs:documentation>
 		</xs:annotation>
