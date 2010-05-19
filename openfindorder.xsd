@@ -49,6 +49,21 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="findAllOpenEndUserOrdersRequest">
+		<xs:annotation>
+			<xs:documentation>The service request for all open end user orders</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:authentication" minOccurs="0"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="findOpenIllOrdersRequest">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">The service request for open ILL orders</xs:documentation>
