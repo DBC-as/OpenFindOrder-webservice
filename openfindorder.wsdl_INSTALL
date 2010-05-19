@@ -14,6 +14,9 @@
 	<wsdl:message name="findAllNonIllOrdersRequest">
 		<wsdl:part name="body" element="ofo:findAllNonIllOrdersRequest"/>
 	</wsdl:message>
+	<wsdl:message name="findAllOpenEndUserOrdersRequest">
+		<wsdl:part name="body" element="ofo:findAllOpenEndUserOrdersRequest"/>
+	</wsdl:message>
 	<wsdl:message name="findOpenIllOrdersRequest">
 		<wsdl:part name="body" element="ofo:findOpenIllOrdersRequest"/>
 	</wsdl:message>
@@ -74,6 +77,12 @@
 	<wsdl:portType name="findAllNonIllOrdersPortType">
 		<wsdl:operation name="findAllNonIllOrders">
 			<wsdl:input message="ofow:findAllNonIllOrdersRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="findAllOpenEndUserOrdersPortType">
+		<wsdl:operation name="findAllOpenEndUserOrders">
+			<wsdl:input message="ofow:findAllOpenEndUserOrdersRequest"/>
 			<wsdl:output message="ofow:findOrdersResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
@@ -184,6 +193,18 @@
 		<wsdl:operation name="findAllNonIllOrders">
 			<soap:operation soapAction="findAllNonIllOrders"/>
 			<wsdl:input name="findAllNonIllOrdersRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="findAllOpenEndUserOrdersSoapBinding" type="ofow:findAllOpenEndUserOrdersPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findAllOpenEndUserOrders">
+			<soap:operation soapAction="findAllOpenEndUserOrders"/>
+			<wsdl:input name="findAllOpenEndUserOrdersRequest">
 				<soap:body use="literal"/>
 			</wsdl:input>
 			<wsdl:output name="findOrdersResponse">
@@ -355,6 +376,9 @@
 			<soap:address location="http://openfindorder.addi.dk"/>
 		</wsdl:port>
 		<wsdl:port name="findAllNonIllOrdersPortType" binding="ofow:findAllOrdersSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
+		<wsdl:port name="findAllOpenEndUserOrdersPortType" binding="ofow:findAllOpenEndUserOrdersSoapBinding">
 			<soap:address location="http://openfindorder.addi.dk"/>
 		</wsdl:port>
 		<wsdl:port name="findOpenIllOrdersPortType" binding="ofow:findOpenIllOrdersSoapBinding">
