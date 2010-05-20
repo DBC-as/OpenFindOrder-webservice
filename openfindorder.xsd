@@ -15,7 +15,7 @@
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -30,7 +30,7 @@
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -45,7 +45,7 @@
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -60,7 +60,7 @@
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -75,7 +75,7 @@
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -91,7 +91,7 @@
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
 				<xs:element ref="ofo:orderStatus" minOccurs="0"/>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -102,10 +102,12 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="ofo:authentication" minOccurs="0"/>
-				<xs:element ref="ofo:callback" minOccurs="0"/>
-				<xs:element ref="ofo:orderPrimaryKey" maxOccurs="unbounded"/>
-				<xs:element ref="ofo:outputType" minOccurs="0"/>
-				<xs:element ref="ofo:agency"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:element ref="ofo:orderId" maxOccurs="unbounded"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -116,14 +118,17 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="ofo:authentication" minOccurs="0"/>
-				<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
 				<xs:choice>
 					<xs:element ref="ofo:userFreeText"/>
 					<xs:element ref="ofo:userId"/>
 					<xs:element ref="ofo:userMail"/>
 					<xs:element ref="ofo:userName"/>
 				</xs:choice>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -134,8 +139,11 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="ofo:authentication" minOccurs="0"/>
-				<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -146,9 +154,12 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="ofo:authentication" minOccurs="0"/>
-				<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
 				<xs:element ref="ofo:closed"/>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -159,9 +170,12 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="ofo:authentication" minOccurs="0"/>
-				<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
 				<xs:element ref="ofo:closed"/>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -176,7 +190,7 @@
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -191,7 +205,7 @@
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -207,7 +221,7 @@
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
 				<xs:element ref="ofo:autoForwardReason"/>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -227,7 +241,7 @@
 					<xs:element ref="ofo:kvik"/>
 					<xs:element ref="ofo:norfri"/>
 				</xs:choice>
-				<xs:group ref="ofo:requestGeneral" minOccurs="0"/>
+				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
@@ -249,7 +263,6 @@
 				<xs:element ref="ofo:issn" minOccurs="0"/>
 				<xs:element ref="ofo:mediumType" minOccurs="0"/>
 				<xs:element ref="ofo:title" minOccurs="0"/>
-				<xs:element ref="ofo:agency"/>
 				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
@@ -271,6 +284,7 @@
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
+				<xs:element ref="ofo:authentication" minOccurs="0"/>
 				<xs:choice>
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
@@ -669,17 +683,6 @@
 		<xs:annotation>
 			<xs:documentation xml:lang="en">An order.s unique number. Orders from Netpunkt/bibliotek.dk are given a number by ORS, while orders from other systems (e.g. from z39.50-clients) are given numbers by those systems (in z-ill: transaction-qualifier). Orders received via NCIP are numbered by ORS with a UniqueRequestId, qualified with a UniqueAgencyId. Orders numbered by ORS have the interval: 1000000000-2000000000 . numbered orders from other systems must not use numbers in that interval. orderId (+requesterId) is the Primary key to an order.</xs:documentation>
 		</xs:annotation>
-	</xs:element>
-	<xs:element name="orderPrimaryKey">
-		<xs:annotation>
-			<xs:documentation xml:lang="en">the primary key to an order in the orders tabel consisting of an orderId and requesterAgencyId</xs:documentation>
-		</xs:annotation>
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="ofo:orderId"/>
-				<xs:element ref="ofo:requesterAgencyId"/>
-			</xs:sequence>
-		</xs:complexType>
 	</xs:element>
 	<xs:element name="orderStatus" type="ofo:orderStatusType">
 		<xs:annotation>
