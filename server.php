@@ -73,6 +73,18 @@ class openFindOrder extends webServiceServer
     die();
   }
 
+  public function findAllOpenEndUserOrders($param)
+  {
+   
+     if( $error=OFO_agency::authenticate($param->agency->_value) )
+       return $this->send_error($error);
+
+    $OFO = new OFO_database("findAllOpenEndUserOrders",$this->config);
+    $orders=$OFO->findOrders($param);
+
+    return $this->findOrderResponse($orders);
+  }
+
   /** \brif
       The service request for orders on material not localized to the end user agency.
    */
@@ -337,12 +349,15 @@ class openFindOrder extends webServiceServer
 
 //    $this->stat->orders+=count($orders);
 
+    // TODO - this line is for test-purpose only. Remove in production
+    $response->findOrdersResponse->_value->pure_sql->_value=OFO_database::$pure_sql;
+
     $response->findOrdersResponse->_value->result->_namespace='http://oss.dbc.dk/ns/openfindorder';    
     
     $response->findOrdersResponse->_value->result->_value->numberOfOrders->_namespace='http://oss.dbc.dk/ns/openfindorder';
     // $response->findOrdersResponse->_value->result->_value->numberOfOrders->_value=count($orders);
     $response->findOrdersResponse->_value->result->_value->numberOfOrders->_value=OFO_database::$numrows;
-
+   
     foreach( $orders as $order )
       $response->findOrdersResponse->_value->result->_value->order[]=$order;
 
@@ -355,6 +370,9 @@ class openFindOrder extends webServiceServer
   private function send_error($message)
   {
     $response->findOrdersResponse->_namespace='http://oss.dbc.dk/ns/openfindorder';
+
+    // TODO - this line is for test-purpose only. Remove in production
+    $response->findOrdersResponse->_value->pure_sql->_value=OFO_database::$pure_sql;
 
     $error->_namespace='http://oss.dbc.dk/ns/openfindorder';
     $error->_value=$message;
@@ -379,12 +397,15 @@ class OFO_database
 {
   public static $error;
   public static $numrows;
+  public static $pure_sql;
+  public static $vip_connect;
 
   private $xmlfields=array();
   private $action;
   private $fields=array();
   private $sql;
   private $connectionstring;
+  
 
   /**\brief
    * Constructor. 
@@ -398,6 +419,9 @@ class OFO_database
     if( !$this->connectionstring=$config->get_value("connectionstring","setup") )
       die( "no database credentials in config-file" );   
 
+    if( !self::$vip_connect=$config->get_value("vip","setup") )
+      die(" no credentials for vip-base ");
+
     // set actions
     $arr=$config->get_value("action");
     if( empty($arr) )
@@ -405,24 +429,8 @@ class OFO_database
     foreach($arr[$action] as $key=>$val)
       $this->fields[]=$val;
  
-    // set base sql from config-file
-    $this->sql="SELECT ";
-    // get fields to select 
-    $sqlarr=$config->get_section("ors_order");
-    if( empty($sqlarr) )
-      die( "no table definition in config-file" );     
-
-    foreach( $sqlarr as $key=>$val )
-      {
-	if( $val )
-	  $this->sql.=$val."\n,";
-	else
-	  $this->sql.=$key."\n,";
-      }
-    // remove trailing ','
-    $this->sql=substr($this->sql,0,-1);
-    $this->sql.=" FROM ors_order WHERE ";
-
+    $this->set_base_sql($config);
+    
     // get xml schema
     $schemafile=$config->get_value("schema","setup");
     if( !file_exists($schemafile) )
@@ -435,6 +443,35 @@ class OFO_database
       $this->xmlfields=$schema->get_sequence_array('getOrderStatusResponse');
     else
       $this->xmlfields=$schema->get_sequence_array('order');
+
+  }
+
+  private function set_base_sql($config)
+  {
+    $this->sql="SELECT ";
+
+    // get fields to select from ini-file 
+    $sqlarr=$config->get_section("ors_order");
+    if( empty($sqlarr) )
+      die( "no table definition in config-file" );     
+    
+    foreach( $sqlarr as $key=>$val )
+      {
+	if( $val )
+	  $this->sql.=$val."\n,";
+	else
+	  $this->sql.=$key."\n,";
+      }
+    // remove trailing ','
+    $this->sql=substr($this->sql,0,-1);
+
+    // insert join on ors_order_index here if operations are bibliographic search or OrdersFromUser
+
+      $this->sql.=" FROM ors_order o INNER JOIN ors_order_index oi ON \n
+                (oi.requesterid=o.requesterid AND oi.orderid=o.orderid)\n";
+                    
+    //$this->sql.=" FROM ors_order o WHERE ";
+    
   }
   
   /**\brief
@@ -446,6 +483,9 @@ class OFO_database
   {
     if(!$oci=$this->execute($param))
       return false;
+    
+    // TODO - this line is for test-purpose only. Remove in production
+    self::$pure_sql=$oci->pure_sql();
 
     $resultPosition=1;
     while( $data=$oci->fetch_into_assoc() )
@@ -469,20 +509,29 @@ class OFO_database
 
     $sql="SELECT COUNT(*) count FROM(".$this->sql.$clause.")";
 
-    if(!$oci1->connect() )
+    try{$oci1->connect();}
+    catch(ociException $e)
       {
 	self::$error="could not connect to db";
 	return false;
       }
     
-    if(!$oci1->set_query($sql))
+    try{$oci1->set_query($sql);}
+    catch(ociException $e)
       {
-	self::$error="query could not be set";
-	die("TSTHEST");
+	//	self::$error="query could not be set";
+	self::$error=$e->__toString();
+	//	die("TSTHEST");
 	return false;
       }
 
-    $row=$oci1->fetch_into_assoc();
+    
+    try{$row=$oci1->fetch_into_assoc();}
+    catch(ociException $e)
+      {
+	self::$error=$e->__toString();
+return false;
+      }
 
     self::$numrows=$row["COUNT"];
 
@@ -495,7 +544,7 @@ class OFO_database
    * @resultPosition; rownumber of result
    * return; óne order as xml-object
    */
-  private function get_order($data,$resultPosition)
+  private function get_order(&$data,$resultPosition)
   {
     $ret->_namespace='http://oss.dbc.dk/ns/openfindorder';
   
@@ -541,33 +590,54 @@ class OFO_database
    */
   private function execute($param)
   {
-    $oci=new oci($this->connectionstring);
-   
+    try{$oci=new oci($this->connectionstring);}
+    catch(ociException $e){
+      self::$error="could not connect to db: ".$e->__toString()."\n";
+      return false;}
+    
     $step=$param->stepValue->_value;
     $start=$param->start->_value;
 
-    if( !$clause = $this->set_sql($param,$oci) )
-	return false;
 
+    /* try{$clause = $this->set_sql($param,$oci);}
+    catch(ociException $e){
+      self::$error="could not set sql: ".$e->__toString()."\n";
+      return false;}*/
+
+    if( !$clause = $this->set_sql($param,$oci) )
+      return false;
+    
     $sql=$this->sql.$clause;
+
+    //echo $sql;
+    //exit;
 
     $this->count($param);
 
     if( ($step || $step===0) && ($start || $start===0) )
       $oci->set_pagination($start,($start+$step)-1);
 
-    if(!@$oci->connect() )
-      {
-	self::$error="could not connect to db";
-	return false;
-      }
     
-    if(!@$oci->set_query($sql))
+    try{ $oci->connect(); }
+    catch(ociException $e){
+      self::$error="could not connect to db: ".$e->__toString()."\n";
+      return false;}
+
+    try{ $oci->set_query($sql); }
+    catch(ociException $e){
+      self::$error="could not set query: ".$e->__toString()."\n";
+      return false;}
+
+    
+    /*echo $oci->pure_sql();
+  print_r($oci->bind_backup);
+  exit;*/
+
+    /* if(!@$oci->set_query($sql))
       {
 	self::$error="query could not be set";
 	return false;
-      }
-   
+	}*/
     return $oci;
   }
  
@@ -583,6 +653,9 @@ class OFO_database
   {
     switch( $this->action )
       {
+      case "findAllOpenEndUserOrders":
+	$ret=OFO_sql::findAllOpenEndUserOrders($param,$oci);
+	break;
       case "findAllOrders":
 	$ret= OFO_sql::findAllOrders($param,$oci);
 	break;
@@ -639,19 +712,104 @@ class OFO_database
 	die( "no or wrong action" );
 	break;
       }
-
     if(! $ret )
       {
-	self::$error="sql could not be set";
+	self::$error="sql could not be set for ".$this->action;
 	return false;
       }
 
     return $ret;    
   }
 
+
+  
+
 }
 
 
+/** 
+\brief
+* class to handle lookups in vip-base
+*/
+
+class OFO_vip
+{
+  public static function set_libraries($param)
+  {
+   
+    if( !$agency=$param->agency->_value )
+      return false;
+    
+
+    $libs=OFO_vip::get_library_list($agency);
+    // print_r($libs);
+    if( empty($libs) )
+      {
+	if( $param->requesterAgencyId->_value )
+	  $ret="AND o.requesterid=".$agency;
+	elseif( $param->responderAgencyId->_value )
+	  $ret.="AND responderid=".$agency;
+
+      }
+    elseif( !empty($libs) )
+      {
+	if(  $param->requesterAgencyId )
+	  $ret=" AND o.requesterid in(";
+	//elseif( $param->responderAgencyId )	  
+	else
+	  $ret="AND responderid in(";
+	//else
+	// return false;
+
+	$clause='';
+	foreach( $libs as $lib )
+	  {
+	    if( strlen($clause) )
+	      $clause.=',';
+	    $clause.=$lib['BIB_NR'];
+	  }
+	$ret.=$clause;
+	$ret.=")\n";
+      }
+    else
+      {
+      return false;
+ 
+      }  
+
+    return $ret;        
+  }
+  
+  private static function get_library_list($agency)
+  {
+    $sql="select v.bib_nr from vip v inner join vip_vsn vs on v.kmd_nr=vs.kmd_nr where vs.bib_nr=".$agency;
+    $oci=new oci(OFO_database::$vip_connect);
+    
+    try{$oci->connect();}
+    catch(ociException $e)
+      {
+	OFO_database::$error="could not connect to db ".OFO_database::$vip_connect;
+	return false;
+      }
+    
+    try{ $oci->set_query($sql); }
+    catch(ociException $e)
+      {
+	OFO_database::$error="query could not be set";
+	return false;
+      }
+    
+    try{$ret= $oci->fetch_all_into_assoc();}
+    catch(ociException $e){ die($e->__toString());}
+	
+    
+
+    return $ret;	   
+  }
+
+  
+  
+}
 /** \brief
     Class to handle sql for each of the methods in webservice
  */
@@ -663,6 +821,35 @@ class OFO_sql
     return '';
   }  
 
+
+  public static function findAllOpenEndUserOrders($params,$oci)
+  {
+     $sql = self::get_select();
+    
+    if( $add=self::set_ids($params,$ids) )
+      $sql.=$add;
+    else
+      return false; 
+   
+    $sql.=self::bind_array($ids,$oci);
+    
+    $oci->bind("ordertype_bind","enduser_request");
+    $oci->bind("ordertype1_bind","enduser_illrequest");
+    
+    $sql.="and (ordertype=:ordertype_bind OR ordertype=:ordertype1_bind)\n";
+
+    $oci->bind("closed_bind","N");
+    $sql.="and closed=:closed_bind";
+    
+    $add = self::setRequestGeneral($params,$oci);
+
+    if( $add !== false )
+      $sql.=$add;
+    else
+      return false;
+
+    return $sql;   
+  }
 
   public static function findAllIllOrders($params,$oci)
   {
@@ -824,18 +1011,20 @@ class OFO_sql
     $oci->bind("ordertype_bind","inter_library_request");
     $sql.="and ordertype=:ordertype_bind\n";
 
-      
     // required field; orderStatus
-    if( $status=$params->orderStatus->_value )
+      if( $status=$params->orderStatus->_value )
       {
-	$oci->bind("orderStatus_bind",$status);
 	if( $status=='shipped' )
 	  $sql.="and isshipped='Y'\n";
 	else
-	  $sql.="and provideranswer=:orderStatus_bind\n";
+	  {
+	    $oci->bind("orderStatus_bind",$status);
+	    $sql.="and provideranswer=:orderStatus_bind\n";
+	  }
       }
-    else
-      return false;
+      else
+	$sql.="AND provideranswer IS NOT NULL\n";    
+    
 
     $add = self::setRequestGeneral($params,$oci);
     if( $add !== false )
@@ -860,12 +1049,12 @@ class OFO_sql
     $oci->bind("ordertype_bind","inter_library_request");
     $sql.="and ordertype=:ordertype_bind\n";
 
-    $sql.="and provideranswer IS NOT NULL\n";
+    $sql.="and provideranswer IS NULL\n";
 
-    $sql.="and isshipped IS NOT NULL\n";
+    //$sql.="and isshipped IS NOT NULL\n";
     
-    $oci->bind("autoforward_bind","automated");
-    $sql.="and autoforwardresult=:autoforward_bind\n";
+    //    $oci->bind("autoforward_bind","automated");
+    //$sql.="and autoforwardresult=:autoforward_bind\n";
 
     $add = self::setRequestGeneral($params,$oci);
     if( $add !== false )
@@ -964,7 +1153,7 @@ class OFO_sql
       return false;
 
     $oci->bind('auto_bind','non_automated');
-    $sql.="AND AUTOFORWARDRESULT=:auto_bind";
+    $sql.="AND AUTOFORWARDRESULT=:auto_bind\n";
 
     return $sql;      
     
@@ -979,20 +1168,20 @@ class OFO_sql
     else
       return false; 
    
-  
+    $sql.=self::bind_array($ids,$oci);
     // TODO restrict selection somehow 
+
+    $oci->bind("ordertype_bind","inter_library_request");
+    $sql.="and ordertype=:ordertype_bind\n";
+    
+    $oci->bind('auto_bind','automated');
+    $sql.="AND AUTOFORWARDRESULT=:auto_bind\n";
 
     $add = self::setRequestGeneral($params,$oci);
     if( $add !== false )
       $sql.=$add;
     else
       return false;
-
-    $oci->bind("ordertype_bind","automated");
-    $sql.="and ordertype=:ordertype_bind";
-    
-    $oci->bind('auto_bind','automated');
-    $sql.="AND AUTOFORWARDRESULT=:auto_bind";
 
     return $sql;      
   }
@@ -1003,11 +1192,15 @@ class OFO_sql
    
     $sql = self::get_select();
     
+    
+
     if( $add=self::set_ids($params,$ids) )
       $sql.=$add;
     else
       return false; 
    
+
+
     $sql.=self::bind_array($ids,$oci);
 
     
@@ -1019,6 +1212,7 @@ class OFO_sql
       $sql.=$add;
     else
       return false;
+
 
     return $sql;      
   }
@@ -1047,8 +1241,9 @@ class OFO_sql
       }
     elseif( $userName=$params->userName->_value )
       {
-	$oci->bind("userName_bind",$userName.'%');
-	$sql.="and username like :userName_bind\n";
+	$oci->bind("userName_bind",'%'.$userName.'%');
+	//$sql.="and username like :userName_bind\n";
+	$sql.="and contains( oi.username,:userName_bind, 1 ) > 0";
       }
     elseif( $ftext=$params->userFreeText->_value )
       {
@@ -1105,9 +1300,10 @@ class OFO_sql
     // optional parameters;author,bibliographicRecordId,isbn,issn,mediumType,title,bibliographicFreeText
     if( $author=$params->author->_value )
       {
-	$oci->bind("author_bind",$author."%");
+	$oci->bind("author_bind","%".$author."%");
 	//	echo "'".$author."%'";
-	$sql.=" and author like :author_bind\n";
+	//$sql.=" and author like :author_bind\n";
+	$sql.="and contains( oi.author,:author_bind, 1 ) > 0";
       }
     if( $bibliographicRecordId=$params->bibliographicRecordId->_value )
       {
@@ -1134,14 +1330,18 @@ class OFO_sql
 
     if( $title=$params->title->_value )
       {
-	$oci->bind("title_bind",$title.'%');
-	$sql.="and title like:title_bind\n";
+	$oci->bind("title_bind","%".$title."%");
+	$sql.="and contains( oi.title,:title_bind, 2 ) > 0";
+
+	//	$sql.="and title like:title_bind\n";
       }
 
     if( $ftxt=$params->bibliographicFreeText->_value )
       {
-	$oci->bind("ftext_bind",$ftxt.'%');
-	$sql.="and (title like :ftext_bind OR author like :ftext_bind)\n";
+	$oci->bind("ftext_bind","%".$ftxt.'%');
+       
+	//$sql.="and (o.title like :ftext_bind OR o.author like :ftext_bind)\n";
+	$sql.="and ((contains( oi.title,:ftext_bind, 3 ) > 0) OR (contains( oi.author,:ftext_bind, 4 ) > 0))\n";
       }
      
     /* echo $sql;
@@ -1159,19 +1359,19 @@ class OFO_sql
   public static function findSpecificOrder($params,$oci)
   {
     // required fields requesterAgencyId OR responderAgencyId, orderId, agency
-    $sql = self::get_select();
+     $sql = self::get_select();
     
-    if( $add=self::set_ids($params,$ids) )
+      if( $add=self::set_ids($params,$ids) )
       $sql.=$add;
     else
       return false;
    
-    $sql.=self::bind_array($ids,$oci);
+      $sql.=self::bind_array($ids,$oci);
 
     // required field orderId
     if( is_array($params->orderId ) )
       {
-	$sql.=" and orderid in(";
+	$sql.=" and o.orderid in(";
 	$sql.=self::bind_array($params->orderId,$oci,"orderId");
 
 	//	echo $sql;
@@ -1180,10 +1380,16 @@ class OFO_sql
     elseif( $orderId=$params->orderId->_value )
       {
 	$oci->bind("orderId_bind",$orderId);
-	$sql.=" and orderid=:orderId_bind\n";
+	$sql.=" and o.orderid=:orderId_bind\n";
       }
     else
       return false;
+
+    /*    $add = self::setRequestGeneral($params,$oci);
+    if( $add !== false )
+      $sql.=$add;
+    else
+    return false;*/
    
     return $sql;
   }
@@ -1238,11 +1444,12 @@ class OFO_sql
 
   private static function set_ids($params,&$ids)
   {
+    $sql.=" WHERE ";
     if( $ids = $params->requesterAgencyId )
-      $sql.="requesterid in(";
-    //$sql.="pickUpAgencyId in(";
+      // $sql.="requesterid in(";
+    $sql.="pickUpAgencyId in(";
     elseif( $ids = $params->responderAgencyId )
-      $sql.="responderid in(";
+      $sql.="RESPONDERID in(";
     else
       return false;
 
@@ -1270,7 +1477,9 @@ class OFO_sql
 
 	$oci->bind("fromDate_bind",$fdate);
 	//	$sql.=" and to_char(creationdate,'YYYY-MM-DD HH24:MI:SS') >=:fromDate_bind\n";
-	$sql.=" and to_char(creationdate,'YYYY-MM-DD') >=:fromDate_bind\n";
+	//$sql.=" and to_char(creationdate,'YYYY-MM-DD') >=:fromDate_bind\n";
+	// jgn's suggestion to avoid string-comparison
+	$sql.=" and creationdate >=to_date(:fromDate_bind,'YYYY-MM-DD')\n";
       }
 
      // toDate
@@ -1281,9 +1490,32 @@ class OFO_sql
 	  return false;
 	$oci->bind("toDate_bind",$tdate);
 	//	$sql.=" and to_char(creationdate,'YYYY-MM-DD HH24:MI:SS') <=:toDate_bind\n";
-		$sql.=" and to_char(creationdate,'YYYY-MM-DD') <=:toDate_bind\n";
-      }       
+	//$sql.=" and to_char(creationdate,'YYYY-MM-DD') <=:toDate_bind\n";
+	// jgn's suggestion to avoid string-comparison
+	$sql.=" and creationdate<to_date(:toDate_bind,'YYYY-MM-DD')\n";
+      }     
+
+  
+    if( $moresql=OFO_vip::set_libraries($params) )
+      $sql.=$moresql;
+    else
+      {	
+	//	self::$error="no libraries found";
+	return false;
+      }  
+
+    if( $sort = $params->sortKey->_value )
+      {
+	if( $sort=='creationDateAscending' )
+	  $sql.=" ORDER BY creationdate asc\n";
+	elseif( $sort == 'creationDateDescending' )
+	  $sql.=" ORDER BY creationdate desc\n";
+	else
+	  return false;
+      }
     // agency ??? 
+   
+
     return $sql;
   }
 
@@ -1291,8 +1523,6 @@ class OFO_sql
      check if given string can be converted to date; 
      returns date('Ymd') or false
    */
-
-  // TODO parse for xml Date
   private static function check_date($date)
   {
     /* if( $time=strtotime($date) )
@@ -1348,17 +1578,19 @@ class OFO_sql
 	foreach( $idarr as $key=>$val )
 	  {
 	    $oci->bind($key,$idarr[$key],-1,SQLT_INT);
+	    //$oci->bind($key,$idarr[$key]);
 	    $sql.=":".$key.",";	
 	  }
 	
 	// remove trailing ','
 	$sql=substr($sql,0,-1);
-	$sql.=")";
+	$sql.=")\n";
       }
     else
       {
-	$oci->bind($prefix."bind_ID",$ids->_value);
-	$sql.=":bind_ID)";
+	$oci->bind($prefix."bind_ID",$ids->_value,-1,SQLT_INT);
+	//$oci->bind($prefix."bind_ID",$ids->_value);
+	$sql.=":bind_ID)\n";
       }
 
     return $sql;

@@ -13,9 +13,10 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
     <ofo:userIdAut>?</ofo:userIdAut>
   </ofo:authentication>
   <ofo:callback>?</ofo:callback>
-  <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
-  <ofo:responderAgencyId>?</ofo:responderAgencyId>
-  <ofo:orderId>?</ofo:orderId>
+  <ofo:orderPrimaryKey>
+    <ofo:orderId>?</ofo:orderId>
+    <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
+  </ofo:orderPrimaryKey>
   <ofo:outputType>?</ofo:outputType>
   <ofo:agency>?</ofo:agency>
 </ofo:findSpecificOrderRequest>

@@ -6,30 +6,19 @@ xmlns:ofow="http://oss.dbc.dk/ns/openfindorder_wsdl"
 xmlns:ofo="http://oss.dbc.dk/ns/openfindorder"
 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
 <SOAP-ENV:Body>
-<ofo:bibliographicSearchRequest>
-  <ofo:authentication>
-    <ofo:groupIdAut>?</ofo:groupIdAut>
-    <ofo:passwordAut>?</ofo:passwordAut>
-    <ofo:userIdAut>?</ofo:userIdAut>
-  </ofo:authentication>
+<ofo:getOrderStatusRequest>
   <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
   <ofo:responderAgencyId>?</ofo:responderAgencyId>
-  <ofo:author>?</ofo:author>
-  <ofo:bibliographicFreeText>?</ofo:bibliographicFreeText>
-  <ofo:bibliographicRecordId>?</ofo:bibliographicRecordId>
-  <ofo:isbn>?</ofo:isbn>
-  <ofo:issn>?</ofo:issn>
-  <ofo:mediumType>?</ofo:mediumType>
-  <ofo:title>?</ofo:title>
-  <ofo:agency>?</ofo:agency>
+  <ofo:orderId>?</ofo:orderId>
   <ofo:agency>?</ofo:agency>
   <ofo:orderSystem>?</ofo:orderSystem>
   <ofo:fromDate>?</ofo:fromDate>
   <ofo:toDate>?</ofo:toDate>
   <ofo:outputType>?</ofo:outputType>
   <ofo:callback>?</ofo:callback>
+  <ofo:sortKey>?</ofo:sortKey>
   <ofo:start>?</ofo:start>
   <ofo:stepValue>?</ofo:stepValue>
-</ofo:bibliographicSearchRequest>
+</ofo:getOrderStatusRequest>
 </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>

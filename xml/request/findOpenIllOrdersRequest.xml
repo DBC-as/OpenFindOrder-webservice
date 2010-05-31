@@ -20,6 +20,7 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <ofo:toDate>?</ofo:toDate>
   <ofo:outputType>?</ofo:outputType>
   <ofo:callback>?</ofo:callback>
+  <ofo:sortKey>?</ofo:sortKey>
   <ofo:start>?</ofo:start>
   <ofo:stepValue>?</ofo:stepValue>
 </ofo:findOpenIllOrdersRequest>
