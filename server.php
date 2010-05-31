@@ -746,9 +746,9 @@ class OFO_vip
     if( empty($libs) )
       {
 	if( $param->requesterAgencyId->_value )
-	  $ret="AND o.requesterid=".$agency;
+	  $ret=" AND o.requesterid=".$agency;
 	elseif( $param->responderAgencyId->_value )
-	  $ret.="AND responderid=".$agency;
+	  $ret.=" AND responderid=".$agency;
 
       }
     elseif( !empty($libs) )
@@ -757,7 +757,7 @@ class OFO_vip
 	  $ret=" AND o.requesterid in(";
 	//elseif( $param->responderAgencyId )	  
 	else
-	  $ret="AND responderid in(";
+	  $ret=" AND responderid in(";
 	//else
 	// return false;
 
