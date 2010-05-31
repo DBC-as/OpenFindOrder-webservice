@@ -8,8 +8,11 @@ $seq = $schema->get_sequence('order');
 foreach( $seq as $element)
   $arr[]=$schema->get_element_attributes($element);
 
+foreach($arr as $a)
+echo $a['name']."=\n";*/
+//print_r($arr);
 
-foreach($arr as $key=>$val)
+/*foreach($arr as $key=>$val)
   // $ret[]=$val['name'];
   echo '"'.$val['name'].'"=>"'.strtoupper($val['name']).'",'."\n"; 
   
