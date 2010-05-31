@@ -49,7 +49,7 @@ class openFindOrder extends webServiceServer
   public function __destruct()
   {
     $this->watch->stop("openfindorderWS");
-    verbose::log(TIMER, $this->watch->dump());
+    //verbose::log(TIMER, $this->watch->dump());
   }
 
    /** \brief Echos config-settings
