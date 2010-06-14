@@ -51,7 +51,7 @@
 	</xs:element>
 	<xs:element name="findAllOpenEndUserOrdersRequest">
 		<xs:annotation>
-			<xs:documentation>The service request for all open end user orders</xs:documentation>
+			<xs:documentation xml:lang="en">The service request for all open end user orders</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>
@@ -107,6 +107,7 @@
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
 				</xs:choice>
 				<xs:element ref="ofo:orderId" maxOccurs="unbounded"/>
+				<xs:element ref="ofo:orderType" minOccurs="0"/>
 				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
 		</xs:complexType>
@@ -694,6 +695,11 @@
 			<xs:documentation xml:lang="en">The system in which the order was created.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
+	<xs:element name="orderType" type="ofo:orderTypeType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Type of order (eg. end-user request or inter-library request)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
 	<xs:element name="originalOrderId" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">A reference to a previous order, replaced by this one. E.g. by remit or re-ordering.</xs:documentation>
@@ -1044,6 +1050,12 @@
 			<xs:enumeration value="bibliotekdk"/>
 			<xs:enumeration value="netpunkt"/>
 			<xs:enumeration value="zpunkt"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="orderTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="enduser_order"/>
+			<xs:enumeration value="inter_library_order"/>
 		</xs:restriction>
 	</xs:simpleType>
 	<xs:simpleType name="outputTypeType">
