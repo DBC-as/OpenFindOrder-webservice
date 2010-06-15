@@ -73,6 +73,14 @@ class openFindOrder extends webServiceServer
     die();
   }
 
+  public function HowRU()
+  {
+    echo "TESTHSET";
+    $testarray=$this->config->get_section("howru");
+    print_r($testarray);
+    exit;    
+  }
+
   public function findAllOpenEndUserOrders($param)
   {
    
@@ -473,6 +481,9 @@ class OFO_database
     //$this->sql.=" FROM ors_order o WHERE ";
     
   }
+
+ 
+
   
   /**\brief
    * Get orders from database.
@@ -761,16 +772,18 @@ class OFO_vip
 	//else
 	// return false;
 
-	$clause='';
 	foreach( $libs as $lib )
+	  $ids[]=$lib['BIB_NR'];
+	
+	$clause='';
+		foreach( $libs as $lib )
 	  {
 	    if( strlen($clause) )
 	      $clause.=',';
 	    $clause.=$lib['BIB_NR'];
 	  }
 	$ret.=$clause;
-	$ret.=")\n";
-      }
+	$ret.=")\n";      }
     else
       {
       return false;
@@ -780,7 +793,7 @@ class OFO_vip
     return $ret;        
   }
   
-  private static function get_library_list($agency)
+  public static function get_library_list($agency)
   {
     $sql="select v.bib_nr from vip v inner join vip_vsn vs on v.kmd_nr=vs.kmd_nr where vs.bib_nr=".$agency;
     $oci=new oci(OFO_database::$vip_connect);
@@ -1243,12 +1256,12 @@ class OFO_sql
       {
 	$oci->bind("userName_bind",'%'.$userName.'%');
 	//$sql.="and username like :userName_bind\n";
-	$sql.="and contains( oi.username,:userName_bind, 1 ) > 0";
+	$sql.="and contains( oi.username,:userName_bind, 1 ) > 0\n";
       }
     elseif( $ftext=$params->userFreeText->_value )
       {
 	$oci->bind("ftxt_bind",$ftext.'%');
-	$sql.="and (userName like :ftxt_bind OR userMail like :ftxt_bind OR userId like :ftxt_bind)\n";
+	$sql.="and (o.userName like :ftxt_bind OR o.userMail like :ftxt_bind OR o.userId like :ftxt_bind)\n";
       }
     else
       return false;
@@ -1488,21 +1501,25 @@ class OFO_sql
 	//if( !$tdate=self::check_date_time($toDate) )
 	if( !$tdate=self::check_date($toDate) )
 	  return false;
-	$oci->bind("toDate_bind",$tdate);
+	$oci->bind("toDate_bind",$tdate.' 23:59:59');
 	//	$sql.=" and to_char(creationdate,'YYYY-MM-DD HH24:MI:SS') <=:toDate_bind\n";
 	//$sql.=" and to_char(creationdate,'YYYY-MM-DD') <=:toDate_bind\n";
 	// jgn's suggestion to avoid string-comparison
-	$sql.=" and creationdate<to_date(:toDate_bind,'YYYY-MM-DD')\n";
+	$sql.=" and creationdate<=to_date(:toDate_bind,'YYYY-MM-DD HH24:MI:SS')\n";
       }     
 
-  
-    if( $moresql=OFO_vip::set_libraries($params) )
+    if( $more=self::set_libs($params,$oci) )
+      $sql.=$more;
+    else
+      return false;
+    
+	  /*    if( $moresql=OFO_vip::set_libraries($params) )
       $sql.=$moresql;
     else
       {	
 	//	self::$error="no libraries found";
 	return false;
-      }  
+	}  */
 
     if( $sort = $params->sortKey->_value )
       {
@@ -1517,6 +1534,47 @@ class OFO_sql
    
 
     return $sql;
+  }
+
+  private static function set_libs($params,$oci)
+  {
+
+    if( !$agency=$params->agency->_value )
+      return false;
+
+    $libs=OFO_vip::get_library_list($params->agency->_value); 
+
+    if( empty($libs) )
+      {
+	if( $params->requesterAgencyId )
+	  $ret.="AND o.requesterid=".$agency;
+	elseif( $params->responderAgencyId )
+	  $ret.="AND responderid=".$agency;
+
+	return $ret;	
+	} 
+    elseif( !empty($libs) )
+      {
+	// make a 'xml_object' from array
+	foreach( $libs as $lib )
+	  {
+	    $lib_obj->_value=$lib['BIB_NR'];
+	    //array_push($lib_ids,$lib['BIB_NR']);
+	    $lib_ids[]=$lib_obj;
+	    $lib_obj=null;
+	  }
+      }
+    
+    if(  $params->requesterAgencyId )
+      $ret.=" AND o.requesterid in(";
+    elseif( $params->responderAgencyId )
+      $ret.="AND responderid in(";
+    else
+      return false;
+    
+    $ret.=self::bind_array($lib_ids,$oci,"lib");
+    return $ret;
+    
   }
 
   /**
@@ -1537,7 +1595,7 @@ class OFO_sql
     $reg='/([0-9]{4})-([0-9]{2})-([0-9]{2})/';
     if( preg_match($reg,$date,$matches) )
       {
-	$time=strtotime($date);
+	$time=strtotime($matches[0]);
 	//	$date=date('Y-m-d H:i:s',$time );
 	$date=date('Y-m-d',$time );
 
@@ -1569,6 +1627,7 @@ class OFO_sql
   {
     if( is_array($ids) )
       {
+
 	$count=1;
 	// make an array
 	foreach( $ids as $key=>$val )
@@ -1577,8 +1636,8 @@ class OFO_sql
 	//iterate array; generate sql
 	foreach( $idarr as $key=>$val )
 	  {
-	    $oci->bind($key,$idarr[$key],-1,SQLT_INT);
-	    //$oci->bind($key,$idarr[$key]);
+	    //$oci->bind($key,$idarr[$key],-1,SQLT_INT);
+	    $oci->bind($key,$idarr[$key]);
 	    $sql.=":".$key.",";	
 	  }
 	
@@ -1588,8 +1647,8 @@ class OFO_sql
       }
     else
       {
-	$oci->bind($prefix."bind_ID",$ids->_value,-1,SQLT_INT);
-	//$oci->bind($prefix."bind_ID",$ids->_value);
+	//$oci->bind($prefix."bind_ID",$ids->_value,-1,SQLT_INT);
+	$oci->bind($prefix."bind_ID",$ids->_value);
 	$sql.=":bind_ID)\n";
       }
 
