@@ -12,13 +12,19 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
     <ofo:passwordAut>?</ofo:passwordAut>
     <ofo:userIdAut>?</ofo:userIdAut>
   </ofo:authentication>
-  <ofo:callback>?</ofo:callback>
-  <ofo:orderPrimaryKey>
-    <ofo:orderId>?</ofo:orderId>
-    <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
-  </ofo:orderPrimaryKey>
-  <ofo:outputType>?</ofo:outputType>
+  <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
+  <ofo:responderAgencyId>?</ofo:responderAgencyId>
+  <ofo:orderId>?</ofo:orderId>
+  <ofo:orderType>?</ofo:orderType>
   <ofo:agency>?</ofo:agency>
+  <ofo:orderSystem>?</ofo:orderSystem>
+  <ofo:fromDate>?</ofo:fromDate>
+  <ofo:toDate>?</ofo:toDate>
+  <ofo:outputType>?</ofo:outputType>
+  <ofo:callback>?</ofo:callback>
+  <ofo:sortKey>?</ofo:sortKey>
+  <ofo:start>?</ofo:start>
+  <ofo:stepValue>?</ofo:stepValue>
 </ofo:findSpecificOrderRequest>
 </SOAP-ENV:Body>
 </SOAP-ENV:Envelope>
