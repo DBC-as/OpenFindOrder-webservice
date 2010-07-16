@@ -1398,6 +1398,27 @@ class OFO_sql
     else
       return false;
 
+    if( $orderType=$params->orderType->_value )
+      {
+	// request does not correspond to database; - map to correct values
+	if( $orderType=="enduser_order" )
+	  {
+	    $mapType1="enduser_illrequest";
+	    $mapType2="enduser_request";
+	    $oci->bind("orderType_bind1",$mapType1);
+	    $oci->bind("orderType_bind2",$mapType2);
+	    $sql.=" and (o.ordertype=:orderType_bind1 OR o.ordertype=:orderType_bind2)\n";
+	  }
+	elseif( $orderType=="inter_library_order")
+	  {
+	    $mapType="inter_library_request";
+	    $oci->bind("orderType_bind",$mapType);
+	    $sql.=" and o.ordertype=:orderType_bind\n";
+	  }
+	else
+	  return false;
+      }
+
     /*    $add = self::setRequestGeneral($params,$oci);
     if( $add !== false )
       $sql.=$add;
@@ -1544,6 +1565,9 @@ class OFO_sql
 
     $libs=OFO_vip::get_library_list($params->agency->_value); 
 
+    //print_r($libs);
+   
+
     if( empty($libs) )
       {
 	if( $params->requesterAgencyId )
@@ -1571,7 +1595,11 @@ class OFO_sql
       $ret.="AND responderid in(";
     else
       return false;
+
+    //  print_r($lib_ids);
     
+    // exit;
+
     $ret.=self::bind_array($lib_ids,$oci,"lib");
     return $ret;
     
