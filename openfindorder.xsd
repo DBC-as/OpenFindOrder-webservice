@@ -119,6 +119,7 @@
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element ref="ofo:authentication" minOccurs="0"/>
+				<xs:element ref="ofo:orderType" minOccurs="0"/>
 				<xs:choice>
 					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
 					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
@@ -263,6 +264,7 @@
 				<xs:element ref="ofo:isbn" minOccurs="0"/>
 				<xs:element ref="ofo:issn" minOccurs="0"/>
 				<xs:element ref="ofo:mediumType" minOccurs="0"/>
+				<xs:element ref="ofo:orderType" minOccurs="0"/>
 				<xs:element ref="ofo:title" minOccurs="0"/>
 				<xs:group ref="ofo:requestGeneral"/>
 			</xs:sequence>
