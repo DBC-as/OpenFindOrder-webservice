@@ -95,6 +95,25 @@
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="findManuallyFinishedIllOrdersRequest">
+		<xs:annotation>
+			<xs:documentation>The service request for manually finished ILL orders. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ofo:authentication" minOccurs="0"/>
+				<xs:choice>
+					<xs:element ref="ofo:requesterAgencyId" maxOccurs="unbounded"/>
+					<xs:element ref="ofo:responderAgencyId" maxOccurs="unbounded"/>
+				</xs:choice>
+				<xs:choice>
+					<xs:element ref="ofo:providerOrderState"/>
+					<xs:element ref="ofo:requesterOrderState"/>
+				</xs:choice>
+				<xs:group ref="ofo:requestGeneral"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="findSpecificOrderRequest">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">The service request for one or more specific orders (orderId)</xs:documentation>
