@@ -23,6 +23,9 @@
 	<wsdl:message name="findClosedIllOrdersRequest">
 		<wsdl:part name="body" element="ofo:findClosedIllOrdersRequest"/>
 	</wsdl:message>
+	<wsdl:message name="findManuallyFinishedIllOrdersRequest">
+		<wsdl:part name="body" element="ofo:findManuallyFinishedIllOrdersRequest"/>
+	</wsdl:message>
 	<wsdl:message name="findSpecificOrderRequest">
 		<wsdl:part name="body" element="ofo:findSpecificOrderRequest"/>
 	</wsdl:message>
@@ -95,6 +98,12 @@
 	<wsdl:portType name="findClosedIllOrdersPortType">
 		<wsdl:operation name="findClosedIllOrders">
 			<wsdl:input message="ofow:findClosedIllOrdersRequest"/>
+			<wsdl:output message="ofow:findOrdersResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="findManuallyFinishedIllOrdersPortType">
+		<wsdl:operation name="findManuallyFinishedIllOrders">
+			<wsdl:input message="ofow:findManuallyFinishedIllOrdersRequest"/>
 			<wsdl:output message="ofow:findOrdersResponse"/>
 		</wsdl:operation>
 	</wsdl:portType>
@@ -229,6 +238,18 @@
 		<wsdl:operation name="findClosedIllOrders">
 			<soap:operation soapAction="findClosedIllOrders"/>
 			<wsdl:input name="findClosedIllOrdersRequest">
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output name="findOrdersResponse">
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="findManuallyFinishedIllOrdersSoapBinding" type="ofow:findManuallyFinishedIllOrdersPortType">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="findManuallyFinishedIllOrders">
+			<soap:operation soapAction="findManuallyFinishedIllOrders"/>
+			<wsdl:input name="findManuallyFinishedIllOrdersRequest">
 				<soap:body use="literal"/>
 			</wsdl:input>
 			<wsdl:output name="findOrdersResponse">
@@ -387,8 +408,11 @@
 		<wsdl:port name="findClosedIllOrdersPortType" binding="ofow:findClosedIllOrdersSoapBinding">
 			<soap:address location="http://openfindorder.addi.dk"/>
 		</wsdl:port>
+		<wsdl:port name="findManuallyFinishedIllOrdersPortType" binding="ofow:findManuallyFinishedIllOrdersSoapBinding">
+			<soap:address location="http://openfindorder.addi.dk"/>
+		</wsdl:port>
 		<wsdl:port name="findSpecificOrderPortType" binding="ofow:findSpecificOrderSoapBinding">
-			<soap:address location="http://didcias.dbc.dk/openfindorder"/>
+			<soap:address location="http://openfindorder.addi.dk"/>
 		</wsdl:port>
 		<wsdl:port name="findOrdersFromUserPortType" binding="ofow:findOrdersFromUserSoapBinding">
 			<soap:address location="http://openfindorder.addi.dk"/>
