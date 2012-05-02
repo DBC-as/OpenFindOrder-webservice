@@ -1,4 +1,4 @@
-<?php
+<? php
 // little program to parse fields from xsd
 
 /*$schema = new xml_schema();
@@ -121,8 +121,8 @@ class xml_schema {
     $namespaces = array();
     foreach ($nodelist as $node) {
       // remove 'xlmns:'
-      if ($index = strpos($node->nodeName,':'))
-        $key = substr($node->nodeName,$index+1);
+      if ($index = strpos($node->nodeName, ':'))
+        $key = substr($node->nodeName, $index + 1);
       else
         $key = $node->nodeName;
 
@@ -142,16 +142,16 @@ class helpFunc {
   }
 
   public static function split($string) {
-    if (strpos($string,':') > 0) {
-      $split = explode(':',$string);
+    if (strpos($string, ':') > 0) {
+      $split = explode(':', $string);
       return $split[1];
     }
     return $string;
   }
 
   public static function get_type($element) {
-    if (strpos($element,':') > 0) {
-      $split = explode(':',$element);
+    if (strpos($element, ':') > 0) {
+      $split = explode(':', $element);
       return $split[0];
     }
     return false;
@@ -163,7 +163,7 @@ class helpFunc {
       $ret .= 'xmlns:'.$prefix.'="'.$namespace."\"\n";
     }
     // remove last \n character
-    $ret = substr($ret,0,-1);
+    $ret = substr($ret, 0, -1);
     $ret .= '>'."\n".'<SOAP-ENV:Body>'."\n";
 
     return $ret;
@@ -178,4 +178,4 @@ class helpFunc {
   }
 }
 
-?>
+? >
