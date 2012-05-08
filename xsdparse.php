@@ -1,4 +1,4 @@
-<? php
+<?php
 // little program to parse fields from xsd
 
 /*$schema = new xml_schema();
@@ -178,4 +178,3 @@ class helpFunc {
   }
 }
 
-? >
