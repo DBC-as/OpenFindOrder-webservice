@@ -1,0 +1,159 @@
+Functions &amp; parameters:
+<ul>
+  <li>findAllOrders, findAllIllOrders, findAllNonIllOrders, findAllOpenEndUserOrders, findOpenIllOrders, findOrdersFromUnknownUser, findAutomatedOrders, findNonAutomatedOrders
+    <ul>
+      <li>agency:</li> Identifier of the agency using this service
+      <li>orderSystem:</li> The system in which the order was created
+      <li>fromDate:</li> Earliest date in request
+      <li>toDate:</li> Latest date in request
+      <li>outputType:</li> json, php, xml 
+      <li>callback:</li> for json-callback 
+      <li>sortKey:</li> How the requester wants the response sorted (eg. by creationDateDescending)
+      <li>start:</li> The number of the first order you want the service to return
+      <li>stepValue:</li> The number of orders you want the service to return, counted from the value in start
+    </ul>
+  </li>
+  <li>findClosedIllOrders
+    <ul>
+      <li>orderStatus:</li> Status of an ill order
+      <li>agency:</li> as above
+      <li>orderSystem:</li> as above
+      <li>fromDate:</li> as above
+      <li>toDate:</li> as above
+      <li>outputType:</li> as above
+      <li>callback:</li> as above
+      <li>sortKey:</li> as above
+      <li>start:</li> as above
+      <li>stepValue:</li> as above
+    </ul>
+  </li>
+  <li>findManuallyFinishedIllOrders
+    <ul>
+      <li>providerOrderState:</li> The state of an order from a responder's point of view
+      <li>requesterOrderState:</li> The state of an order from the requester's point of view
+      <li>agency:</li> as above
+      <li>orderSystem:</li> as above
+      <li>fromDate:</li> as above
+      <li>toDate:</li> as above
+      <li>outputType:</li> as above
+      <li>callback:</li> as above
+      <li>sortKey:</li> as above
+      <li>start:</li> as above
+      <li>stepValue:</li> as above
+    </ul>
+  </li>
+  <li>findSpecificOrder
+    <ul>
+      <li>orderId:</li> An order's unique number
+      <li>orderType:</li> Type of order (eg. end-user request or inter-library request)
+      <li>agency:</li> as above
+      <li>orderSystem:</li> as above
+      <li>fromDate:</li> as above
+      <li>toDate:</li> as above
+      <li>outputType:</li> as above
+      <li>callback:</li> as above
+      <li>sortKey:</li> as above
+      <li>start:</li> as above
+      <li>stepValue:</li> as above
+    </ul>
+  </li>
+  <li>findOrdersFromUser
+    <ul>
+      <li>userFreeText:</li> Search in either one of the exposed user identifier fields (userId OR userName OR userMail)
+      <li>userId:</li> End user's identification (e.g. borrower id), type of ID is stated in userIdType
+      <li>userMail:</li> End user's mail address
+      <li>userName:</li> End user's name
+      <li>agency:</li> as above
+      <li>orderSystem:</li> as above
+      <li>fromDate:</li> as above
+      <li>toDate:</li> as above
+      <li>outputType:</li> as above
+      <li>callback:</li> as above
+      <li>sortKey:</li> as above
+      <li>start:</li> as above
+      <li>stepValue:</li> as above
+    </ul>
+  </li>
+  <li>findLocalizedEndUserOrders, findNonLocalizedEndUserOrders
+    <ul>
+      <li>closed:</li> Whether the order is closed or not
+      <li>agency:</li> as above
+      <li>orderSystem:</li> as above
+      <li>fromDate:</li> as above
+      <li>toDate:</li> as above
+      <li>outputType:</li> as above
+      <li>callback:</li> as above
+      <li>sortKey:</li> as above
+      <li>start:</li> as above
+      <li>stepValue:</li> as above
+    </ul>
+  </li>
+  <li>findOrdersWithAutoForwardReason
+    <ul>
+      <li>autoForwardReason:</li> State of automated-ILL orders
+      <li>agency:</li> as above
+      <li>orderSystem:</li> as above
+      <li>fromDate:</li> as above
+      <li>toDate:</li> as above
+      <li>outputType:</li> as above
+      <li>callback:</li> as above
+      <li>sortKey:</li> as above
+      <li>start:</li> as above
+      <li>stepValue:</li> as above
+    </ul>
+  </li>
+  <li>findOrderOfType
+    <ul>
+      <li>articleDirect:</li> Order of a photocopy from bibliotek.dk with direct delivery to the end-user
+      <li>kvik:</li> The order is a KVIK-order
+      <li>norfri:</li> The order is a NORFRI-order
+      <li>agency:</li> as above
+      <li>orderSystem:</li> as above
+      <li>fromDate:</li> as above
+      <li>toDate:</li> as above
+      <li>outputType:</li> as above
+      <li>callback:</li> as above
+      <li>sortKey:</li> as above
+      <li>start:</li> as above
+      <li>stepValue:</li> as above
+    </ul>
+  </li>
+  <li>bibliographicSearch
+    <ul>
+      <li>author:</li> 
+      <li>bibliographicFreeText:</li> 
+      <li>bibliographicRecordId:</li> 
+      <li>isbn:</li> 
+      <li>issn:</li> 
+      <li>mediumType:</li> 
+      <li>orderType:</li> 
+      <li>title:</li> 
+      <li>agency:</li> as above
+      <li>orderSystem:</li> as above
+      <li>fromDate:</li> as above
+      <li>toDate:</li> as above
+      <li>outputType:</li> as above
+      <li>callback:</li> as above
+      <li>sortKey:</li> as above
+      <li>start:</li> as above
+      <li>stepValue:</li> as above
+    </ul>
+  </li>
+  <li>getOrderStatus
+    <ul>
+      <li>orderId:</li> An order's unique number
+      <li>agency:</li> as above
+      <li>orderSystem:</li> as above
+      <li>fromDate:</li> as above
+      <li>toDate:</li> as above
+      <li>outputType:</li> as above
+      <li>callback:</li> as above
+      <li>sortKey:</li> as above
+      <li>start:</li> as above
+      <li>stepValue:</li> as above
+    </ul>
+  </li>
+</ul>
+
+<a href="openfindorder.wsdl">The WSDL is here</a>
+
