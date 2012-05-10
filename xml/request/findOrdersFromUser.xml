@@ -18,7 +18,6 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <ofo:userMail>?</ofo:userMail>
   <ofo:userName>?</ofo:userName>
   <ofo:agency>?</ofo:agency>
-  <ofo:orderSystem>?</ofo:orderSystem>
   <ofo:fromDate>?</ofo:fromDate>
   <ofo:toDate>?</ofo:toDate>
   <ofo:outputType>?</ofo:outputType>

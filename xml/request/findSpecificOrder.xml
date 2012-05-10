@@ -17,7 +17,6 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <ofo:orderId>?</ofo:orderId>
   <ofo:orderType>?</ofo:orderType>
   <ofo:agency>?</ofo:agency>
-  <ofo:orderSystem>?</ofo:orderSystem>
   <ofo:fromDate>?</ofo:fromDate>
   <ofo:toDate>?</ofo:toDate>
   <ofo:outputType>?</ofo:outputType>
