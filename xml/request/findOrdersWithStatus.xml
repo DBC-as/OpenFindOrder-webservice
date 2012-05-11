@@ -7,7 +7,10 @@ xmlns:ofo="http://oss.dbc.dk/ns/openfindorder"
 xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
 <SOAP-ENV:Body>
 <ofo:findOrdersWithStatusRequest>
+  <!--You have a CHOICE of the next 2 items at this level-->
+  <!--1 or more repetitions:-->
   <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
+  <!--1 or more repetitions:-->
   <ofo:responderAgencyId>?</ofo:responderAgencyId>
   <ofo:agency>?</ofo:agency>
   <ofo:fromDate>?</ofo:fromDate>

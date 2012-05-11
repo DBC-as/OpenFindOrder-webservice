@@ -12,16 +12,15 @@ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
     <ofo:passwordAut>?</ofo:passwordAut>
     <ofo:userIdAut>?</ofo:userIdAut>
   </ofo:authentication>
+  <!--You have a CHOICE of the next 2 items at this level-->
+  <!--1 or more repetitions:-->
   <ofo:requesterAgencyId>?</ofo:requesterAgencyId>
+  <!--1 or more repetitions:-->
   <ofo:responderAgencyId>?</ofo:responderAgencyId>
   <ofo:author>?</ofo:author>
   <ofo:bibliographicFreeText>?</ofo:bibliographicFreeText>
-  <ofo:bibliographicRecordId>?</ofo:bibliographicRecordId>
-  <ofo:isbn>?</ofo:isbn>
-  <ofo:issn>?</ofo:issn>
-  <ofo:mediumType>?</ofo:mediumType>
+  <ofo:orderType>?</ofo:orderType>
   <ofo:title>?</ofo:title>
-  <ofo:agency>?</ofo:agency>
   <ofo:agency>?</ofo:agency>
   <ofo:fromDate>?</ofo:fromDate>
   <ofo:toDate>?</ofo:toDate>
