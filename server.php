@@ -456,7 +456,8 @@ class OFO_solr {
    * return; FALSE if requesterAgencyId or responderAgencyId contains non-valid agency
    */
   private function check_agency_consistency(&$param) {
-    $url = sprintf($this->agency_url, $param->agency->_value);
+    $agency = $this->strip_agency($param->agency->_value);
+    $url = sprintf($this->agency_url, $agency);
     $res = unserialize($this->curl->get($url));
     if ($res && $res->pickupAgencyListResponse->_value->library) {
       foreach ($res->pickupAgencyListResponse->_value->library[0]->_value->pickupAgency as $sublib) {
@@ -480,12 +481,12 @@ class OFO_solr {
   private function check_in_list($valid_list, $selected_list, $error_text) {
     if (is_array($selected_list)) {
       foreach ($selected_list as $sel) {
-        if (!in_array($sel->_value, $valid_list))
+        if (!in_array($this->strip_agency($sel->_value), $valid_list))
           return $error_text;
       }
     }
     else {
-      return in_array($selected_list->_value, $valid_list);
+      return in_array($this->strip_agency($selected_list->_value), $valid_list);
     }
     return TRUE;
   }
@@ -672,7 +673,7 @@ class OFO_solr {
   /**\brief
    * handles one parameter 
    */
-  private function add_one_par(&$par, $search_field, $ret = '', $op = 'AND') {
+  private function add_one_par($par, $search_field, $ret = '', $op = 'AND') {
     if (is_array($par)) {
       foreach ($par as $val) {
         $help = $this->add_one_par($val, $search_field, $help, 'OR');
@@ -684,11 +685,20 @@ class OFO_solr {
     }
     else {
       if ($par->_value) {
+        if ($search_field == 'requesterid' || $search_field == 'responderid')
+          $par->_value = $this->strip_agency($par->_value);
         if ($ret) $ret .= ' ' . $op . ' ';
         $ret .= $search_field . ':' . $par->_value;
       }
     }
     return $ret;
+  }
+
+  /** \brief
+   *  return only digits, so something like DK-710100 returns 710100
+   */
+  private function strip_agency($id) {
+    return preg_replace('/\D/', '', $id);
   }
 
 }
