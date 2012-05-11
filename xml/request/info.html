@@ -9,6 +9,8 @@ Functions &amp; parameters:
   <li>findAutomatedOrders</li>
   <li>findNonAutomatedOrders
     <ul>
+      <li>requesterAgencyId:</li> ISIL-number of a requester agency that the agency using this service is authorized to manage orders on behalf of (or the agency itself)
+      <li>responderAgencyId:</li> ISIL-number of a responder agency that the agency using this service is authorized to manage orders on behalf of (or the agency itself)
       <li>agency:</li> Identifier of the agency using this service
       <li>fromDate:</li> Earliest date in request
       <li>toDate:</li> Latest date in request
@@ -21,6 +23,8 @@ Functions &amp; parameters:
   </li>
   <li>findClosedIllOrders
     <ul>
+      <li>requesterAgencyId:</li> as above
+      <li>responderAgencyId:</li> as above
       <li>orderStatus:</li> Status of an ill order
       <li>agency:</li> as above
       <li>fromDate:</li> as above
@@ -34,8 +38,10 @@ Functions &amp; parameters:
   </li>
   <li>findManuallyFinishedIllOrders
     <ul>
-      <li>providerOrderState:</li> The state of an order from a responder's point of view
-      <li>requesterOrderState:</li> The state of an order from the requester's point of view
+      <li>requesterAgencyId:</li> as above
+      <li>responderAgencyId:</li> as above
+      <li>providerOrderState:</li> The state of an order from a responder's point of view, check xsd for values
+      <li>requesterOrderState:</li> The state of an order from the requester's point of view, check xsd for values
       <li>agency:</li> as above
       <li>fromDate:</li> as above
       <li>toDate:</li> as above
@@ -48,8 +54,10 @@ Functions &amp; parameters:
   </li>
   <li>findSpecificOrder
     <ul>
+      <li>requesterAgencyId:</li> as above
+      <li>responderAgencyId:</li> as above
       <li>orderId:</li> An order's unique number
-      <li>orderType:</li> Type of order (eg. end-user request or inter-library request)
+      <li>orderType:</li> Type of order (eg. enduser_order or inter_library_order)
       <li>agency:</li> as above
       <li>fromDate:</li> as above
       <li>toDate:</li> as above
@@ -62,6 +70,8 @@ Functions &amp; parameters:
   </li>
   <li>findOrdersFromUser
     <ul>
+      <li>requesterAgencyId:</li> as above
+      <li>responderAgencyId:</li> as above
       <li>userFreeText:</li> Search in either one of the exposed user identifier fields (userId OR userName OR userMail)
       <li>userId:</li> End user's identification (e.g. borrower id), type of ID is stated in userIdType
       <li>userMail:</li> End user's mail address
@@ -79,6 +89,8 @@ Functions &amp; parameters:
   <li>findLocalizedEndUserOrders</li>
   <li>findNonLocalizedEndUserOrders
     <ul>
+      <li>requesterAgencyId:</li> as above
+      <li>responderAgencyId:</li> as above
       <li>closed:</li> Whether the order is closed or not
       <li>agency:</li> as above
       <li>fromDate:</li> as above
@@ -92,7 +104,9 @@ Functions &amp; parameters:
   </li>
   <li>findOrdersWithAutoForwardReason
     <ul>
-      <li>autoForwardReason:</li> State of automated-ILL orders
+      <li>requesterAgencyId:</li> as above
+      <li>responderAgencyId:</li> as above
+      <li>autoForwardReason:</li> State of automated-ILL orders, check xsd for values
       <li>agency:</li> as above
       <li>fromDate:</li> as above
       <li>toDate:</li> as above
@@ -105,6 +119,8 @@ Functions &amp; parameters:
   </li>
   <li>findOrderOfType
     <ul>
+      <li>requesterAgencyId:</li> as above
+      <li>responderAgencyId:</li> as above
       <li>articleDirect:</li> Order of a photocopy from bibliotek.dk with direct delivery to the end-user
       <li>kvik:</li> The order is a KVIK-order
       <li>norfri:</li> The order is a NORFRI-order
@@ -120,13 +136,11 @@ Functions &amp; parameters:
   </li>
   <li>bibliographicSearch
     <ul>
+      <li>requesterAgencyId:</li> as above
+      <li>responderAgencyId:</li> as above
       <li>author:</li> 
       <li>bibliographicFreeText:</li> 
-      <li>bibliographicRecordId:</li> 
-      <li>isbn:</li> 
-      <li>issn:</li> 
-      <li>mediumType:</li> 
-      <li>orderType:</li> 
+      <li>orderType:</li> as above
       <li>title:</li> 
       <li>agency:</li> as above
       <li>fromDate:</li> as above
@@ -140,6 +154,8 @@ Functions &amp; parameters:
   </li>
   <li>getOrderStatus
     <ul>
+      <li>requesterAgencyId:</li> as above
+      <li>responderAgencyId:</li> as above
       <li>orderId:</li> An order's unique number
       <li>agency:</li> as above
       <li>fromDate:</li> as above
