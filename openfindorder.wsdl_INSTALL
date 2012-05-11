@@ -391,58 +391,58 @@
 	</wsdl:binding>
 	<wsdl:service name="openFindOrderService">
 		<wsdl:port name="findAllOrdersPortType" binding="ofow:findAllOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findAllIllOrdersPortType" binding="ofow:findAllOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findAllNonIllOrdersPortType" binding="ofow:findAllOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findAllOpenEndUserOrdersPortType" binding="ofow:findAllOpenEndUserOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findOpenIllOrdersPortType" binding="ofow:findOpenIllOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findClosedIllOrdersPortType" binding="ofow:findClosedIllOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findManuallyFinishedIllOrdersPortType" binding="ofow:findManuallyFinishedIllOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findSpecificOrderPortType" binding="ofow:findSpecificOrderSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findOrdersFromUserPortType" binding="ofow:findOrdersFromUserSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findOrdersFromUnknownUserPortType" binding="ofow:findOrdersFromUserSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findLocalizedEndUserOrdersPortType" binding="ofow:findLocalizedEndUserOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findNonLocalizedEndUserOrdersPortType" binding="ofow:findNonLocalizedEndUserOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findOrdersWithAutoForwardReasonPortType" binding="ofow:findOrdersWithAutoForwardReasonSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findAutomatedOrdersPortType" binding="ofow:findAutomatedOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findNonAutomatedOrdersPortType" binding="ofow:findNonAutomatedOrdersSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="findOrderTypePortType" binding="ofow:findOrderTypeSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="bibliographicSearchPortType" binding="ofow:bibliographicSearchSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 		<wsdl:port name="getOrderStatusPortType" binding="ofow:getOrderStatusSoapBinding">
-			<soap:address location="http://openfindorder.addi.dk/1.1/"/>
+			<soap:address location="http://openfindorder.addi.dk/2.0/"/>
 		</wsdl:port>
 	</wsdl:service>
 </wsdl:definitions>
