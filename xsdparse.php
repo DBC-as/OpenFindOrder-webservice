@@ -59,7 +59,7 @@ class xml_schema {
   public function get_element_attributes($element_name) {
     $element = helpFunc::split($element_name);
 
-    $query = "//*[@name='".$element."']/@*";
+    $query = "//*[@name='" . $element . "']/@*";
     $nodes = $this->xpath->query($query);
     $ret['wsdlname'] = $element_name;
     foreach ($nodes as $node) {
@@ -70,7 +70,7 @@ class xml_schema {
   }
 
   public function is_simple_type($element_name) {
-    $query = "//*[@name='".$element_name."']/@*";
+    $query = "//*[@name='" . $element_name . "']/@*";
     $nodes = $this->xpath->query($query);
     foreach ($nodes as $node) {
       if ($node->nodeName == 'type') {
@@ -81,7 +81,7 @@ class xml_schema {
 
     if (!$type) {
       //check if simpleType is inline
-      $query = "//*[@name='".$element_name."']/*[local-name()='simpleType']";
+      $query = "//*[@name='" . $element_name . "']/*[local-name()='simpleType']";
       $nodes = $this->xpath->query($query);
       if ($nodes->length > 0)
         return true;
@@ -90,7 +90,7 @@ class xml_schema {
     }
 
     $typename = helpFunc::split($type);
-    $query = "//*[local-name()='simpleType'][@name='".$typename."']";
+    $query = "//*[local-name()='simpleType'][@name='" . $typename."']";
 
     $nodes = $this->xpath->query($query);
     if ($nodes->length > 0)
@@ -102,7 +102,7 @@ class xml_schema {
   public function get_sequence($element_name) {
     $element = helpFunc::split($element_name);
 
-    $query = "//*[@name='".$element."']//*[local-name()='element']/@*";
+    $query = "//*[@name='" . $element . "']//*[local-name()='element']/@*";
     $nodes = $this->xpath->query($query);
     foreach ($nodes as $node) {
       if ($node->nodeName == "ref" || $node->nodeName == "type")
