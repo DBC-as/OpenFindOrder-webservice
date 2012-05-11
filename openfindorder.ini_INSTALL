@@ -1,7 +1,7 @@
 ; Inifile for openfindorder
 
 [setup]
-version = 1.1
+version = 2.0
 
 ; wsdl for service
 wsdl = openfindorder.wsdl
@@ -18,24 +18,42 @@ wsdl = openfindorder.wsdl
 
 ; soapActions and their corresponding request structure
 ; Can be found in the wsdl but is stated here for convenience
-soapAction[findOrder] = findOrderRequest
+soapAction[findAllOrders]=findAllOrdersRequest
+soapAction[findAllIllOrders]=findAllIllOrdersRequest
+soapAction[findAllNonIllOrders]=findAllNonIllOrdersRequest
+soapAction[findOpenIllOrders]=findOpenIllOrdersRequest
+soapAction[findClosedIllOrders]=findClosedIllOrdersRequest
+soapAction[findSpecificOrder]=findSpecificOrderRequest
+soapAction[findOrdersFromUser]=findOrdersFromUserRequest
+soapAction[findOrdersFromUnknownUser]=findOrdersFromUnknownUserRequest
+soapAction[findLocalizedEndUserOrders]=findLocalizedEndUserOrdersRequest
+soapAction[findNonLocalizedEndUserOrders]=findNonLocalizedEndUserOrdersRequest
+soapAction[findOrdersWithAutoForwardReason]=findOrdersWithAutoForwardReasonRequest
+soapAction[findAutomatedOrders]=findAutomatedOrdersRequest
+soapAction[findNonAutomatedOrders]=findNonAutomatedOrdersRequest
+soapAction[findOrderType]=findOrderOfTypeRequest
+soapAction[bibliographicSearch]=bibliographicSearchRequest
+soapAction[getOrderStatus]=getOrderStatusRequest
+soapAction[findAllOpenEndUserOrders]=findAllOpenEndUserOrdersRequest
+soapAction[findManuallyFinishedIllOrders]=findManuallyFinishedIllOrdersRequest
 
 ; prefixes and namespaces
 xmlns[NONE] = http://oss.dbc.dk/ns/openfindorder
-xmlns[xs] = http://www.w3.org/2001/XMLSchema
-xmlns[xsi] = http://www.w3.org/2001/XMLSchema-instance
-xmlns[oss] = http://oss.dbc.dk/ns/osstypes
-xmlns[dc] = http://purl.org/dc/elements/1.1/
-xmlns[dkabm] = http://biblstandard.dk/abm/namespace/dkabm/
-xmlns[dcmitype] = http://purl.org/dc/dcmitype/
-xmlns[dcterms] = http://purl.org/dc/terms/
-xmlns[ac] = http://biblstandard.dk/ac/namespace/
-xmlns[dkdcplus] = http://biblstandard.dk/abm/namespace/dkdcplus/
+xmlns[xml]=http://www.w3.org/XML/1998/namespace
+xmlns[wsdl]=http://schemas.xmlsoap.org/wsdl/
+xmlns[xs]=http://www.w3.org/2001/XMLSchema
+xmlns[ofow]=http://oss.dbc.dk/ns/openfindorder_wsdl
+xmlns[ofo]=http://oss.dbc.dk/ns/openfindorder
+xmlns[soap]=http://schemas.xmlsoap.org/wsdl/soap
 
 ; path to xml-examples
 xmldir = ./xml
 
-order_credentials = user/pass@someserver.dbc.dk
+; schema-file
+schema=openfindorder.xsd
+
+connectionstring = ora_user/ora_passwd@some.server.dk
+vip = ora_user/ora_passwd@some.server.dk
 
 ; logfile for verbose output
 logfile = /tmp/openfindorder.log
@@ -58,12 +76,11 @@ dump_timer = openfindorder(%s)
 
 [aaa]
 ; aaa Authentication, Access control and Accounting
-;
 ; if aaa_credentials is set, the rights-object is created from
 ; the FORS-server or aaa_ip_rights below
 ;
 ; oci credentials for FORS server
-;aaa_credentials = some_user/some_pwd@some.server.dbc.dk
+aaa_credentials = ora_user/ora_passwd@some.server.dk
 ; memcache server - use localhost in one-webserver environment
 ;aaa_cache_address = localhost:11211
 ; number of seconds to cache authentication and access rights info
@@ -74,8 +91,8 @@ dump_timer = openfindorder(%s)
 ; aaa_ip_rights[group-identifier][ressource][<named ressource>] = right to <named ressource>
 ; aaa_ip_rights[group-identifier][ressource][<named ressource 2>] = right to <named ressource 2>
 ;
-;aaa_ip_rights[dbc][ip_list] = 172.16.0.0-172.31.255.255;193.111.162.0-193.111.162.255
-;aaa_ip_rights[dbc][ressource][openfindorder] = 500
+aaa_ip_rights[dbc][ip_list] = 172.16.0.0-172.31.255.255;193.111.162.0-193.111.162.255
+aaa_ip_rights[dbc][ressource][openfindorder] = 500
 
 
 [rest]
@@ -97,12 +114,189 @@ dump_timer = openfindorder(%s)
 ;
 ; action[ALL] defines parameter used in all defined soap-actions
 ;
-action[ALL][] = outputType
-action[ALL][] = callback
+action[ALL][]=outputType
+action[ALL][]=callback
+action[ALL][]=requesterAgencyId
+action[ALL][]=responderAgencyId
+action[ALL][]=agency
+action[ALL][authentication][]=groupIdAut
+action[ALL][authentication][]=passwordAut
+action[ALL][authentication][]=userIdAut
+action[ALL][]=sortKey
 
-action[findOrder][] = query
+action[findManuallyFinishedIllOrders][]=providerOrderState
+action[findManuallyFinishedIllOrders][]=requesterOrderState
+action[findManuallyFinishedIllOrders][]=orderSystem
+action[findManuallyFinishedIllOrders][]=fromDate
+action[findManuallyFinishedIllOrders][]=toDate
+action[findManuallyFinishedIllOrders][]=start
+action[findManuallyFinishedIllOrders][]=stepValue
+
+action[findAllOpenEndUserOrders][]=orderSystem
+action[findAllOpenEndUserOrders][]=fromDate
+action[findAllOpenEndUserOrders][]=toDate
+action[findAllOpenEndUserOrders][]=start
+action[findAllOpenEndUserOrders][]=stepValue
+
+action[findAllIllOrders][]=orderSystem
+action[findAllIllOrders][]=fromDate
+action[findAllIllOrders][]=toDate
+action[findAllIllOrders][]=start
+action[findAllIllOrders][]=stepValue
+
+action[findAllNonIllOrders][]=orderSystem
+action[findAllNonIllOrders][]=fromDate
+action[findAllNonIllOrders][]=toDate
+action[findAllNonIllOrders][]=start
+action[findAllNonIllOrders][]=stepValue
+
+action[findOpenIllOrders][]=orderSystem
+action[findOpenIllOrders][]=fromDate
+action[findOpenIllOrders][]=toDate
+action[findOpenIllOrders][]=start
+action[findOpenIllOrders][]=stepValue
+
+action[findClosedIllOrders][]=orderStatus
+action[findClosedIllOrders][]=orderSystem
+action[findClosedIllOrders][]=fromDate
+action[findClosedIllOrders][]=toDate
+action[findClosedIllOrders][]=start
+action[findClosedIllOrders][]=stepValue
+
+action[findLocalizedEndUserOrders][]=closed
+action[findLocalizedEndUserOrders][]=orderSystem
+action[findLocalizedEndUserOrders][]=fromDate
+action[findLocalizedEndUserOrders][]=toDate
+action[findLocalizedEndUserOrders][]=start
+action[findLocalizedEndUserOrders][]=stepValue
+
+action[findNonLocalizedEndUserOrders][]=closed
+action[findNonLocalizedEndUserOrders][]=orderSystem
+action[findNonLocalizedEndUserOrders][]=fromDate
+action[findNonLocalizedEndUserOrders][]=toDate
+action[findNonLocalizedEndUserOrders][]=start
+action[findNonLocalizedEndUserOrders][]=stepValue
+
+action[findAllOrders][]=orderSystem
+action[findAllOrders][]=fromDate
+action[findAllOrders][]=toDate
+action[findAllOrders][]=start
+action[findAllOrders][]=stepValue
+
+action[findSpecificOrder][]=orderId
+
+action[findOrdersFromUser][]=userId
+action[findOrdersFromUser][]=userMail
+action[findOrdersFromUser][]=userName
+action[findOrdersFromUser][]=orderSystem
+action[findOrdersFromUser][]=fromDate
+action[findOrdersFromUser][]=toDate
+action[findOrdersFromUser][]=start
+action[findOrdersFromUser][]=stepValue
+action[findOrdersFromUser][]=orderType
+
+action[findOrdersFromUnknownUser][]=orderSystem
+action[findOrdersFromUnknownUser][]=fromDate
+action[findOrdersFromUnknownUser][]=toDate
+action[findOrdersFromUnknownUser][]=start
+action[findOrdersFromUnknownUser][]=stepValue
+
+action[findOrdersWithStatus][]=orderSystem
+action[findOrdersWithStatus][]=fromDate
+action[findOrdersWithStatus][]=toDate
+action[findOrdersWithStatus][]=start
+action[findOrdersWithStatus][]=stepValue
+
+action[findOrdersWithAutoForwardReason][]=autoForwardReason
+action[findOrdersWithAutoForwardReason][]=orderSystem
+action[findOrdersWithAutoForwardReason][]=fromDate
+action[findOrdersWithAutoForwardReason][]=toDate
+action[findOrdersWithAutoForwardReason][]=start
+action[findOrdersWithAutoForwardReason][]=stepValue
+
+action[findAutomatedOrders][]=orderSystem
+action[findAutomatedOrders][]=fromDate
+action[findAutomatedOrders][]=toDate
+action[findAutomatedOrders][]=start
+action[findAutomatedOrders][]=stepValue
+
+action[findNonAutomatedOrders][]=orderSystem
+action[findNonAutomatedOrders][]=fromDate
+action[findNonAutomatedOrders][]=toDate
+action[findNonAutomatedOrders][]=start
+action[findNonAutomatedOrders][]=stepValue
+
+action[findOrderType][]=articleDirect
+action[findOrderType][]=kvik
+action[findOrderType][]=norfri
+action[findOrderType][]=orderSystem
+action[findOrderType][]=fromDate
+action[findOrderType][]=toDate
+action[findOrderType][]=start
+action[findOrderType][]=stepValue
+
+action[bibliographicSearch][]=author
+action[bibliographicSearch][]=bibliographicRecordId
+action[bibliographicSearch][]=isbn
+action[bibliographicSearch][]=issn
+action[bibliographicSearch][]=mediumType
+action[bibliographicSearch][]=title
+action[bibliographicSearch][]=orderSystem
+action[bibliographicSearch][]=fromDate
+action[bibliographicSearch][]=toDate
+action[bibliographicSearch][]=start
+action[bibliographicSearch][]=stepValue
+action[bibliographicSearch][]=orderType
+
+action[getOrderStatus][]=orderId
+action[getOrderStatus][]=orderSystem
+action[getOrderStatus][]=fromDate
+action[getOrderStatus][]=toDate
+action[getOrderStatus][]=start
+action[getOrderStatus][]=stepValue
+
+; this part is database-specific.
+; map fields in databasetable(ors_order)
+[ors_order]
+ACTIVE=
+ACTIVEID=
+ARTICLEDIRECT=
+ARTICLEFIRSTNOTE=
+o.AUTHOR=
+AUTHOROFCOMPONENT=
+AUTOFORWARDDELIVERTODAY=
+AUTOFORWARDREASON=
+AUTOFORWARDRESULT=
+BIBLIOGRAPHICCATEGORY=
+BIBLIOGRAPHICRECORDAGENCYID=
+BIBLIOGRAPHICRECORDID=
+CALLNUMBER=
+CANCELLED=
+CANCELLEDDATE=to_char(CANCELLEDDATE,'YYYY-MM-DD') CANCELLEDDATE
+CLOSED=
+CLOSEDDATE=to_char(CLOSEDDATE,'YYYY-MM-DD') CLOSEDDATE
+COPY=
+;CREATIONDATE=to_char(CREATIONDATE,'YYYY-MM-DD HH24:MI:SS') CREATIONDATE
+CREATIONDATE=to_char(SYS_EXTRACT_UTC(CREATIONDATE),'YYYY-MM-DD HH24:MI:SS') CREATIONDATE
+;CREATIONDATE=SYS_EXTRACT_UTC(CREATIONDATE) CREATIONDATE
+DATEDUE=to_char(DATEDUE,'YYYY-MM-DD') DATEDUE
+DESIREDDATEDUE=to_char(DESIREDDATEDUE,'YYYY-MM-DD') DESIREDDATEDUE
+EDITION=
+EXACTEDITION=
+EXPECTEDDELIVERY=to_char(EXPECTEDDELIVERY,'YYYY-MM-DD') EXPECTEDDELIVERY
+FORWARDORDERID=
+ISBN=
+ISSHIPPED=
+ISSN=
+ISSUE=
+ITEMID=
+KVIK=
+LANGUAGE=
+LASTRENEWALDATE=to_char(LASTRENEWALDATE,'YYYY-MM-DD') LASTRENEWALDATE
 
 [howru]
-;test[] = search&query=danmark&stepValue=1
-;preg_match[] = hitCount
-;error[] = ERROR searching for danmark
+[howru]
+test[]=findAllOrders&requesterAgencyId=716702&agency=716700&orderSystem=pallesgavebod
+preg_match[]=result
+error[]=ERROR findAllOrders&requesterAgencyId=716702&agency=716700&orderSystem=pallesgavebod
+
