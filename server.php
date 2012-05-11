@@ -481,7 +481,7 @@ class OFO_solr {
   private function check_in_list($valid_list, $selected_list, $error_text) {
     if (is_array($selected_list)) {
       foreach ($selected_list as $sel) {
-        if (!in_array($this->strip_agency($sel->_value), $valid_list))
+        if ($sel->_value && !in_array($this->strip_agency($sel->_value), $valid_list))
           return $error_text;
       }
     }
@@ -562,10 +562,15 @@ class OFO_solr {
     }
   }
 
+  /** \brief build the solr-search corresponding to the user-request
+   *         use the solr edismax search handler syntax
+   *         OR searches has to be field:(a OR b) and not (field:a OR field:b)
+   *  return a solr-query string
+   */
   private function set_solr_query($param) {
     switch ($this->action) {
       case 'findAllOpenEndUserOrders':
-        $ret = 'closed:N AND (ordertype:enduser_request OR ordertype:enduser_illrequest)';
+        $ret = 'closed:N AND ordertype:(enduser_request OR enduser_illrequest)';
         $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
         $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
@@ -676,22 +681,26 @@ class OFO_solr {
   private function add_one_par($par, $search_field, $ret = '', $op = 'AND') {
     if (is_array($par)) {
       foreach ($par as $val) {
-        $help = $this->add_one_par($val, $search_field, $help, 'OR');
+        if ($val->_value)
+          $help .= ($help ? ' OR ' : '') . $this->norm_agency($val->_value, $search_field);
       }
-      if ($help) {
-        if ($ret) $ret .= ' ' . $op . ' ';
-        $ret .= '(' . $help . ')';
-      }
+      if ($help)
+        $ret .= ($ret ? " $op " : '') . $search_field . ':(' . $help . ')';
     }
     else {
-      if ($par->_value) {
-        if ($search_field == 'requesterid' || $search_field == 'responderid')
-          $par->_value = $this->strip_agency($par->_value);
-        if ($ret) $ret .= ' ' . $op . ' ';
-        $ret .= $search_field . ':' . $par->_value;
-      }
+      if ($par->_value)
+        $ret .= ($ret ? " $op " : '') . $search_field . ':' . $this->norm_agency($par->_value, $search_field);
     }
     return $ret;
+  }
+
+  /** \brief
+   *  return normalized agency for selected fields
+   */
+  private function norm_agency($agency, $field) {
+    if ($field == 'requesterid' || $field == 'responderid')
+      $agency = $this->strip_agency($agency);
+    return $agency;
   }
 
   /** \brief
