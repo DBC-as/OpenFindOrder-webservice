@@ -279,10 +279,6 @@
 				</xs:choice>
 				<xs:element ref="ofo:author" minOccurs="0"/>
 				<xs:element ref="ofo:bibliographicFreeText" minOccurs="0"/>
-				<xs:element ref="ofo:bibliographicRecordId" minOccurs="0"/>
-				<xs:element ref="ofo:isbn" minOccurs="0"/>
-				<xs:element ref="ofo:issn" minOccurs="0"/>
-				<xs:element ref="ofo:mediumType" minOccurs="0"/>
 				<xs:element ref="ofo:orderType" minOccurs="0"/>
 				<xs:element ref="ofo:title" minOccurs="0"/>
 				<xs:group ref="ofo:requestGeneral"/>
@@ -992,7 +988,6 @@
 		</xs:annotation>
 		<xs:sequence>
 			<xs:element ref="ofo:agency"/>
-			<xs:element ref="ofo:orderSystem" minOccurs="0"/>
 			<xs:element ref="ofo:fromDate" minOccurs="0"/>
 			<xs:element ref="ofo:toDate" minOccurs="0"/>
 			<xs:element ref="ofo:outputType" minOccurs="0"/>
