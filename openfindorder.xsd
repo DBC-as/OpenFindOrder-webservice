@@ -1028,6 +1028,9 @@
 		<xs:restriction base="xs:string">
 			<xs:enumeration value="open find order service not available"/>
 			<xs:enumeration value="no orders found"/>
+			<xs:enumeration value="cannot_find_agency"/>
+			<xs:enumeration value="requester_not_in_agency"/>
+			<xs:enumeration value="responder_not_in_agency"/>
 			<xs:enumeration value="authentication_error"/>
 		</xs:restriction>
 	</xs:simpleType>
