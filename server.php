@@ -71,7 +71,26 @@ class openFindOrder extends webServiceServer {
     die();
   }
 
-// FVS this one
+  /** \brif
+      The service 
+   */
+  public function findManuallyFinishedIllOrders($param) {
+    if ($error=OFO_agency::authenticate($param->agency->_value))
+      return $this->send_error($error);
+
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
+
+    //$OFO = new OFO_database("findManuallyFinishedIllOrders", $this->config, $this->watch);
+    //$orders = $OFO->findOrders($param);
+//var_dump($orders);
+
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
+  }
+
+  /** \brif
+      The service 
+   */
   public function findAllOpenEndUserOrders($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
@@ -93,10 +112,14 @@ class openFindOrder extends webServiceServer {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findNonLocalizedEndUserOrders', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    //$OFO = new OFO_database('findNonLocalizedEndUserOrders', $this->config);
+    //$orders = $OFO->findOrders($param);
+//var_dump($orders);
+
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /** \brief
@@ -106,10 +129,14 @@ class openFindOrder extends webServiceServer {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findLocalizedEndUserOrders', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    //$OFO = new OFO_database('findLocalizedEndUserOrders', $this->config);
+    //$orders = $OFO->findOrders($param);
+//var_dump($orders);
+
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /** \brief
@@ -119,10 +146,13 @@ class openFindOrder extends webServiceServer {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findClosedIllOrders', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
+    //$OFO = new OFO_database('findClosedIllOrders', $this->config);
+    //$orders = $OFO->findOrders($param);
+//var_dump($orders);
 
-    return $this->findOrderResponse($orders);
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /** \brief
@@ -131,31 +161,46 @@ class openFindOrder extends webServiceServer {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findOpenIllOrders', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
+    //$OFO = new OFO_database('findOpenIllOrders', $this->config);
+    //$orders = $OFO->findOrders($param);
+//var_dump($orders);
 
-    return $this->findOrderResponse($orders);
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
 
+  /** \brief
+   */
   public function findAllIllOrders($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findAllIllOrders', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    //$OFO = new OFO_database('findAllIllOrders', $this->config);
+    //$orders = $OFO->findOrders($param);
+//var_dump($orders);
+
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
+  /** \brief
+   */
   public function findAllNonIllOrders($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findAllNonIllOrders', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    //$OFO = new OFO_database('findAllNonIllOrders', $this->config);
+    //$orders = $OFO->findOrders($param);
+//var_dump($orders);
+
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
 
@@ -167,10 +212,14 @@ class openFindOrder extends webServiceServer {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findAllOrders', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    //$OFO = new OFO_database('findAllOrders', $this->config);
+    //$orders = $OFO->findOrders($param);
+//var_dump($orders);
+
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /**\brief
@@ -178,14 +227,15 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object.
    */
   public function findSpecificOrder($param) {
-    // TODO implement
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findSpecificOrder', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
+    //$OFO = new OFO_database('findSpecificOrder', $this->config);
+    //$orders = $OFO->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /**\brief
@@ -249,10 +299,13 @@ class openFindOrder extends webServiceServer {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findAutomatedOrders', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    //$OFO = new OFO_database('findAutomatedOrders', $this->config);
+    //$orders = $OFO->findOrders($param);
+
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /**\brief
@@ -273,7 +326,6 @@ class openFindOrder extends webServiceServer {
    *  The service request for a biblographical search of orders
    * @param; request parameters in request-xml object
    */
-// FVS or this one
   public function bibliographicSearch($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
@@ -384,6 +436,7 @@ $ws->handle_request();
  * Class to handle connection to solr and correlation to xml-schema
  */
 class OFO_solr {
+  public static $error;
   public static $vip_connect;
   public static $numrows;
 
@@ -399,6 +452,7 @@ class OFO_solr {
    * @param; soap_action and config-object
    */
   public function __construct($action, $config) {
+    self::$error = null;
     if (!$this->solr_url = $config->get_value('solr_order_uri', 'setup'))
       die('no url to order-SOLR in config-file');
     if (!$this->agency_url = $config->get_value('openagency_agency_list', 'setup'))
@@ -569,6 +623,18 @@ class OFO_solr {
    */
   private function set_solr_query($param) {
     switch ($this->action) {
+      case "findManuallyFinishedIllOrders":
+        $ret = 'ordertype:inter_library_request';
+        if (isset($param->requesterOrderState->_value)) {
+          $ret .= 'requesterorderstate:' . $param->requesterOrderState->_value;
+        } 
+        elseif (isset($param->providerOrderState->_value)) {
+          $ret .= 'providerorderstate:' . $param->providerOrderState->_value;
+        }
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
+        $ret = $this->add_common_pars($param, $ret);
+        break;
       case 'findAllOpenEndUserOrders':
         $ret = 'closed:N AND ordertype:(enduser_request OR enduser_illrequest)';
         $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
@@ -576,15 +642,33 @@ class OFO_solr {
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findAllOrders':
+        $ret = '';
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findAllIllOrders':
+        $ret = 'ordertype:inter_library_request';
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findAllNonIllOrders':
+        $ret = 'ordertype:(enduser_request OR enduser_illrequest)';
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findSpecificOrder':
+        if ($param->orderType->_value == 'enduser_order') {
+          $ret = 'ordertype:(enduser_request OR enduser_illrequest)';
+        }
+        if ($param->orderType->_value == 'inter_library_order') {
+          $ret = 'ordertype:inter_library_request';
+        }
+        $ret = $this->add_one_par($param->orderId, 'orderid', $ret);
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findOrdersFromUser':
@@ -601,9 +685,9 @@ class OFO_solr {
         // $ret = $this->add_one_par($param->mediumType, 'mediumtype', $ret);  // not indexed
         if ($param->bibliographicFreeText) {
           $ret = $this->add_one_par($param->bibliographicFreeText, 'author', $ret, 'AND (');
-          $ret = $this->add_one_par($param->bibliographicFreeText, 'title', $ret, 'OR') . ')';
+          $ret = '(' . $this->add_one_par($param->bibliographicFreeText, 'title', $ret, 'OR') . ')';
         }
-        $ret = $this->add_one_par($param->orderType, 'ordertype', $ret);
+        //$ret = $this->add_one_par($param->orderType, 'ordertype', $ret);
         $ret = $this->add_one_par($param->title, 'title', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
@@ -614,6 +698,9 @@ class OFO_solr {
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findAutomatedOrders':
+        $ret = 'ordertype:inter_library_request AND autoforwardresult:automated';
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findNonAutomatedOrders':
@@ -626,15 +713,51 @@ class OFO_solr {
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findOpenIllOrders':
+        $ret = 'ordertype:inter_library_request';
+        $ret .= ' AND -provideranswer:*';
+        if ($param->requesterAgencyId) {
+          $ret .= ' AND -requesterorderstate:finished';
+        }
+        if ($param->responderAgencyId) {
+          $ret .= ' AND -providerorderstate:finished';
+        }
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findClosedIllOrders':
+        $ret = 'ordertype:inter_library_request';
+        if ($param->orderStatus->_value == 'shipped') {
+          $ret .= ' AND isshipped:Y';
+        }
+        elseif ($param->orderStatus->_value) {
+          $ret .= ' AND provideranswer:' . $param->orderStatus->_value;
+        }
+        else {
+          $ret .= ' AND provideranswer:*';
+        }
+        if ($param->requesterAgencyId) {
+          $ret .= ' AND -requesterorderstate:finished';
+        }
+        if ($param->responderAgencyId) {
+          $ret .= ' AND -providerorderstate:finished';
+        }
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findLocalizedEndUserOrders':
+        $ret = 'ordertype:enduser_request';
+        $ret .= ' AND closed:' . ($this->xs_boolean($param->closed->_value) ? 'Y' : 'N');
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findNonLocalizedEndUserOrders':
+        $ret = 'ordertype:enduser_illrequest';
+        $ret .= ' AND closed:' . ($this->xs_boolean($param->closed->_value) ? 'Y' : 'N');
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       default:
@@ -701,6 +824,13 @@ class OFO_solr {
     if ($field == 'requesterid' || $field == 'responderid')
       $agency = $this->strip_agency($agency);
     return $agency;
+  }
+
+  /** \brief
+   *  return true if xs:boolean is so
+   */
+  private function xs_boolean($str) {
+    return (strtolower($str) == 'true' || $str == 1);
   }
 
   /** \brief
@@ -974,6 +1104,9 @@ class OFO_database {
   */
   private function set_sql($param, $oci) {
     switch ($this->action) {
+      case "findManuallyFinishedIllOrders":
+        $ret = OFO_sql::findManuallyFinishedIllOrders($param, $oci);
+        break;
       case 'findAllOpenEndUserOrders':
         $ret = OFO_sql::findAllOpenEndUserOrders($param, $oci);
         break;
@@ -1143,6 +1276,37 @@ class OFO_sql {
   public static function get_select() {
     // return 'SELECT * FROM ORS_ORDER WHERE ';
     return '';
+  }
+
+  public static function findManuallyFinishedIllOrders($params, $oci) {
+    $sql = self::get_select();
+
+    if ($add = self::set_ids($params, $ids) )
+      $sql .= $add;
+    else
+      return FALSE;
+
+    $sql .= self::bind_array($ids, $oci);
+
+    // make sure these are ill-orders
+    $oci->bind('ordertype_bind', 'inter_library_request');
+    $sql .= "and ordertype=:ordertype_bind\n";
+
+    //TODO implement rest
+    $oci->bind('orderstate_bind', 'finished');
+    if (isset($params->requesterOrderState->_value))
+      $sql .= "and (requesterorderstate=:orderstate_bind OR requesterorderstate IS NOT NULL)\n";
+    elseif (isset($params->providerOrderState->_value))
+      $sql .= "and (providerorderstate=:orderstate_bind OR providerorderstate IS NOT NULL)\n";
+
+    $add = self::setRequestGeneral($params, $oci);
+
+    if ($add !== FALSE)
+      $sql .= $add;
+    else
+      return FALSE;
+
+    return $sql;
   }
 
 
