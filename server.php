@@ -81,10 +81,6 @@ class openFindOrder extends webServiceServer {
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
 
-    //$OFO = new OFO_database("findManuallyFinishedIllOrders", $this->config, $this->watch);
-    //$orders = $OFO->findOrders($param);
-//var_dump($orders);
-
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
@@ -97,10 +93,6 @@ class openFindOrder extends webServiceServer {
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
-
-    //$OFO = new OFO_database('findAllOpenEndUserOrders', $this->config);
-    //$orders = $OFO->findOrders($param);
-//var_dump($orders);
 
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
@@ -115,10 +107,6 @@ class openFindOrder extends webServiceServer {
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
 
-    //$OFO = new OFO_database('findNonLocalizedEndUserOrders', $this->config);
-    //$orders = $OFO->findOrders($param);
-//var_dump($orders);
-
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
@@ -132,10 +120,6 @@ class openFindOrder extends webServiceServer {
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
 
-    //$OFO = new OFO_database('findLocalizedEndUserOrders', $this->config);
-    //$orders = $OFO->findOrders($param);
-//var_dump($orders);
-
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
@@ -148,9 +132,6 @@ class openFindOrder extends webServiceServer {
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
-    //$OFO = new OFO_database('findClosedIllOrders', $this->config);
-    //$orders = $OFO->findOrders($param);
-//var_dump($orders);
 
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
@@ -163,9 +144,6 @@ class openFindOrder extends webServiceServer {
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
-    //$OFO = new OFO_database('findOpenIllOrders', $this->config);
-    //$orders = $OFO->findOrders($param);
-//var_dump($orders);
 
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
@@ -180,10 +158,6 @@ class openFindOrder extends webServiceServer {
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
 
-    //$OFO = new OFO_database('findAllIllOrders', $this->config);
-    //$orders = $OFO->findOrders($param);
-//var_dump($orders);
-
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
@@ -195,10 +169,6 @@ class openFindOrder extends webServiceServer {
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
-
-    //$OFO = new OFO_database('findAllNonIllOrders', $this->config);
-    //$orders = $OFO->findOrders($param);
-//var_dump($orders);
 
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
@@ -215,10 +185,6 @@ class openFindOrder extends webServiceServer {
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
 
-    //$OFO = new OFO_database('findAllOrders', $this->config);
-    //$orders = $OFO->findOrders($param);
-//var_dump($orders);
-
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
@@ -232,8 +198,6 @@ class openFindOrder extends webServiceServer {
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
-    //$OFO = new OFO_database('findSpecificOrder', $this->config);
-    //$orders = $OFO->findOrders($param);
 
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
@@ -242,28 +206,30 @@ class openFindOrder extends webServiceServer {
    * The service request for orders from a specific user (userId, userName or userMail)
    * @param; request parameters in request-xml object.
    */
+// 2DO - done
   public function findOrdersFromUser($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findOrdersFromUser', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /**\brief
    * The service request for orders from unknown users (general)
    * @param; request parameters in request-xml object.
    */
+// 2DO - done
   public function findOrdersFromUnknownUser($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findOrdersFromUnknownUser', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /**\brief
@@ -273,7 +239,12 @@ class openFindOrder extends webServiceServer {
   public function findOrdersWithStatus($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
+/*
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
+*/
     return $this->send_error('placeholder - request not yet defined');
   }
 
@@ -281,14 +252,15 @@ class openFindOrder extends webServiceServer {
    * The service request for reason for auto forward (autoForwardReason)
    * @param; request parameters in request-xml object.
    */
+// 2DO - done
   public function findOrdersWithAutoForwardReason($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findOrdersWithAutoForwardReason', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /**\brief
@@ -302,9 +274,6 @@ class openFindOrder extends webServiceServer {
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
 
-    //$OFO = new OFO_database('findAutomatedOrders', $this->config);
-    //$orders = $OFO->findOrders($param);
-
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
@@ -312,14 +281,15 @@ class openFindOrder extends webServiceServer {
    * The service request for orders from a specific ill-cooperation (kvik, norfri or articleDirect)
    * @param; request parameters in request-xml object.
    */
+// 2DO - done
   public function findOrderType($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findOrderType', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /**\brief
@@ -332,8 +302,6 @@ class openFindOrder extends webServiceServer {
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
     $orders = $OFO_s->findOrders($param);
-    //$OFO = new OFO_database('bibliographicSearch', $this->config);
-    //$orders = $OFO->findOrders($param);
 
     return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
@@ -342,28 +310,30 @@ class openFindOrder extends webServiceServer {
    * The service request for the status of an order
    * @param; request parameters in request-xml object
    */
+// 2DO - done
   public function getOrderStatus($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('getOrderStatus', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /**\brief
    * The service request for non-automatatically forwarded orders (general)
    *  @param; request parameters in request-xml object
    */
+// 2DO - done
   public function findNonAutomatedOrders($param) {
     if ($error = OFO_agency::authenticate($param->agency->_value))
       return $this->send_error($error);
 
-    $OFO = new OFO_database('findNonAutomatedOrders', $this->config);
-    $orders = $OFO->findOrders($param);
+    $OFO_s = new OFO_solr($this->soap_action, $this->config);
+    $orders = $OFO_s->findOrders($param);
 
-    return $this->findOrderResponse($orders);
+    return $this->findOrderResponse($orders, $OFO_s->numrows);
   }
 
   /**\brief
@@ -663,7 +633,7 @@ class OFO_solr {
         if ($param->orderType->_value == 'enduser_order') {
           $ret = 'ordertype:(enduser_request OR enduser_illrequest)';
         }
-        if ($param->orderType->_value == 'inter_library_order') {
+        elseif ($param->orderType->_value == 'inter_library_order') {
           $ret = 'ordertype:inter_library_request';
         }
         $ret = $this->add_one_par($param->orderId, 'orderid', $ret);
@@ -672,9 +642,29 @@ class OFO_solr {
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findOrdersFromUser':
+        if ($param->orderType->_value == 'enduser_order') {
+          $ret = 'ordertype:(enduser_request OR enduser_illrequest)';
+        }
+        elseif ($param->orderType->_value == 'inter_library_order') {
+          $ret = 'ordertype:inter_library_request';
+        }
+        $ret = $this->add_one_par($param->userId, 'userid', $ret);
+        $ret = $this->add_one_par($param->userMail, 'usermail', $ret);
+        $ret = $this->add_one_par($param->userName, 'userName', $ret);
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
+// Spooky ... this OR-part below has to be the last and no () around it ????
+// apparently the edismax searchHandler parse (a OR b OR c) as some list where all members should be present
+// Users are therefore recommended to user userId, userMail and userName instead of userFreeText
+        if ($uft = $param->userFreeText->_value) {
+          $ret .= ($ret ? ' AND ' : '') . 'userid:"' . $uft . '" OR usermail:"' . $uft . '" OR username:"' . $uft . '"';
+        }
         break;
       case 'findOrdersFromUnknownUser':
+        $ret = 'useridauthenticated:no';
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'bibliographicSearch':
@@ -695,6 +685,9 @@ class OFO_solr {
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findOrdersWithAutoForwardReason':
+        $ret = $this->add_one_par($param->autoForwardReason, 'autoforwardreason', $ret);
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findAutomatedOrders':
@@ -704,12 +697,23 @@ class OFO_solr {
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findNonAutomatedOrders':
+        $ret = 'autoforwardreason:non_automated';
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findOrderType':
+        $ret = $this->add_one_par($param->articleDirect, 'articledirect', $ret);
+        $ret = $this->add_one_par($param->kvik, 'kvik', $ret);
+        $ret = $this->add_one_par($param->norfri, 'norfri', $ret);
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'getOrderStatus':
+        $ret = $this->add_one_par($param->orderId, 'orderid', $ret);
+        $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
+        $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
         break;
       case 'findOpenIllOrders':
