@@ -18,33 +18,33 @@ wsdl = openfindorder.wsdl
 
 ; soapActions and their corresponding request structure
 ; Can be found in the wsdl but is stated here for convenience
-soapAction[findAllOrders]=findAllOrdersRequest
-soapAction[findAllIllOrders]=findAllIllOrdersRequest
-soapAction[findAllNonIllOrders]=findAllNonIllOrdersRequest
-soapAction[findOpenIllOrders]=findOpenIllOrdersRequest
-soapAction[findClosedIllOrders]=findClosedIllOrdersRequest
-soapAction[findSpecificOrder]=findSpecificOrderRequest
-soapAction[findOrdersFromUser]=findOrdersFromUserRequest
-soapAction[findOrdersFromUnknownUser]=findOrdersFromUnknownUserRequest
-soapAction[findLocalizedEndUserOrders]=findLocalizedEndUserOrdersRequest
-soapAction[findNonLocalizedEndUserOrders]=findNonLocalizedEndUserOrdersRequest
-soapAction[findOrdersWithAutoForwardReason]=findOrdersWithAutoForwardReasonRequest
-soapAction[findAutomatedOrders]=findAutomatedOrdersRequest
-soapAction[findNonAutomatedOrders]=findNonAutomatedOrdersRequest
-soapAction[findOrderType]=findOrderOfTypeRequest
-soapAction[bibliographicSearch]=bibliographicSearchRequest
-soapAction[getOrderStatus]=getOrderStatusRequest
-soapAction[findAllOpenEndUserOrders]=findAllOpenEndUserOrdersRequest
-soapAction[findManuallyFinishedIllOrders]=findManuallyFinishedIllOrdersRequest
+soapAction[findAllOrders] = findAllOrdersRequest
+soapAction[findAllIllOrders] = findAllIllOrdersRequest
+soapAction[findAllNonIllOrders] = findAllNonIllOrdersRequest
+soapAction[findOpenIllOrders] = findOpenIllOrdersRequest
+soapAction[findClosedIllOrders] = findClosedIllOrdersRequest
+soapAction[findSpecificOrder] = findSpecificOrderRequest
+soapAction[findOrdersFromUser] = findOrdersFromUserRequest
+soapAction[findOrdersFromUnknownUser] = findOrdersFromUnknownUserRequest
+soapAction[findLocalizedEndUserOrders] = findLocalizedEndUserOrdersRequest
+soapAction[findNonLocalizedEndUserOrders] = findNonLocalizedEndUserOrdersRequest
+soapAction[findOrdersWithAutoForwardReason] = findOrdersWithAutoForwardReasonRequest
+soapAction[findAutomatedOrders] = findAutomatedOrdersRequest
+soapAction[findNonAutomatedOrders] = findNonAutomatedOrdersRequest
+soapAction[findOrderType] = findOrderOfTypeRequest
+soapAction[bibliographicSearch] = bibliographicSearchRequest
+soapAction[getOrderStatus] = getOrderStatusRequest
+soapAction[findAllOpenEndUserOrders] = findAllOpenEndUserOrdersRequest
+soapAction[findManuallyFinishedIllOrders] = findManuallyFinishedIllOrdersRequest
 
 ; prefixes and namespaces
 xmlns[NONE] = http://oss.dbc.dk/ns/openfindorder
-xmlns[xml]=http://www.w3.org/XML/1998/namespace
-xmlns[wsdl]=http://schemas.xmlsoap.org/wsdl/
-xmlns[xs]=http://www.w3.org/2001/XMLSchema
-xmlns[ofow]=http://oss.dbc.dk/ns/openfindorder_wsdl
-xmlns[ofo]=http://oss.dbc.dk/ns/openfindorder
-xmlns[soap]=http://schemas.xmlsoap.org/wsdl/soap
+xmlns[xml] = http://www.w3.org/XML/1998/namespace
+xmlns[wsdl] = http://schemas.xmlsoap.org/wsdl/
+xmlns[xs] = http://www.w3.org/2001/XMLSchema
+xmlns[ofow] = http://oss.dbc.dk/ns/openfindorder_wsdl
+xmlns[ofo] = http://oss.dbc.dk/ns/openfindorder
+xmlns[soap] = http://schemas.xmlsoap.org/wsdl/soap
 
 ; path to xml-examples
 xmldir = ./xml
@@ -114,149 +114,150 @@ aaa_ip_rights[dbc][ressource][openfindorder] = 500
 ;
 ; action[ALL] defines parameter used in all defined soap-actions
 ;
-action[ALL][]=outputType
-action[ALL][]=callback
-action[ALL][]=requesterAgencyId
-action[ALL][]=responderAgencyId
-action[ALL][]=agency
-action[ALL][authentication][]=groupIdAut
-action[ALL][authentication][]=passwordAut
-action[ALL][authentication][]=userIdAut
-action[ALL][]=sortKey
+action[ALL][] = outputType
+action[ALL][] = callback
+action[ALL][] = requesterAgencyId
+action[ALL][] = responderAgencyId
+action[ALL][] = agency
+action[ALL][authentication][] = groupIdAut
+action[ALL][authentication][] = passwordAut
+action[ALL][authentication][] = userIdAut
+action[ALL][] = sortKey
 
-action[findManuallyFinishedIllOrders][]=providerOrderState
-action[findManuallyFinishedIllOrders][]=requesterOrderState
-action[findManuallyFinishedIllOrders][]=orderSystem
-action[findManuallyFinishedIllOrders][]=fromDate
-action[findManuallyFinishedIllOrders][]=toDate
-action[findManuallyFinishedIllOrders][]=start
-action[findManuallyFinishedIllOrders][]=stepValue
+action[findManuallyFinishedIllOrders][] = providerOrderState
+action[findManuallyFinishedIllOrders][] = requesterOrderState
+action[findManuallyFinishedIllOrders][] = orderSystem
+action[findManuallyFinishedIllOrders][] = fromDate
+action[findManuallyFinishedIllOrders][] = toDate
+action[findManuallyFinishedIllOrders][] = start
+action[findManuallyFinishedIllOrders][] = stepValue
 
-action[findAllOpenEndUserOrders][]=orderSystem
-action[findAllOpenEndUserOrders][]=fromDate
-action[findAllOpenEndUserOrders][]=toDate
-action[findAllOpenEndUserOrders][]=start
-action[findAllOpenEndUserOrders][]=stepValue
+action[findAllOpenEndUserOrders][] = orderSystem
+action[findAllOpenEndUserOrders][] = fromDate
+action[findAllOpenEndUserOrders][] = toDate
+action[findAllOpenEndUserOrders][] = start
+action[findAllOpenEndUserOrders][] = stepValue
 
-action[findAllIllOrders][]=orderSystem
-action[findAllIllOrders][]=fromDate
-action[findAllIllOrders][]=toDate
-action[findAllIllOrders][]=start
-action[findAllIllOrders][]=stepValue
+action[findAllIllOrders][] = orderSystem
+action[findAllIllOrders][] = fromDate
+action[findAllIllOrders][] = toDate
+action[findAllIllOrders][] = start
+action[findAllIllOrders][] = stepValue
 
-action[findAllNonIllOrders][]=orderSystem
-action[findAllNonIllOrders][]=fromDate
-action[findAllNonIllOrders][]=toDate
-action[findAllNonIllOrders][]=start
-action[findAllNonIllOrders][]=stepValue
+action[findAllNonIllOrders][] = orderSystem
+action[findAllNonIllOrders][] = fromDate
+action[findAllNonIllOrders][] = toDate
+action[findAllNonIllOrders][] = start
+action[findAllNonIllOrders][] = stepValue
 
-action[findOpenIllOrders][]=orderSystem
-action[findOpenIllOrders][]=fromDate
-action[findOpenIllOrders][]=toDate
-action[findOpenIllOrders][]=start
-action[findOpenIllOrders][]=stepValue
+action[findOpenIllOrders][] = orderSystem
+action[findOpenIllOrders][] = fromDate
+action[findOpenIllOrders][] = toDate
+action[findOpenIllOrders][] = start
+action[findOpenIllOrders][] = stepValue
 
-action[findClosedIllOrders][]=orderStatus
-action[findClosedIllOrders][]=orderSystem
-action[findClosedIllOrders][]=fromDate
-action[findClosedIllOrders][]=toDate
-action[findClosedIllOrders][]=start
-action[findClosedIllOrders][]=stepValue
+action[findClosedIllOrders][] = orderStatus
+action[findClosedIllOrders][] = orderSystem
+action[findClosedIllOrders][] = fromDate
+action[findClosedIllOrders][] = toDate
+action[findClosedIllOrders][] = start
+action[findClosedIllOrders][] = stepValue
 
-action[findLocalizedEndUserOrders][]=closed
-action[findLocalizedEndUserOrders][]=orderSystem
-action[findLocalizedEndUserOrders][]=fromDate
-action[findLocalizedEndUserOrders][]=toDate
-action[findLocalizedEndUserOrders][]=start
-action[findLocalizedEndUserOrders][]=stepValue
+action[findLocalizedEndUserOrders][] = closed
+action[findLocalizedEndUserOrders][] = orderSystem
+action[findLocalizedEndUserOrders][] = fromDate
+action[findLocalizedEndUserOrders][] = toDate
+action[findLocalizedEndUserOrders][] = start
+action[findLocalizedEndUserOrders][] = stepValue
 
-action[findNonLocalizedEndUserOrders][]=closed
-action[findNonLocalizedEndUserOrders][]=orderSystem
-action[findNonLocalizedEndUserOrders][]=fromDate
-action[findNonLocalizedEndUserOrders][]=toDate
-action[findNonLocalizedEndUserOrders][]=start
-action[findNonLocalizedEndUserOrders][]=stepValue
+action[findNonLocalizedEndUserOrders][] = closed
+action[findNonLocalizedEndUserOrders][] = orderSystem
+action[findNonLocalizedEndUserOrders][] = fromDate
+action[findNonLocalizedEndUserOrders][] = toDate
+action[findNonLocalizedEndUserOrders][] = start
+action[findNonLocalizedEndUserOrders][] = stepValue
 
-action[findAllOrders][]=orderSystem
-action[findAllOrders][]=fromDate
-action[findAllOrders][]=toDate
-action[findAllOrders][]=start
-action[findAllOrders][]=stepValue
+action[findAllOrders][] = orderSystem
+action[findAllOrders][] = fromDate
+action[findAllOrders][] = toDate
+action[findAllOrders][] = start
+action[findAllOrders][] = stepValue
 
-action[findSpecificOrder][]=orderId
+action[findSpecificOrder][] = orderId
 
-action[findOrdersFromUser][]=userId
-action[findOrdersFromUser][]=userMail
-action[findOrdersFromUser][]=userName
-action[findOrdersFromUser][]=orderSystem
-action[findOrdersFromUser][]=fromDate
-action[findOrdersFromUser][]=toDate
-action[findOrdersFromUser][]=start
-action[findOrdersFromUser][]=stepValue
-action[findOrdersFromUser][]=orderType
+action[findOrdersFromUser][] = userId
+action[findOrdersFromUser][] = userMail
+action[findOrdersFromUser][] = userName
+action[findOrdersFromUser][] = orderSystem
+action[findOrdersFromUser][] = fromDate
+action[findOrdersFromUser][] = toDate
+action[findOrdersFromUser][] = start
+action[findOrdersFromUser][] = stepValue
+action[findOrdersFromUser][] = orderType
 
-action[findOrdersFromUnknownUser][]=orderSystem
-action[findOrdersFromUnknownUser][]=fromDate
-action[findOrdersFromUnknownUser][]=toDate
-action[findOrdersFromUnknownUser][]=start
-action[findOrdersFromUnknownUser][]=stepValue
+action[findOrdersFromUnknownUser][] = orderSystem
+action[findOrdersFromUnknownUser][] = fromDate
+action[findOrdersFromUnknownUser][] = toDate
+action[findOrdersFromUnknownUser][] = start
+action[findOrdersFromUnknownUser][] = stepValue
 
-action[findOrdersWithStatus][]=orderSystem
-action[findOrdersWithStatus][]=fromDate
-action[findOrdersWithStatus][]=toDate
-action[findOrdersWithStatus][]=start
-action[findOrdersWithStatus][]=stepValue
+action[findOrdersWithStatus][] = orderSystem
+action[findOrdersWithStatus][] = fromDate
+action[findOrdersWithStatus][] = toDate
+action[findOrdersWithStatus][] = start
+action[findOrdersWithStatus][] = stepValue
 
-action[findOrdersWithAutoForwardReason][]=autoForwardReason
-action[findOrdersWithAutoForwardReason][]=orderSystem
-action[findOrdersWithAutoForwardReason][]=fromDate
-action[findOrdersWithAutoForwardReason][]=toDate
-action[findOrdersWithAutoForwardReason][]=start
-action[findOrdersWithAutoForwardReason][]=stepValue
+action[findOrdersWithAutoForwardReason][] = autoForwardReason
+action[findOrdersWithAutoForwardReason][] = orderSystem
+action[findOrdersWithAutoForwardReason][] = fromDate
+action[findOrdersWithAutoForwardReason][] = toDate
+action[findOrdersWithAutoForwardReason][] = start
+action[findOrdersWithAutoForwardReason][] = stepValue
 
-action[findAutomatedOrders][]=orderSystem
-action[findAutomatedOrders][]=fromDate
-action[findAutomatedOrders][]=toDate
-action[findAutomatedOrders][]=start
-action[findAutomatedOrders][]=stepValue
+action[findAutomatedOrders][] = orderSystem
+action[findAutomatedOrders][] = fromDate
+action[findAutomatedOrders][] = toDate
+action[findAutomatedOrders][] = start
+action[findAutomatedOrders][] = stepValue
 
-action[findNonAutomatedOrders][]=orderSystem
-action[findNonAutomatedOrders][]=fromDate
-action[findNonAutomatedOrders][]=toDate
-action[findNonAutomatedOrders][]=start
-action[findNonAutomatedOrders][]=stepValue
+action[findNonAutomatedOrders][] = orderSystem
+action[findNonAutomatedOrders][] = fromDate
+action[findNonAutomatedOrders][] = toDate
+action[findNonAutomatedOrders][] = start
+action[findNonAutomatedOrders][] = stepValue
 
-action[findOrderType][]=articleDirect
-action[findOrderType][]=kvik
-action[findOrderType][]=norfri
-action[findOrderType][]=orderSystem
-action[findOrderType][]=fromDate
-action[findOrderType][]=toDate
-action[findOrderType][]=start
-action[findOrderType][]=stepValue
+action[findOrderType][] = articleDirect
+action[findOrderType][] = kvik
+action[findOrderType][] = norfri
+action[findOrderType][] = orderSystem
+action[findOrderType][] = fromDate
+action[findOrderType][] = toDate
+action[findOrderType][] = start
+action[findOrderType][] = stepValue
 
-action[bibliographicSearch][]=author
-action[bibliographicSearch][]=bibliographicRecordId
-action[bibliographicSearch][]=isbn
-action[bibliographicSearch][]=issn
-action[bibliographicSearch][]=mediumType
-action[bibliographicSearch][]=title
-action[bibliographicSearch][]=orderSystem
-action[bibliographicSearch][]=fromDate
-action[bibliographicSearch][]=toDate
-action[bibliographicSearch][]=start
-action[bibliographicSearch][]=stepValue
-action[bibliographicSearch][]=orderType
+action[bibliographicSearch][] = author
+action[bibliographicSearch][] = bibliographicRecordId
+action[bibliographicSearch][] = isbn
+action[bibliographicSearch][] = issn
+action[bibliographicSearch][] = mediumType
+action[bibliographicSearch][] = title
+action[bibliographicSearch][] = orderSystem
+action[bibliographicSearch][] = fromDate
+action[bibliographicSearch][] = toDate
+action[bibliographicSearch][] = start
+action[bibliographicSearch][] = stepValue
+action[bibliographicSearch][] = orderType
 
-action[getOrderStatus][]=orderId
-action[getOrderStatus][]=orderSystem
-action[getOrderStatus][]=fromDate
-action[getOrderStatus][]=toDate
-action[getOrderStatus][]=start
-action[getOrderStatus][]=stepValue
+action[getOrderStatus][] = orderId
+action[getOrderStatus][] = orderSystem
+action[getOrderStatus][] = fromDate
+action[getOrderStatus][] = toDate
+action[getOrderStatus][] = start
+action[getOrderStatus][] = stepValue
 
 ; this part is database-specific.
 ; map fields in databasetable(ors_order)
+
 [ors_order]
 ACTIVE=
 ACTIVEID=
@@ -293,10 +294,62 @@ ITEMID=
 KVIK=
 LANGUAGE=
 LASTRENEWALDATE=to_char(LASTRENEWALDATE,'YYYY-MM-DD') LASTRENEWALDATE
+LATESTPROVIDERNOTE=
+LATESTREQUESTERNOTE=
+LOCALHOLDINGSID=
+LOOKEDUPUSERID=
+MEDIUMTYPE=
+NEEDBEFOREDATE=to_char(NEEDBEFOREDATE,'YYYY-MM-DD') NEEDBEFOREDATE
+NORFRI=
+NUMBEROFRENEWALS=
+o.ORDERID=
+ORDERSYSTEM=
+ORDERTYPE=
+ORIGINALORDERID=
+PAGINATION=
+PICKUPAGENCYID=
+PICKUPAGENCYSUBDIVISION=
+PLACEOFPUBLICATION=
+PLACEONHOLD=
+PROVIDERANSWER=
+PROVIDERANSWERDATE=to_char(PROVIDERANSWERDATE,'YYYY-MM-DD') PROVIDERANSWERDATE
+PROVIDERANSWERREASON=
+PROVIDERORDERSTATE=
+PUBLICATIONDATE=
+PUBLICATIONDATEOFCOMPONENT=
+PUBLISHER=
+RECEIVEDDATE=
+RENEWED=
+RENEWPENDINGDATE=to_char(RENEWPENDINGDATE,'YYYY-MM-DD') RENEWPENDINGDATE
+o.REQUESTERID=
+REQUESTERINITIALS=
+REQUESTERORDERSTATE=
+RESENDTOREQUESTERDATE=to_char(RESENDTOREQUESTERDATE,'YYYY-MM-DD') RESENDTOREQUESTERDATE
+RESENDTORESPONDERDATE=to_char(RESENDTORESPONDERDATE,'YYYY-MM-DD') RESENDTORESPONDERDATE
+RESPONDERID=
+RETURNEDDATE=to_char(RETURNEDDATE,'YYYY-MM-DD') RETURNEDDATE
+SERIESTITLENUMBER=
+SHIPPEDDATE=to_char(SHIPPEDDATE,'YYYY-MM-DD') SHIPPEDDATE
+SHIPPEDSERVICETYPE=
+o.TITLE=
+TITLEOFCOMPONENT=
+USERADDRESS=
+USERAGENCYID=
+USERDATEOFBIRTH=
+USERID=
+USERIDAUTHENTICATED=
+USERIDTYPE=
+USERMAIL=
+o.USERNAME=
+USERREFERENCESOURCE=
+USERTELEPHONE=
+VERIFICATIONREFERENCESOURCE=
+VOLUME=
+WANTSRECEIPT=
+WORLDCATNOTE=
 
 [howru]
-[howru]
-test[]=findAllOrders&requesterAgencyId=716702&agency=716700&orderSystem=pallesgavebod
-preg_match[]=result
-error[]=ERROR findAllOrders&requesterAgencyId=716702&agency=716700&orderSystem=pallesgavebod
+test[] = findAllOrders&requesterAgencyId=716702&agency=716700&orderSystem=pallesgavebod
+preg_match[] = result
+error[] = ERROR findAllOrders&requesterAgencyId=716702&agency=716700&orderSystem=pallesgavebod
 
