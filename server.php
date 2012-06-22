@@ -512,15 +512,11 @@ class OFO_solr {
     foreach ($this->xmlfields as $key =>$val) {
       if ($value =  $data[strtolower($val)]) {
         if ($value && $value != '0001-01-01' && $value != 'uninitialized') {
-          if ($key  !=  'placeOnHold') {
-            if ($value == 'yes')
+          if ($key !=  'placeOnHold') {
+            if ($value == 'yes' || $value == 'Y')
               $value = 'true';
-            if ($value == 'no')
+            if ($value == 'no' || $value == 'N')
               $value = 'false';
-            if ($value == 'N')
-              $value = 'false';
-            if ($value == 'Y')
-              $value = 'true';
           }
           if ($key == 'creationDate') {
             $value = str_replace(' ', 'T', $value);
