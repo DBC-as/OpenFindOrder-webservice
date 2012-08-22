@@ -785,25 +785,30 @@ class OFO_solr {
     if (is_array($par)) {
       foreach ($par as $val) {
         if ($val->_value)
-          $help .= ($help ? ' OR ' : '') . $this->norm_agency($val->_value, $search_field);
+          $help .= ($help ? ' OR ' : '') . $this->normalize($val->_value, $search_field);
       }
       if ($help)
         $ret .= ($ret ? " $op " : '') . $search_field . ':(' . $help . ')';
     }
     else {
       if ($par->_value)
-        $ret .= ($ret ? " $op " : '') . $search_field . ':' . $this->norm_agency($par->_value, $search_field);
+        $ret .= ($ret ? " $op " : '') . $search_field . ':' . $this->normalize($par->_value, $search_field);
     }
     return $ret;
   }
 
   /** \brief
-   *  return normalized agency for selected fields
+   *  return normalized agency for selected fields and escape solr meta-chars
    */
-  private function norm_agency($agency, $field) {
+  private function normalize($agency, $field) {
+    static $solr_e_from = array('+', '-', ':', '!');
+    static $solr_e_to = array();
+    if (empty($solr_e_to)) {
+      foreach ($solr_e_from as $ch) $solr_e_to[] = '\\' . $ch;
+    }
     if ($field == 'requesterid' || $field == 'responderid')
       $agency = $this->strip_agency($agency);
-    return $agency;
+    return str_replace($solr_e_from, $solr_e_to, $agency);
   }
 
   /** \brief
