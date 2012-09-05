@@ -510,21 +510,22 @@ class OFO_solr {
     // column-names from database MUST match xml-fields for this loop to work
     // new loop to ensure roworder as defined in xml-schema
     foreach ($this->xmlfields as $key =>$val) {
-      if ($value =  $data[strtolower($val)]) {
-        if ($value && $value != '0001-01-01' && $value != 'uninitialized') {
-          if ($key !=  'placeOnHold') {
-            if ($value == 'yes' || $value == 'Y')
-              $value = 'true';
-            if ($value == 'no' || $value == 'N')
-              $value = 'false';
-          }
-          if ($key == 'creationDate') {
-            $value = str_replace(' ', 'T', $value);
-            if (!strpos($value, 'Z')) $value .= 'Z';
-          }
-          $ret->_value->$key->_value = $value;
-          $ret->_value->$key->_namespace = THIS_NAMESPACE;
+      $value = $data[strtolower($val)];
+      if (is_array($value))
+        $value = $value[0];
+      if ($value && $value != '0001-01-01' && $value != 'uninitialized') {
+        if ($key !=  'placeOnHold') {
+          if ($value == 'yes' || $value == 'Y')
+            $value = 'true';
+          if ($value == 'no' || $value == 'N')
+            $value = 'false';
         }
+        if ($key == 'creationDate') {
+          $value = str_replace(' ', 'T', $value);
+          if (!strpos($value, 'Z')) $value .= 'Z';
+        }
+        $ret->_value->$key->_value = $value;
+        $ret->_value->$key->_namespace = THIS_NAMESPACE;
       }
     }
     return $ret;
