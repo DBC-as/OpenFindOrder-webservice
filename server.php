@@ -573,10 +573,10 @@ class OFO_solr {
       case "findManuallyFinishedIllOrders":
         $ret = 'ordertype:inter_library_request';
         if (isset($param->requesterOrderState->_value)) {
-          $ret .= 'requesterorderstate:' . $param->requesterOrderState->_value;
+          $ret .= 'AND requesterorderstate:' . $param->requesterOrderState->_value;
         } 
         elseif (isset($param->providerOrderState->_value)) {
-          $ret .= 'providerorderstate:' . $param->providerOrderState->_value;
+          $ret .= 'AND providerorderstate:' . $param->providerOrderState->_value;
         }
         $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
         $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
@@ -627,13 +627,13 @@ class OFO_solr {
         }
         $ret = $this->add_one_par($param->userId, 'userid', $ret);
         $ret = $this->add_one_par($param->userMail, 'usermail', $ret);
-        $ret = $this->add_one_par($param->userName, 'userName', $ret);
+        $ret = $this->add_one_par($param->userName, 'username', $ret);
         $ret = $this->add_one_par($param->requesterAgencyId, 'requesterid', $ret);
         $ret = $this->add_one_par($param->responderAgencyId, 'responderid', $ret);
         $ret = $this->add_common_pars($param, $ret);
 // Spooky ... this OR-part below has to be the last and no () around it ????
 // apparently the edismax searchHandler parse (a OR b OR c) as some list where all members should be present
-// Users are therefore recommended to user userId, userMail and userName instead of userFreeText
+// Users are therefore encouraged/recommended to user userId, userMail and userName instead of userFreeText
         if ($uft = $param->userFreeText->_value) {
           $ret .= ($ret ? ' AND ' : '') . 'userid:"' . $uft . '" OR usermail:"' . $uft . '" OR username:"' . $uft . '"';
         }
