@@ -52,6 +52,12 @@ xmldir = ./xml
 ; schema-file
 schema=openfindorder.xsd
 
+; where to find openAgency
+openagency_agency_list = http://some.server.dk/OpenAgency/?action=pickupAgencyList&agencyId=%s&libraryStatus=alle&outputType=php
+
+; where to find solr indexes
+solr_order_uri = http://some.server.dk:8081/solr/select?
+
 connectionstring = ora_user/ora_passwd@some.server.dk
 vip = ora_user/ora_passwd@some.server.dk
 
@@ -92,7 +98,7 @@ aaa_credentials = ora_user/ora_passwd@some.server.dk
 ; aaa_ip_rights[group-identifier][ressource][<named ressource 2>] = right to <named ressource 2>
 ;
 aaa_ip_rights[dbc][ip_list] = 172.16.0.0-172.31.255.255;193.111.162.0-193.111.162.255
-aaa_ip_rights[dbc][ressource][openfindorder] = 500
+aaa_ip_rights[dbc][ressource]['netpunkt.dk'] = 500
 
 
 [rest]
