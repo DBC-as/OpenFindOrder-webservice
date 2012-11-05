@@ -75,7 +75,7 @@ class openFindOrder extends webServiceServer {
       The service 
    */
   public function findManuallyFinishedIllOrders($param) {
-    if ($error=OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -88,7 +88,7 @@ class openFindOrder extends webServiceServer {
       The service 
    */
   public function findAllOpenEndUserOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -101,7 +101,7 @@ class openFindOrder extends webServiceServer {
       The service request for orders on material not localized to the end user agency.
    */
   public function findNonLocalizedEndUserOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -114,7 +114,7 @@ class openFindOrder extends webServiceServer {
       The service request for orders on material localized to the end user agency.
    */
   public function findLocalizedEndUserOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -127,7 +127,7 @@ class openFindOrder extends webServiceServer {
 
    */
   public function findClosedIllOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -139,7 +139,7 @@ class openFindOrder extends webServiceServer {
   /** \brief
    */
   public function findOpenIllOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -152,7 +152,7 @@ class openFindOrder extends webServiceServer {
   /** \brief
    */
   public function findAllIllOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -164,7 +164,7 @@ class openFindOrder extends webServiceServer {
   /** \brief
    */
   public function findAllNonIllOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -179,7 +179,7 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object.
    */
   public function findAllOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -193,7 +193,7 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object.
    */
   public function findSpecificOrder($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -207,7 +207,7 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object.
    */
   public function findOrdersFromUser($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -221,7 +221,7 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object.
    */
   public function findOrdersFromUnknownUser($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -235,7 +235,7 @@ class openFindOrder extends webServiceServer {
    *
    */
   public function findOrdersWithStatus($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 /*
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -251,7 +251,7 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object.
    */
   public function findOrdersWithAutoForwardReason($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -265,7 +265,7 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object.
    */
   public function findAutomatedOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -279,7 +279,7 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object.
    */
   public function findOrderType($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -293,7 +293,7 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object
    */
   public function bibliographicSearch($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -307,7 +307,7 @@ class openFindOrder extends webServiceServer {
    * @param; request parameters in request-xml object
    */
   public function getOrderStatus($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -321,7 +321,7 @@ class openFindOrder extends webServiceServer {
    *  @param; request parameters in request-xml object
    */
   public function findNonAutomatedOrders($param) {
-    if ($error = OFO_agency::authenticate($param->agency->_value))
+    if ($error = OFO_authentication::authenticate($this->aaa, __FUNCTION__))
       return $this->send_error($error);
 
     $OFO_s = new OFO_solr($this->soap_action, $this->config);
@@ -828,19 +828,11 @@ class OFO_solr {
 
 }
 
-class OFO_agency {
-  // WHAT IS THIS and how do i authenticate
-  public static function authenticate($agency) {
-    // return self::error();
-    return;
+class OFO_authentication {
+  public static function authenticate(&$aaa, $function) {
+    if ($aaa->has_right('netpunkt.dk', 500))
+      return;
+    else 
+      return 'authentication_error';
   }
-
-  public static function error() {
-    return 'orssearch order service not available';
-  }
-
 }
-
-
-?>
-
