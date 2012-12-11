@@ -328,6 +328,7 @@
 					<xs:element ref="ofo:creationDate" minOccurs="0"/>
 					<xs:element ref="ofo:dateDue" minOccurs="0"/>
 					<xs:element ref="ofo:expectedDelivery" minOccurs="0"/>
+					<xs:element ref="ofo:lastRelevantModification" minOccurs="0"/>
 					<xs:element ref="ofo:lastRenewalDate" minOccurs="0"/>
 					<xs:element ref="ofo:latestProviderNote" minOccurs="0"/>
 					<xs:element ref="ofo:latestRequesterNote" minOccurs="0"/>
@@ -562,7 +563,7 @@
 			<xs:documentation xml:lang="en">Boolean stating whether end-user wants a photocopy of an article or component. Provider may still choose to fulfill the order by lending out the item itself. Default is: .false".</xs:documentation>
 		</xs:annotation>
 	</xs:element>
-	<xs:element name="creationDate" type="xs:dateTime">
+	<xs:element name="creationDate" type="xs:date">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Date of order received/created in ORS.</xs:documentation>
 		</xs:annotation>
@@ -655,6 +656,11 @@
 	<xs:element name="latestRequesterNote" type="xs:string">
 		<xs:annotation>
 			<xs:documentation xml:lang="en">Latest note received from requester.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="lastRelevantModification" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">Timestamp for last modification.</xs:documentation>
 		</xs:annotation>
 	</xs:element>
 	<xs:element name="lastRenewalDate" type="xs:date">
@@ -990,6 +996,7 @@
 			<xs:element ref="ofo:agency"/>
 			<xs:element ref="ofo:fromDate" minOccurs="0"/>
 			<xs:element ref="ofo:toDate" minOccurs="0"/>
+			<xs:element ref="ofo:lastRelevantModification" minOccurs="0"/>
 			<xs:element ref="ofo:outputType" minOccurs="0"/>
 			<xs:element ref="ofo:callback" minOccurs="0"/>
 			<xs:element ref="ofo:sortKey" minOccurs="0"/>
