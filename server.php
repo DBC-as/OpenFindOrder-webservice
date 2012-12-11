@@ -757,9 +757,6 @@ class OFO_solr {
    * handles general parms: agency, orderSystem, fromDate, toDate
    */
   private function add_common_pars($param, $ret = '') {
-    // dropped orderSyetm in request since it's not used
-    //$ret = $this->add_one_par($param->orderSystem, 'ordersystem', $ret);  
-
     // solr intervals as
     // creationdate:[2012-03-06T00:00:00Z TO 2076-03-06T23:59:59Z]
     // creationdate:[2012-03-06T00:00:00Z TO *]
@@ -774,6 +771,11 @@ class OFO_solr {
       }
       if ($ret) $ret .= ' AND ';
       $ret .= 'creationdate:[' . $from . ' TO ' . $to . ']';
+    }
+    if ($param->lastRelevantModification->_value) {
+      $from = date('c', strtotime($param->lastRelevantModification->_value)) . 'Z';
+      if ($ret) $ret .= ' AND ';
+      $ret .= 'lastRelevantModification:[' . $from . ' TO *]';
     }
 
     return $ret;
