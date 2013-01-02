@@ -764,21 +764,27 @@ class OFO_solr {
     if ($param->fromDate->_value || $param->toDate->_value) {
       $from = $to = '*';
       if ($param->fromDate->_value) {
-        $from = date('c', strtotime($param->fromDate->_value)) . 'Z';
+        $from = $this->solr_date($param->fromDate->_value);
       }
       if ($param->toDate->_value) {
-        $to = date('c', strtotime($param->toDate->_value . '+23 hours 59 minutes 59 seconds')) . 'Z';
+        $to = $this->solr_date($param->toDate->_value . '+23 hours 59 minutes 59 seconds');
       }
       if ($ret) $ret .= ' AND ';
       $ret .= 'creationdate:[' . $from . ' TO ' . $to . ']';
     }
-    if ($param->lastRelevantModification->_value) {
-      $from = date('c', strtotime($param->lastRelevantModification->_value)) . 'Z';
+    if ($param->lastModification->_value) {
+      $from = $this->solr_date($param->lastModification->_value);
       if ($ret) $ret .= ' AND ';
-      $ret .= 'lastRelevantModification:[' . $from . ' TO *]';
+      $ret .= 'lastmodification:[' . $from . ' TO *]';
     }
 
     return $ret;
+  }
+
+  private function solr_date($some_time) {
+    date_default_timezone_set('UTC');
+    return date('Y-m-d\TH:i:s\Z', strtotime($some_time));
+
   }
 
   /**\brief
