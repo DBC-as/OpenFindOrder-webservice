@@ -652,7 +652,7 @@ class OFO_solr {
         // $ret = $this->add_one_par($param->mediumType, 'mediumtype', $ret);  // not indexed
         if ($param->bibliographicFreeText) {
           $ret = $this->add_one_par($param->bibliographicFreeText, 'author', $ret, 'AND (');
-          $ret = '(' . $this->add_one_par($param->bibliographicFreeText, 'title', $ret, 'OR') . ')';
+          $ret = $this->add_one_par($param->bibliographicFreeText, 'title', $ret, 'OR');
         }
         //$ret = $this->add_one_par($param->orderType, 'ordertype', $ret);
         $ret = $this->add_one_par($param->title, 'title', $ret);
@@ -794,30 +794,33 @@ class OFO_solr {
     if (is_array($par)) {
       foreach ($par as $val) {
         if ($val->_value)
-          $help .= ($help ? ' OR ' : '') . $this->normalize($val->_value, $search_field);
+          $help .= ($help ? ' OR ' : '') . $this->normalize_query_term($val->_value, $search_field);
       }
       if ($help)
         $ret .= ($ret ? " $op " : '') . $search_field . ':(' . $help . ')';
     }
     else {
       if ($par->_value)
-        $ret .= ($ret ? " $op " : '') . $search_field . ':' . $this->normalize($par->_value, $search_field);
+        $ret .= ($ret ? " $op " : '') . $search_field . ':' . $this->normalize_query_term($par->_value, $search_field);
     }
     return $ret;
   }
 
   /** \brief
-   *  return normalized agency for selected fields and escape solr meta-chars
+   *  return normalized agency for selected fields, escape solr meta-chars and use proximity for multi term queries
    */
-  private function normalize($agency, $field) {
+  private function normalize_query_term($query_term, $field) {
     static $solr_e_from = array('+', '-', ':', '!');
     static $solr_e_to = array();
     if (empty($solr_e_to)) {
       foreach ($solr_e_from as $ch) $solr_e_to[] = '\\' . $ch;
     }
     if ($field == 'requesterid' || $field == 'responderid')
-      $agency = $this->strip_agency($agency);
-    return str_replace($solr_e_from, $solr_e_to, $agency);
+      $query_term = $this->strip_agency($query_term);
+    elseif (strpos($query_term, ' ')) {
+      $query_term = '"' . str_replace('"', '', $query_term) . '"~3';
+    }
+    return str_replace($solr_e_from, $solr_e_to, $query_term);
   }
 
   /** \brief

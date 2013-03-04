@@ -1,7 +1,13 @@
 ; Inifile for openfindorder
 
 [setup]
-version = 2.0
+; To close a service, set service_http_error
+; service status - values:
+;service_http_error = HTTP/1.0 404 Not Found
+;service_http_error = HTTP/1.1 410 Gone
+;service_http_error = HTTP/1.0 503 Service Unavailable
+
+version = 2.1
 
 ; wsdl for service
 wsdl = openfindorder.wsdl
@@ -11,6 +17,10 @@ wsdl = openfindorder.wsdl
 
 ; set to TRUE to expose the create_sample form
 ;show_samples = 1
+;show_samples_ip_list = 127.0.0.1-127.0.0.2
+
+; path to xml-examples
+xmldir = ./xml
 
 ; validate
 ;validate[request] = openfindorder.xsd
@@ -45,9 +55,6 @@ xmlns[xs] = http://www.w3.org/2001/XMLSchema
 xmlns[ofow] = http://oss.dbc.dk/ns/openfindorder_wsdl
 xmlns[ofo] = http://oss.dbc.dk/ns/openfindorder
 xmlns[soap] = http://schemas.xmlsoap.org/wsdl/soap
-
-; path to xml-examples
-xmldir = ./xml
 
 ; schema-file
 schema=openfindorder.xsd
