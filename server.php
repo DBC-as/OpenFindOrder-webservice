@@ -520,6 +520,9 @@ class OFO_solr {
           if ($value == 'no' || $value == 'N')
             $value = 'false';
         }
+        if (in_array($key, array('expectedDelivery', 'providerAnswerDate'))) {
+          $value = substr($value, 0, 10);
+        }
         if ($key == 'creationDate') {
           $value = str_replace(' ', 'T', $value);
           if (!strpos($value, 'Z')) $value .= 'Z';
